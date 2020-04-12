@@ -23,7 +23,8 @@ namespace FileStorage.Domain.Services.Implementations
         public async Task<IEnumerable<StorageItemDto>> GetAllStorageItemAsync()
         {
             var storageItems = await unitOfWork.StorageItems.GetAllAsync();
-            var storageItemsDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<StorageItemDto>>(storageItems);
+            var storageItemsDto = 
+                mapper.Map<IEnumerable<StorageItem>, IEnumerable<StorageItemDto>>(storageItems);
 
             return storageItemsDto;
         }
@@ -31,7 +32,8 @@ namespace FileStorage.Domain.Services.Implementations
         public async Task<StorageItemDto> GetStorageItemByIdAsync(Guid id)
         {
             var storageItem = await unitOfWork.StorageItems.GetByIdAsync(id);
-            var storageItemDto = mapper.Map<StorageItem, StorageItemDto>(storageItem);
+            var storageItemDto = 
+                mapper.Map<StorageItem, StorageItemDto>(storageItem);
 
             return storageItemDto;
         }
