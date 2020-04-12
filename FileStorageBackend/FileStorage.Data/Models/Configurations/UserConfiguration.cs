@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FileStorage.Data.Models.Configurations
 {
@@ -11,6 +8,10 @@ namespace FileStorage.Data.Models.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(user => user.Id);
+
+            builder.Property(user => user.Username)
+                .HasMaxLength(250)
+                .IsRequired();
         }
     }
 }

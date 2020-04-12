@@ -1,43 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using FileStorage.Data.Models;
+﻿using FileStorage.Data.Models;
+using FileStorage.Data.Persistence.Repositories;
 using FileStorage.Persistence.Repositories.Interfaces;
 
 namespace FileStorage.Persistence.Repositories
 {
-    public class StorageItemRepository : IStorageItemRepository
+    public class StorageItemRepository : RepositoryBase<StorageItem>, IStorageItemRepository
     {
-        private FileStorageContext context;
-
-        public StorageItemRepository(FileStorageContext context)
+        private FileStorageContext fileStorageContext
         {
-            this.context = context;
-        }
-        
-        public void Create(StorageItem entity)
-        {
-            throw new NotImplementedException();
+            get => context as FileStorageContext;
         }
 
-        public void Delete(StorageItem entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<StorageItem> FindAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<StorageItem> FindByCondition(Expression<Func<StorageItem, bool>> expression)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(StorageItem entity)
-        {
-            throw new NotImplementedException();
-        }
+        public StorageItemRepository(FileStorageContext context) : base(context) { }
     }
 }

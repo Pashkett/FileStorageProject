@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FileStorage.Data.Models.Configurations
 {
@@ -12,13 +9,19 @@ namespace FileStorage.Data.Models.Configurations
         {
             builder.HasKey(storageItem => storageItem.Id);
 
-            builder.Property(storageItem => storageItem.Owner)
-                .IsRequired();
+            builder.HasOne(storageItem => storageItem.User)
+                .WithMany(user => user.StorageItems);
 
             builder.Property(storageItem => storageItem.Name)
+                .HasMaxLength(1000)
                 .IsRequired();
 
             builder.Property(storageItem => storageItem.RelativePath)
+                .HasMaxLength(1000)
+                .IsRequired();
+
+            builder.Property(storageItem => storageItem.RootFolderName)
+                .HasMaxLength(1000)
                 .IsRequired();
 
             builder.Property(storageItem => storageItem.IsRootFolder)

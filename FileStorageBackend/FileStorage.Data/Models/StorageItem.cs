@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace FileStorage.Data.Models
 {
@@ -12,7 +9,7 @@ namespace FileStorage.Data.Models
         public bool IsFolder { get; set; }
         public bool IsRootFolder { get; set; }
         public string RelativePath { get; set; } 
-        public string RootFolder { get; set; }
-        public User Owner { get; set; }
+        public string RootFolderName { get; set; }
+        public User User { get; set; }
     }
 }

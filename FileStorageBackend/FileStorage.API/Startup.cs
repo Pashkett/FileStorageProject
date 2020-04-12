@@ -28,6 +28,7 @@ namespace FileStorage.API
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureUnitOfWork();
+            services.ConfigureAutomapper();
             
             services.AddControllers();
         }

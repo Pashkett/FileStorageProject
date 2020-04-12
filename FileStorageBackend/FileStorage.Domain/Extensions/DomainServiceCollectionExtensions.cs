@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using FileStorage.Persistence;
 using FileStorage.UnitOfWork;
+using AutoMapper;
+using System.Reflection;
 
 namespace FileStorage.Domain.Extensions
 {
@@ -19,6 +21,11 @@ namespace FileStorage.Domain.Extensions
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, EfUnitOfWork>();
+        }
+
+        public static void ConfigureAutomapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
     }
 }

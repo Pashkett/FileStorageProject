@@ -7,11 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200407064235_Initial.cs" />
     <Compile Remove="Migrations\20200407064235_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200412082231_InitialMigration.cs" />
+    <Compile Remove="Migrations\20200412082231_InitialMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DataStorage\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
