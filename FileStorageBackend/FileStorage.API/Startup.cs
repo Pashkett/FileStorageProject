@@ -6,14 +6,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using System.IO;
-using System;
 using FileStorage.API.Extensions;
 using FileStorage.Domain.Extensions;
 using FileStorage.Domain.Services;
 using FileStorage.Domain.Services.Implementations;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace FileStorage.API
 {
@@ -38,18 +34,7 @@ namespace FileStorage.API
             services.ConfigureAutomapper();
             services.AddScoped<IStorageItemService, StorageItemService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+            services.ConfigureAuthenticationJWT(Configuration);
             
             services.AddControllers();
         }
