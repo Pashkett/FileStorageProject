@@ -11,6 +11,8 @@ namespace FileStorage.Domain.DataTransferedObjects.Profiles
         public UserProfile()
         {
             CreateMap<User, UserDto>();
+            CreateMap<User, UserForRegisterDto>().ReverseMap();
+            CreateMap<User, UserForLoginDto>().ReverseMap();
         }
     }
 }

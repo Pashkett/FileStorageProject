@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FileStorage.Data.Persistence.Repositories.Interfaces;
 
 namespace FileStorage.Data.UnitOfWork
@@ -7,6 +8,6 @@ namespace FileStorage.Data.UnitOfWork
     {
         IStorageItemRepository StorageItems { get; }
         IUserRepository Users { get; }
-        int Complete { get; }
+        Task<int> CommitAsync();
     }
 }

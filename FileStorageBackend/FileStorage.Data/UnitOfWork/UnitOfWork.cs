@@ -1,6 +1,7 @@
 ﻿using FileStorage.Data.Persistence;
 using FileStorage.Data.Persistence.Repositories;
 using FileStorage.Data.Persistence.Repositories.Interfaces;
+using System.Threading.Tasks;
 
 namespace FileStorage.Data.UnitOfWork
 {
@@ -22,7 +23,10 @@ namespace FileStorage.Data.UnitOfWork
         public IUserRepository Users =>
             userRepository ?? (userRepository = new UserRepository(context));
 
-        public int Complete => context.SaveChanges();
+        public async Task<int> CommitAsync()
+        {
+            return await context.SaveChangesAsync();
+        }
 
         public void Dispose() => context.Dispose();
     }
