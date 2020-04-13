@@ -1,8 +1,7 @@
 ﻿using FileStorage.Data.Models;
-using FileStorage.Data.Persistence.Repositories;
-using FileStorage.Persistence.Repositories.Interfaces;
+using FileStorage.Data.Persistence.Repositories.Interfaces;
 
-namespace FileStorage.Persistence.Repositories
+namespace FileStorage.Data.Persistence.Repositories
 {
     public class StorageItemRepository : RepositoryBase<StorageItem>, IStorageItemRepository
     {

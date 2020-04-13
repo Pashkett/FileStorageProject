@@ -1,9 +1,8 @@
 ﻿using FileStorage.Data.Models;
-using FileStorage.Data.Persistence.Repositories;
-using FileStorage.Persistence.Repositories.Interfaces;
+using FileStorage.Data.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace FileStorage.Persistence.Repositories
+namespace FileStorage.Data.Persistence.Repositories
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {

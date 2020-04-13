@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FileStorage.Persistence.Repositories.Interfaces;
+using FileStorage.Data.Persistence.Repositories.Interfaces;
 
-namespace FileStorage.UnitOfWork
+namespace FileStorage.Data.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -9,10 +9,13 @@
     <Compile Remove="Migrations\20200407064235_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200412082231_InitialMigration.cs" />
     <Compile Remove="Migrations\20200412082231_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200412083116_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200412083116_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DataStorage\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

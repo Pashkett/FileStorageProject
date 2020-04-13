@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FileStorage.Persistence;
-using FileStorage.Repositories.Interfaces;
+using FileStorage.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileStorage.Data.Persistence.Repositories

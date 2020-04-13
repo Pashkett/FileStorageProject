@@ -1,9 +1,8 @@
-﻿using System;
-using FileStorage.Persistence;
-using FileStorage.Persistence.Repositories;
-using FileStorage.Persistence.Repositories.Interfaces;
+﻿using FileStorage.Data.Persistence;
+using FileStorage.Data.Persistence.Repositories;
+using FileStorage.Data.Persistence.Repositories.Interfaces;
 
-namespace FileStorage.UnitOfWork
+namespace FileStorage.Data.UnitOfWork
 {
     public class EfUnitOfWork : IUnitOfWork
     {

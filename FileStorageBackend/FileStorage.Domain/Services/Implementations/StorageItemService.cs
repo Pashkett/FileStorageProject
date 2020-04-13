@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using FileStorage.Data.Models;
 using FileStorage.Domain.DataTransferedObjects;
-using FileStorage.UnitOfWork;
+using FileStorage.Data.UnitOfWork;
 
 namespace FileStorage.Domain.Services.Implementations
 {
@@ -20,7 +19,7 @@ namespace FileStorage.Domain.Services.Implementations
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<StorageItemDto>> GetAllStorageItemAsync()
+        public async Task<IEnumerable<StorageItemDto>> GetAllStorageItemsAsync()
         {
             var storageItems = await unitOfWork.StorageItems.GetAllAsync();
             var storageItemsDto = 

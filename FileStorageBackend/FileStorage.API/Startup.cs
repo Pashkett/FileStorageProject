@@ -6,8 +6,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using System.IO;
+using System;
 using FileStorage.API.Extensions;
 using FileStorage.Domain.Extensions;
+using FileStorage.Domain.Services;
+using FileStorage.Domain.Services.Implementations;
 
 namespace FileStorage.API
 {
@@ -15,7 +18,8 @@ namespace FileStorage.API
     {
         public Startup(IConfiguration configuration)
         {
-            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+            LogManager.LoadConfiguration(
+                string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -29,6 +33,7 @@ namespace FileStorage.API
             services.ConfigureSqlContext(Configuration);
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
+            services.AddTransient<IStorageItemService, StorageItemService>();
             
             services.AddControllers();
         }

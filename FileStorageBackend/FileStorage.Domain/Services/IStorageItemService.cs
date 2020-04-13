@@ -7,7 +7,7 @@ namespace FileStorage.Domain.Services
 {
     public interface IStorageItemService
     {
-        Task<IEnumerable<StorageItemDto>> GetAllStorageItemAsync();
+        Task<IEnumerable<StorageItemDto>> GetAllStorageItemsAsync();
         Task<StorageItemDto> GetStorageItemByIdAsync(Guid id);
     }
 }

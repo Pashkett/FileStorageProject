@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using FileStorage.Persistence;
-using FileStorage.UnitOfWork;
 using AutoMapper;
 using System.Reflection;
+using FileStorage.Data.Persistence;
+using FileStorage.Data.UnitOfWork;
 
 namespace FileStorage.Domain.Extensions
 {

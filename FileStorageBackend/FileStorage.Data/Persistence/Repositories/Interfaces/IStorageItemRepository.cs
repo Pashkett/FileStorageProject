@@ -1,10 +1,7 @@
 ﻿using FileStorage.Data.Models;
-using FileStorage.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using FileStorage.Data.Repositories.Interfaces;
 
-namespace FileStorage.Persistence.Repositories.Interfaces
+namespace FileStorage.Data.Persistence.Repositories.Interfaces
 {
     public interface IStorageItemRepository : IRepositoryBase<StorageItem>
     {

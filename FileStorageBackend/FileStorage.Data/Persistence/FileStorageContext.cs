@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using FileStorage.Data.Models;
 using FileStorage.Data.Models.Configurations;
 
-namespace FileStorage.Persistence
+namespace FileStorage.Data.Persistence
 {
     public class FileStorageContext : DbContext
     {
