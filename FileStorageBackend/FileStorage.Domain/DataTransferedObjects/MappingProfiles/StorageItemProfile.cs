@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FileStorage.Domain.DataTransferedObjects.Profiles
+namespace FileStorage.Domain.DataTransferredObjects.Profiles
 {
     public class StorageItemProfile : Profile
     {

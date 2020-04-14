@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using FileStorage.Domain.DataTransferedObjects;
+using FileStorage.Domain.DataTransferredObjects;
 using FileStorage.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

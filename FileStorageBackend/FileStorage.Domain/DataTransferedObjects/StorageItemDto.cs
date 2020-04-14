@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileStorage.Domain.DataTransferedObjects
+namespace FileStorage.Domain.DataTransferredObjects
 {
     public class StorageItemDto
     {

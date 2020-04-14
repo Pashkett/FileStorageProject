@@ -1,4 +1,4 @@
-﻿using FileStorage.Domain.DataTransferedObjects;
+﻿using FileStorage.Domain.DataTransferredObjects;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

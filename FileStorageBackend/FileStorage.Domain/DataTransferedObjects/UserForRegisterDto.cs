@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace FileStorage.Domain.DataTransferedObjects
+namespace FileStorage.Domain.DataTransferredObjects
 {
     public class UserForRegisterDto
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using FileStorage.Domain.DataTransferedObjects;
+using FileStorage.Domain.DataTransferredObjects;
 
 namespace FileStorage.Domain.Services
 {

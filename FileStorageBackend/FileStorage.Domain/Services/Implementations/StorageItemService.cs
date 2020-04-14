@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FileStorage.Data.Models;
-using FileStorage.Domain.DataTransferedObjects;
+using FileStorage.Domain.DataTransferredObjects;
 using FileStorage.Data.UnitOfWork;
 
 namespace FileStorage.Domain.Services.Implementations

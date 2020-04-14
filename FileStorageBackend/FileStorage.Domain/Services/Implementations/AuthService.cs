@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FileStorage.Data.Models;
 using FileStorage.Data.UnitOfWork;
-using FileStorage.Domain.DataTransferedObjects;
+using FileStorage.Domain.DataTransferredObjects;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
