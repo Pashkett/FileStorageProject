@@ -27,6 +27,7 @@ namespace FileStorage.API.Controllers
         };
 
         // GET api/values
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetValue()
         {
