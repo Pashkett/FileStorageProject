@@ -1,15 +1,16 @@
+using NLog;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using NLog;
-using System.IO;
 using FileStorage.API.Extensions;
 using FileStorage.Domain.Extensions;
 using FileStorage.Domain.Services;
 using FileStorage.Domain.Services.Implementations;
+using FileStorage.Logger;
 
 namespace FileStorage.API
 {
@@ -40,12 +41,18 @@ namespace FileStorage.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
+
+            app.ConfigureExceptionHandler(logger);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
