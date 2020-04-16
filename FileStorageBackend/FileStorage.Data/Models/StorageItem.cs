@@ -10,6 +10,6 @@ namespace FileStorage.Data.Models
         public bool IsRootFolder { get; set; }
         public string RelativePath { get; set; } 
         public string RootFolderName { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

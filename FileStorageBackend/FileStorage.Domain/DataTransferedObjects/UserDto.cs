@@ -9,6 +9,5 @@ namespace FileStorage.Domain.DataTransferredObjects
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public virtual ICollection<StorageItemDto> StorageItems { get; set; }
     }
 }
