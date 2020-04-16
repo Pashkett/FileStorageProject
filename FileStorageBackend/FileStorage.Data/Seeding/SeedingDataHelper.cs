@@ -11,8 +11,8 @@ namespace FileStorage.Data.Seeding
         {
             List<T> data = new List<T>();
 
-            string filePath = Path.Combine(
-                Directory.GetParent(Directory.GetCurrentDirectory()).ToString(), "FileStorage.Data", "Seeding", fileName);
+            string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).ToString(),
+                                           "FileStorage.Data", "Seeding", fileName);
 
             if (File.Exists(filePath))
             {
