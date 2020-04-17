@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { from } from 'rxjs';
@@ -13,20 +14,26 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AnimationBuilder } from '@angular/animations';
+import { RecycleBinComponent } from './recycle-bin/recycle-bin.component';
+import { StorageItemsComponent } from './storage-items/storage-items.component';
+import { fileStorageRoutes } from './routes';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
       HomeComponent,
-      RegisterComponent
+      RegisterComponent,
+      RecycleBinComponent,
+      StorageItemsComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
       BrowserAnimationsModule,
-      BsDropdownModule.forRoot()
+      BsDropdownModule.forRoot(),
+      RouterModule.forRoot(fileStorageRoutes)
    ],
    providers: [
       AuthService,
