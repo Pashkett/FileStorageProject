@@ -13,7 +13,7 @@ constructor() { }
       if (e) {
         okCallBack();
       } else {}
-    })
+    });
   }
 
   success(message: string) {
