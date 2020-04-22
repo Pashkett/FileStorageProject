@@ -13,7 +13,6 @@ namespace FileStorage.Data.Persistence
         public FileStorageContext(DbContextOptions options)
             : base(options) { }
 
-        public DbSet<StorageItem> StorageItems { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,7 +22,6 @@ namespace FileStorage.Data.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new StorageItemConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
