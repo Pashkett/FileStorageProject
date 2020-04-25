@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FileStorage.Domain.DataTransferredObjects
+namespace FileStorage.Domain.UserModels
 {
     public class UserForRegisterDto
     {

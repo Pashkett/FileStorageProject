@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FileStorage.Domain.DataTransferredObjects
+namespace FileStorage.Domain.UserModels
 {
     public class UserDto
     {

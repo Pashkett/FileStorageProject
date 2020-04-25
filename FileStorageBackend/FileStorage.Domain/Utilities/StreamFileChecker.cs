@@ -8,7 +8,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace FileStorage.Domain.Utilities
 {
-    public static class StreamFileChecker
+    public static class StreamedFileChecker
     {
         public static async Task<byte[]> ProcessStreamedFile(
             MultipartSection section,
@@ -30,7 +30,8 @@ namespace FileStorage.Domain.Utilities
                     else if (memoryStream.Length > sizeLimit)
                     {
                         var megabyteSizeLimit = sizeLimit / 1048576;
-                        throw new InvalidDataException($"The file exceeds {megabyteSizeLimit:N1} MB.");
+                        throw new InvalidDataException(
+                            $"The file exceeds {megabyteSizeLimit:N1} MB.");
                     }
                     else
                     {

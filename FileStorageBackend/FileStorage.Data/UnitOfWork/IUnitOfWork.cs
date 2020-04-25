@@ -7,6 +7,7 @@ namespace FileStorage.Data.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository Users { get; }
+        IStorageItemRepository StorageItems { get; }
         Task<int> CommitAsync();
     }
 }

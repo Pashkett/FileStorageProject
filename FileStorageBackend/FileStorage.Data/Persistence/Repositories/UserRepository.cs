@@ -6,13 +6,10 @@ namespace FileStorage.Data.Persistence.Repositories
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        //private FileStorageContext fileStorageContext
-        //{
-        //    get => context as FileStorageContext;
-        //}
+        private FileStorageContext fileStorageContext => 
+            context as FileStorageContext;
 
-        public UserRepository(DbContext dbContext) : base(dbContext)
-        {
-        }
+        public UserRepository(DbContext dbContext) 
+            : base(dbContext) { }
     }
 }

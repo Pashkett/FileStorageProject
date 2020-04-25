@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using FileStorage.Domain.DataTransferredObjects;
+using FileStorage.Domain.UserModels;
 
-namespace FileStorage.Domain.Services
+namespace FileStorage.Domain.Services.AuthenticationServices
 {
     public interface IAuthService
     {

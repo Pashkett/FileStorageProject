@@ -5,6 +5,7 @@ using AutoMapper;
 using System.Reflection;
 using FileStorage.Data.Persistence;
 using FileStorage.Data.UnitOfWork;
+using FileStorage.Domain.Services.FolderServices;
 
 namespace FileStorage.Domain.Extensions
 {
@@ -20,7 +21,12 @@ namespace FileStorage.Domain.Extensions
 
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
-            services.AddTransient<IUnitOfWork, EfUnitOfWork>();
+            services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+        }
+
+        public static void ConfigureFolderService(this IServiceCollection services)
+        {
+            services.AddScoped<IFolderService, FolderService>();
         }
 
         public static void ConfigureAutomapper(this IServiceCollection services)

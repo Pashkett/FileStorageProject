@@ -9,6 +9,9 @@ namespace FileStorage.Data.Models.Configurations
         {
             builder.HasKey(user => user.Id);
 
+            builder.HasIndex(user => user.Username)
+                .IsUnique();
+
             builder.Property(user => user.Username)
                 .HasMaxLength(250)
                 .IsRequired();

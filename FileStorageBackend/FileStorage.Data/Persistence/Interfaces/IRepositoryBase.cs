@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace FileStorage.Data.Interfaces
+namespace FileStorage.Data.Persistence.Interfaces
 {
     public interface IRepositoryBase<TEntity>
     {

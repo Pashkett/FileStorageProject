@@ -8,8 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using FileStorage.API.Extensions;
 using FileStorage.Domain.Extensions;
-using FileStorage.Domain.Services;
-using FileStorage.Domain.Services.Implementations;
+using FileStorage.Domain.Services.AuthenticationServices;
 using FileStorage.Logger;
 
 namespace FileStorage.API
@@ -33,6 +32,7 @@ namespace FileStorage.API
             services.ConfigureSqlContext(Configuration);
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
+            services.ConfigureFolderService();
             services.AddScoped<IAuthService, AuthService>();
             services.ConfigureAuthenticationJWT(Configuration);
             
