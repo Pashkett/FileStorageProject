@@ -1,4 +1,4 @@
-namespace FileStorage.Domain.UserModels
+namespace FileStorage.Domain.DataTransferredObjects.UserModels
 {
     public class UserForLoginDto
     {

@@ -5,15 +5,15 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using FileStorage.Data.Models;
 using FileStorage.Data.Models.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace FileStorage.Data.Persistence
 {
-    public class FileStorageContext : DbContext
+    public class FileStorageContext : IdentityDbContext<User>
     {
         public FileStorageContext(DbContextOptions options)
             : base(options) { }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<StorageItem> StorageItems { get; set; }
 
 
@@ -24,6 +24,8 @@ namespace FileStorage.Data.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new StorageItemConfiguration());
         }

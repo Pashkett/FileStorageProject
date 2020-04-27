@@ -9,16 +9,12 @@ namespace FileStorage.Data.UnitOfWork
     {
         private readonly FileStorageContext context;
 
-        private IUserRepository userRepository;
         private IStorageItemRepository storageItemRepository;
 
         public EfUnitOfWork(FileStorageContext context)
         {
             this.context = context;
         }
-
-        public IUserRepository Users =>
-            userRepository ?? (userRepository = new UserRepository(context));
 
         public IStorageItemRepository StorageItems => 
             storageItemRepository ?? (storageItemRepository = new StorageItemRepository(context));

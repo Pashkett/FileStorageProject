@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FileStorage.Domain.UserModels
+namespace FileStorage.Domain.DataTransferredObjects.UserModels
 {
     public class UserForRegisterDto
     {

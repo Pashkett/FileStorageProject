@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using FileStorage.Domain.UserModels;
+﻿using System.Threading.Tasks;
+using FileStorage.Domain.DataTransferredObjects.UserModels;
+
 
 namespace FileStorage.Domain.Services.AuthenticationServices
 {
@@ -10,6 +8,5 @@ namespace FileStorage.Domain.Services.AuthenticationServices
     {
         Task<UserForRegisterDto> RegisterAsync(UserForRegisterDto user);
         Task<UserDto> LoginAsync(string username, string password);
-        Task<bool> UserExistsAsync(string username);
     }
 }

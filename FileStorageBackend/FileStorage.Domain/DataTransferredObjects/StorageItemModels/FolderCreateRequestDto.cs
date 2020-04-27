@@ -1,7 +1,7 @@
 ﻿using FileStorage.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace FileStorage.Domain.DataTransferedObjects.StorageItemModels
+namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
 {
     public class FolderCreateRequestDto
     {   
@@ -12,7 +12,8 @@ namespace FileStorage.Domain.DataTransferedObjects.StorageItemModels
         [Required]
         public bool IsFolder { get; set; } = true;
 
-        public bool? IsRootFolder { get; set; }
+        [Required]
+        public bool IsRootFolder { get; set; }
         
         [Required]
         public User User { get; set; }

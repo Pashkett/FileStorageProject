@@ -7,9 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using FileStorage.API.Extensions;
-using FileStorage.Domain.Extensions;
+using FileStorage.Domain.ServiceExtensions;
 using FileStorage.Domain.Services.AuthenticationServices;
 using FileStorage.Logger;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace FileStorage.API
 {
@@ -27,16 +29,28 @@ namespace FileStorage.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.ConfigureCors();
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
+            services.ConfigureFileSystemManagers();
             services.ConfigureFolderService();
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddAuthentication();
+            services.ConfigureIdentity();
             services.ConfigureAuthenticationJWT(Configuration);
             
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build();
+
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,7 +81,6 @@ namespace FileStorage.API
             app.UseRouting();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

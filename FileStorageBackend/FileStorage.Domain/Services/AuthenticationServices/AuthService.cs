@@ -1,23 +1,30 @@
-﻿using System.Text;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using FileStorage.Data.Models;
 using FileStorage.Data.UnitOfWork;
-using FileStorage.Domain.UserModels;
 using FileStorage.Domain.Services.FolderServices;
-using FileStorage.Domain.DataTransferedObjects.StorageItemModels;
+using Microsoft.AspNetCore.Identity;
+using FileStorage.Domain.DataTransferredObjects.UserModels;
+using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 
 namespace FileStorage.Domain.Services.AuthenticationServices
 {
     public class AuthService : IAuthService
     {
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IFolderService folderService;
 
-        public AuthService(IUnitOfWork unitOfWork, IMapper mapper, IFolderService folderService)
+        public AuthService(UserManager<User> userManager,
+                           SignInManager<User> signInManager,
+                           IUnitOfWork unitOfWork,
+                           IMapper mapper,
+                           IFolderService folderService)
         {
+            this.userManager = userManager;
+            this.signInManager = signInManager;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.folderService = folderService;
@@ -25,83 +32,41 @@ namespace FileStorage.Domain.Services.AuthenticationServices
 
         public async Task<UserDto> LoginAsync(string username, string password)
         {
-            var user = await unitOfWork.Users.SingleOrDefaultAsync(user => user.Username == username);
-            if (user == null)
-                return null;
+            var user = await userManager.FindByNameAsync(username);
+            var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
 
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                return null;
+            if (result.Succeeded)
+            {
+                var userDto = mapper.Map<User, UserDto>(user);
 
-            var userDto = mapper.Map<User, UserDto>(user);
+                return userDto;
+            }
 
-            return userDto;
+            return null;
         }
 
         public async Task<UserForRegisterDto> RegisterAsync(UserForRegisterDto userForRegister)
         {
-            byte[] passwordHash;
-            byte[] passwordSalt;
-            CreatePasswordHash(userForRegister.Password, out passwordHash, out passwordSalt);
             var user = mapper.Map<UserForRegisterDto, User>(userForRegister);
+            var result = await userManager.CreateAsync(user, userForRegister.Password);
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
-            var userFolder = new FolderCreateRequestDto()
+            if (result.Succeeded)
             {
-                DisplayName = "MyStorage",
-                IsRootFolder = true,
-                User = user,
-                ParentFolder = null
-            };
-
-            await unitOfWork.Users.AddAsync(user);
-
-            user.UserRootFolder = await folderService.CreateFolderAsync(userFolder);
-
-            await unitOfWork.CommitAsync();
-           
-            return userForRegister;
-        }
-
-        public async Task<bool> UserExistsAsync(string username)
-        {
-            if (await unitOfWork.Users
-                .SingleOrDefaultAsync(user => user.Username == username) == null)
-            {
-                return false;
-            }
-                
-
-            return true;
-        }
-
-        private bool VerifyPasswordHash(string password,
-                                byte[] passwordHash,
-                                byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
+                FolderCreateRequestDto userFolder = new FolderCreateRequestDto()
                 {
-                    if (computedHash[i] != passwordHash[i])
-                        return false;
-                }
+                    DisplayName = "MyStorage",
+                    IsRootFolder = true,
+                    User = user,
+                    ParentFolder = null
+                };
 
-                return true;
-            }
-        }
+                await folderService.CreateFolderAsync(userFolder);
+                await unitOfWork.CommitAsync();
 
-        private void CreatePasswordHash(string password,
-                                out byte[] passwordHash,
-                                out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return userForRegister;
             }
+
+            return null;
         }
     }
 }
