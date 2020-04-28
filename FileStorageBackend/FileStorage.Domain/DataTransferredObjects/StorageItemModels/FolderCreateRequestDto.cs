@@ -1,4 +1,5 @@
 ﻿using FileStorage.Data.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
@@ -14,7 +15,9 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
 
         [Required]
         public bool IsRootFolder { get; set; }
-        
+
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+
         [Required]
         public User User { get; set; }
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FileStorage.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -113,6 +113,7 @@ namespace FileStorage.Data.Migrations
                     IsFolder = table.Column<bool>(nullable: false),
                     IsRootFolder = table.Column<bool>(nullable: false),
                     RelativePath = table.Column<string>(maxLength: 900, nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     ParentFolderId = table.Column<Guid>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
@@ -146,6 +147,7 @@ namespace FileStorage.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     UserRootFolderId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>

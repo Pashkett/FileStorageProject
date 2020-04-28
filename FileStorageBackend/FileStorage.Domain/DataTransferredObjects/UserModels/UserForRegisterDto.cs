@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FileStorage.Domain.DataTransferredObjects.UserModels
 {
@@ -12,5 +13,7 @@ namespace FileStorage.Domain.DataTransferredObjects.UserModels
         [Required]
         [StringLength(8, MinimumLength =4, ErrorMessage ="You must specify the password between 4 and 8 characters")]
         public string Password { get; set; }
+
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
 }

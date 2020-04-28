@@ -3,12 +3,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using FileStorage.Domain.Services.AuthenticationServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
+using FileStorage.Domain.Services.AuthenticationServices;
 
 namespace FileStorage.API.Controllers
 {

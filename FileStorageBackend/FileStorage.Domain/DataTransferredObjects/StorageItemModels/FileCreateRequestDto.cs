@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using FileStorage.Data.Models;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
 {
@@ -19,6 +20,8 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
         public bool IsFolder { get; set; } = false;
 
         public bool IsRootFolder { get; set; } = false;
+
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         [Required]
         public User User { get; set; }

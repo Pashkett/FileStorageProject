@@ -11,6 +11,7 @@ namespace FileStorage.Data.Models
         public bool IsFolder { get; set; }
         public bool IsRootFolder { get; set; }
         public string RelativePath { get; set; }
+        public DateTime CreatedOn { get; set; }
         public virtual StorageItem ParentFolder { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<StorageItem> StorageItems { get; set; }
