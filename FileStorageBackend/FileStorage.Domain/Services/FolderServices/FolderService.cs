@@ -35,7 +35,7 @@ namespace FileStorage.Domain.Services.FolderServices
             return storageItemsDto;
         }
 
-        public async Task CreateFolderAsync(FolderCreateRequestDto folderCreate)
+        public async Task<StorageItem> CreateFolderAsync(FolderCreateRequestDto folderCreate)
         {
             var folder = mapper.Map<FolderCreateRequestDto, StorageItem>(folderCreate);
 
@@ -53,6 +53,8 @@ namespace FileStorage.Domain.Services.FolderServices
                 await unitOfWork.CommitAsync();
 
                 folderManager.CreateFolder(fullPath);
+
+                return folder;
             }
             else
                 throw new ArgumentException("Folder has been already exists!");

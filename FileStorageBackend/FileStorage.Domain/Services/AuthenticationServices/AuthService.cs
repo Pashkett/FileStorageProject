@@ -60,7 +60,9 @@ namespace FileStorage.Domain.Services.AuthenticationServices
                     ParentFolder = null
                 };
 
-                await folderService.CreateFolderAsync(userFolder);
+                var folder = await folderService.CreateFolderAsync(userFolder);
+                user.UserRootFolder = folder;
+
                 await unitOfWork.CommitAsync();
 
                 return userForRegister;
