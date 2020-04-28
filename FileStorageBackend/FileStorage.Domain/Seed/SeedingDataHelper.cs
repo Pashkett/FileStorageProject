@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace FileStorage.Data.Seeding
+namespace FileStorage.Domain.Seed
 {
     public static class SeedingDataHelper
     {
@@ -12,7 +12,9 @@ namespace FileStorage.Data.Seeding
             List<T> data = new List<T>();
 
             string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).ToString(),
-                                           "FileStorage.Data", "Seeding", fileName);
+                                      "FileStorage.Data", 
+                                      "Seeding", 
+                                      fileName);
 
             if (File.Exists(filePath))
             {
@@ -27,9 +29,7 @@ namespace FileStorage.Data.Seeding
                 }
             }
             else
-            {
                 throw new Exception("Files not found");
-            }
 
             return data;
         }

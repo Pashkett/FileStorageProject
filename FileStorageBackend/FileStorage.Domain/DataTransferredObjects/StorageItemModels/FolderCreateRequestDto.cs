@@ -14,7 +14,7 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
         public bool IsFolder { get; set; } = true;
 
         [Required]
-        public bool IsRootFolder { get; set; }
+        public bool IsPrimaryFolder { get; set; }
 
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 

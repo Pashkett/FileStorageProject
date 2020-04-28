@@ -7,22 +7,28 @@ namespace FileStorage.Data.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<StorageItem> builder)
         {
-            builder.HasKey(storageFolder => storageFolder.Id);
+            builder.HasKey(storageItem => storageItem.Id);
 
-            builder.Property(storageFolder => storageFolder.TrustedName)
+            builder.Property(storageItem => storageItem.TrustedName)
                 .HasMaxLength(300)
                 .IsRequired();
 
-            builder.Property(storageFolder => storageFolder.DisplayName)
+            builder.Property(storageItem => storageItem.DisplayName)
                 .HasMaxLength(300)
                 .IsRequired();
 
-            builder.Property(storageFolder => storageFolder.RelativePath)
+            builder.Property(storageItem => storageItem.RelativePath)
                 .HasMaxLength(900)
                 .IsRequired();
 
-            builder.HasOne(storageFolder => storageFolder.User)
-                .WithMany(user => user.StorageItems);
+            builder.HasOne(storageItem => storageItem.User)
+                .WithMany(user => user.StorageItems)
+                .HasForeignKey(storageItem => storageItem.UserId);
+
+            builder.HasOne(storageItem => storageItem.ParentFolder)
+                .WithMany(user => user.StorageItems)
+                .HasForeignKey(storageItem => storageItem.ParentFolderId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

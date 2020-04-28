@@ -95,7 +95,7 @@ namespace FileStorage.Domain.Services.FolderServices
         {
             if (folder.IsFolder)
             {
-                if (folder.IsRootFolder)
+                if (folder.IsPrimaryFolder)
                     return folder.User.Id.ToString();
 
                 else
@@ -111,11 +111,12 @@ namespace FileStorage.Domain.Services.FolderServices
         {
             if (folder.IsFolder)
             {
-                if (folder.IsRootFolder == true)
+                if (folder.IsPrimaryFolder == true)
                     return folder.User.Id.ToString();
 
                 else
-                    return string.Concat(folder.User.Id.ToString(), "_", DateTime.Now.ToString());            
+                    return $"{folder.User.Id}_{DateTime.Now:yyyyMMddTHHmmss.fff}";
+                        // string.Concat(folder.User.Id.ToString(), "_", DateTime.Now.ToString());            
             }
             else
             {

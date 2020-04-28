@@ -55,14 +55,12 @@ namespace FileStorage.Domain.Services.AuthenticationServices
                 FolderCreateRequestDto userFolder = new FolderCreateRequestDto()
                 {
                     DisplayName = "MyStorage",
-                    IsRootFolder = true,
+                    IsPrimaryFolder = true,
                     User = user,
                     ParentFolder = null
                 };
 
                 var folder = await folderService.CreateFolderAsync(userFolder);
-                user.UserRootFolder = folder;
-
                 await unitOfWork.CommitAsync();
 
                 return userForRegister;

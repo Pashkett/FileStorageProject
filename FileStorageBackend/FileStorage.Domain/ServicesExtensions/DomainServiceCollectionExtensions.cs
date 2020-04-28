@@ -1,17 +1,18 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using FileStorage.Data.Persistence;
 using FileStorage.Data.UnitOfWork;
 using FileStorage.Domain.Services.FolderServices;
 using FileStorage.Data.FileSystemManagers.StorageFolderManager;
 using FileStorage.Data.FileSystemManagers.StorageFileManager;
 using FileStorage.Data.Models;
-using Microsoft.AspNetCore.Identity;
 
-namespace FileStorage.Domain.ServiceExtensions
+namespace FileStorage.Domain.ServicesExtensions
 {
     public static class DomainServiceCollectionExtensions
     {
@@ -34,12 +35,13 @@ namespace FileStorage.Domain.ServiceExtensions
             });
 
             builder = new IdentityBuilder(builder.UserType,
-                                          typeof(IdentityRole),
+                                          typeof(IdentityRole<Guid>),
                                           builder.Services);
 
             builder.AddEntityFrameworkStores<FileStorageContext>();
-            builder.AddRoleValidator<RoleValidator<IdentityRole>>();
-            builder.AddRoleManager<RoleManager<IdentityRole>>();
+            builder.AddUserManager<UserManager<User>>();
+            builder.AddRoleValidator<RoleValidator<IdentityRole<Guid>>>();
+            builder.AddRoleManager<RoleManager<IdentityRole<Guid>>>();
             builder.AddSignInManager<SignInManager<User>>();
         }
 

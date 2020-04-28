@@ -15,6 +15,7 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
         public bool IsFolder { get; set; }
 
         public bool IsRootFolder { get; set; }
+
         public StorageItemDto ParentFolder { get; set; }
     }
 }

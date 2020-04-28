@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using FileStorage.Data.Models;
 using FileStorage.Data.Models.Configurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace FileStorage.Data.Persistence
 {
-    public class FileStorageContext : IdentityDbContext<User>
+    public class FileStorageContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         public FileStorageContext(DbContextOptions options)
             : base(options) { }

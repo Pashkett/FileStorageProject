@@ -7,11 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using FileStorage.API.Extensions;
-using FileStorage.Domain.ServiceExtensions;
 using FileStorage.Domain.Services.AuthenticationServices;
 using FileStorage.Logger;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using FileStorage.Domain.ServicesExtensions;
 
 namespace FileStorage.API
 {
@@ -59,13 +59,9 @@ namespace FileStorage.API
                               ILoggerManager logger)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.ConfigureExceptionHandler(logger);
 
