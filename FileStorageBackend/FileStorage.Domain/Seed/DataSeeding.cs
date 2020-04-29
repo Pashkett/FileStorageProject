@@ -1,9 +1,15 @@
 ﻿using System;
+using System.IO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using FileStorage.Data.Models;
-using FileStorage.Data.UnitOfWork;
+using FileStorage.Data.Persistence;
+using FileStorage.Logger;
+using FileStorage.Data.FileSystemManagers.StorageFolderManager;
 
 namespace FileStorage.Domain.Seed
 {
@@ -16,60 +22,86 @@ namespace FileStorage.Domain.Seed
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {
-                    var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-                    var unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();
+                    var context = serviceProvider.GetRequiredService<FileStorageContext>();
+                    context.Database.Migrate();
 
-                    SeedData(userManager, unitOfWork);
+                    var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+                    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+                    var folderManager = serviceProvider.GetRequiredService<IFolderManager>();
+                    var config = serviceProvider.GetRequiredService<IConfiguration>();
+                    string targetPath = config.GetValue<string>("StoredFilesPath");
+
+                    SeedData(userManager, roleManager, folderManager, targetPath);
                 }
                 catch(Exception ex)
                 {
-                    throw ex;
+                    var logger = serviceProvider.GetRequiredService<ILoggerManager>();
+                    logger.LogError($"{ex}\n An error occurred during migration process");
                 }
             }
         }
 
-        private static void SeedData(UserManager<User> userManager, 
-                                    IUnitOfWork unitOfWork
-                                    //, RoleManager<IdentityRole> roleManager
-                                    )
-        {
-
-            SeedUsers(userManager);
-            SeedStorageItems(unitOfWork);
-            //SeedRoles(roleManager);
-        }
-
-        private static void SeedUsers(UserManager<User> userManager)
+        private static void SeedData(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager,
+            IFolderManager folderManager, 
+            string targetPath)
         {
             var users = SeedingDataHelper.SeedingDataFromJson<User>("Users.json");
-
-            foreach (var user in users)
+            try
             {
-                if (userManager.FindByNameAsync(user.UserName).Result == null)
+                List<IdentityRole<Guid>> roles = new List<IdentityRole<Guid>>
                 {
-                    IdentityResult result = userManager.CreateAsync(user, "password_goes_here").Result;
+                    new IdentityRole<Guid>{Name = "Member"},
+                    new IdentityRole<Guid>{Name = "Moderator"},
+                    new IdentityRole<Guid>{Name = "Admin"}
+                };
+
+                foreach (var role in roles)
+                {
+                    var isExist = roleManager.FindByNameAsync(role.Name).Result == null;
+                    if (isExist)
+                    {
+                        roleManager.CreateAsync(role).Wait();
+                    }
+                }
+
+                foreach (var user in users)
+                {
+                    if (userManager.FindByNameAsync(user.UserName).Result == null)
+                    {
+                        userManager.CreateAsync(user, "password_goes_here").Wait();
+                        userManager.AddToRoleAsync(user, "Member").Wait();
+
+                        foreach (var folder in user.StorageItems)
+                        {
+                            folderManager.CreateFolder(FolderFullPathMaker(targetPath, folder.RelativePath));
+                        }
+                    }
+                }
+
+                var adminUser = new User { UserName = "Admin" };
+                var result = userManager.CreateAsync(adminUser, "Admin").Result;
+
+                if (result.Succeeded)
+                {
+                    var admin = userManager.FindByNameAsync("Admin").Result;
+                    userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
                 }
             }
-        }
-
-        private static void SeedStorageItems(IUnitOfWork unitOfWork)
-        {
-            var primaryFolders = SeedingDataHelper.SeedingDataFromJson<StorageItem>("StorageItems.json");
-
-            foreach (var folder in primaryFolders)
+            catch (Exception ex)
             {
-                var result = unitOfWork.StorageItems.SingleOrDefaultAsync(f => f.Id == folder.Id).Result;
-                if (result == null)
-                {
-                    unitOfWork.StorageItems.AddAsync(folder).Wait();
-                    unitOfWork.CommitAsync().Wait();
-                }
+                throw ex;
             }
+           
         }
 
-        private static void SeedRoles(object roleManager)
+        private static string FolderFullPathMaker(string targetPath, string relativePath)
         {
-            throw new NotImplementedException();
+            var parentPath = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
+
+            if (targetPath == null || relativePath == null)
+                throw new ArgumentNullException("One of the argument equals null");
+            else
+                return Path.Combine(parentPath, targetPath, relativePath);
         }
     }
 }

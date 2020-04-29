@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FileStorage.Data\FileStorage.Data.csproj" />
+    <ProjectReference Include="..\FileStorage.Logger\FileStorage.Logger.csproj" />
   </ItemGroup>
 
 </Project>

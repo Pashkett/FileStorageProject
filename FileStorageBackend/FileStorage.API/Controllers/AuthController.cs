@@ -54,6 +54,7 @@ namespace FileStorage.API.Controllers
             });
         }
 
+        //TODO Divide into several methods and move to auth service
         private string GenerateJwtToken(UserDto user)
         {
             var claims = new[]
