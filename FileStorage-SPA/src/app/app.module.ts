@@ -51,7 +51,7 @@ export function tokenGetter() {
       RouterModule.forRoot(fileStorageRoutes),
       JwtModule.forRoot({
          config: {
-            tokenGetter: tokenGetter,
+            tokenGetter,
             whitelistedDomains: ['localhost:5001', 'localhost:5000'],
             blacklistedRoutes: ['localhost:5001/api/auth', 'localhost:5000/api/auth']
          }
