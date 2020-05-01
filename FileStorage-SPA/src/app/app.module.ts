@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RouterModule } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { from } from 'rxjs';
@@ -17,6 +18,16 @@ import { AnimationBuilder } from '@angular/animations';
 import { RecycleBinComponent } from './recycle-bin/recycle-bin.component';
 import { StorageItemsComponent } from './storage-items/storage-items.component';
 import { fileStorageRoutes } from './routes';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { ContainsRoleDirective } from './_directives/contains-role.directive';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { FileManagementComponent } from './admin/file-management/file-management.component';
+import { AdminService } from './_services/admin.service';
+
+
+export function tokenGetter() {
+   return localStorage.getItem('token');
+}
 
 @NgModule({
    declarations: [
@@ -25,7 +36,11 @@ import { fileStorageRoutes } from './routes';
       HomeComponent,
       RegisterComponent,
       RecycleBinComponent,
-      StorageItemsComponent
+      StorageItemsComponent,
+      AdminPanelComponent,
+      ContainsRoleDirective,
+      UserManagementComponent,
+      FileManagementComponent
    ],
    imports: [
       BrowserModule,
@@ -33,11 +48,19 @@ import { fileStorageRoutes } from './routes';
       FormsModule,
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
-      RouterModule.forRoot(fileStorageRoutes)
+      RouterModule.forRoot(fileStorageRoutes),
+      JwtModule.forRoot({
+         config: {
+            tokenGetter: tokenGetter,
+            whitelistedDomains: ['localhost:5001', 'localhost:5000'],
+            blacklistedRoutes: ['localhost:5001/api/auth', 'localhost:5000/api/auth']
+         }
+      })
    ],
    providers: [
       AuthService,
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider,
+      AdminService
    ],
    bootstrap: [
       AppComponent
