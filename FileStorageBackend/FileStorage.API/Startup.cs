@@ -45,9 +45,9 @@ namespace FileStorage.API
             services.ConfigureAuthenticationJWT(Configuration);
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminRoleRequiered", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("AdminRoleRequired", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("ModerateFilesRole", policy => policy.RequireRole("Admin", "Moderator"));
-                options.AddPolicy("MemberRequiered", policy => policy.RequireRole("Member"));
+                options.AddPolicy("MemberRequired", policy => policy.RequireRole("Member"));
             });
             
             services.AddControllers(options =>

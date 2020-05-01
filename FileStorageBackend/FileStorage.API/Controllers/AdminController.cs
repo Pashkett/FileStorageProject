@@ -21,7 +21,7 @@ namespace FileStorage.API.Controllers
             this.userService = userService;
         }
 
-        [Authorize(Policy = "AdminRoleRequiered")]
+        [Authorize(Policy = "AdminRoleRequired")]
         [HttpGet("usersWithRoles")]
         public async Task<IActionResult> GetUsersWithRoles()
         {
@@ -30,7 +30,7 @@ namespace FileStorage.API.Controllers
             return Ok(usersWithRoles);
         }
 
-        [Authorize(Policy = "AdminRoleRequiered")]
+        [Authorize(Policy = "AdminRoleRequired")]
         [HttpPost("editRoles/{userName}")]
         public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
         {
