@@ -21,7 +21,7 @@ namespace FileStorage.Domain.ServicesExtensions
         {
             services.AddDbContext<FileStorageContext>(opt =>
                 opt.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                    b => b.MigrationsAssembly("FileStorage.Data")), ServiceLifetime.Transient);
+                    b => b.MigrationsAssembly("FileStorage.Data")));
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)

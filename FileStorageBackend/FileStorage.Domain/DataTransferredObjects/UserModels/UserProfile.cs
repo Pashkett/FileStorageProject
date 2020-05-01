@@ -10,6 +10,7 @@ namespace FileStorage.Domain.DataTransferredObjects.UserModels
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, UserForRegisterDto>().ReverseMap();
             CreateMap<User, UserForLoginDto>().ReverseMap();
+            CreateMap<User, UserForDisplayRoles>().ReverseMap();
         }
     }
 }

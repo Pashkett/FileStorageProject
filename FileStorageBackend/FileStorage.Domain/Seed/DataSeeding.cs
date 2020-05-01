@@ -20,6 +20,8 @@ namespace FileStorage.Domain.Seed
             using (var scope = host.Services.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
+                var logger = serviceProvider.GetRequiredService<ILoggerManager>();
+
                 try
                 {
                     var context = serviceProvider.GetRequiredService<FileStorageContext>();
@@ -30,12 +32,12 @@ namespace FileStorage.Domain.Seed
                     var folderManager = serviceProvider.GetRequiredService<IFolderManager>();
                     var config = serviceProvider.GetRequiredService<IConfiguration>();
                     string targetPath = config.GetValue<string>("StoredFilesPath");
+                    
 
-                    SeedData(userManager, roleManager, folderManager, targetPath);
+                    SeedData(userManager, roleManager, folderManager, logger, targetPath);
                 }
                 catch(Exception ex)
                 {
-                    var logger = serviceProvider.GetRequiredService<ILoggerManager>();
                     logger.LogError($"{ex}\n An error occurred during migration process");
                 }
             }
@@ -43,6 +45,7 @@ namespace FileStorage.Domain.Seed
 
         private static void SeedData(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager,
             IFolderManager folderManager, 
+            ILoggerManager logger,
             string targetPath)
         {
             var users = SeedingDataHelper.SeedingDataFromJson<User>("Users.json");
@@ -61,6 +64,7 @@ namespace FileStorage.Domain.Seed
                     if (isExist)
                     {
                         roleManager.CreateAsync(role).Wait();
+                        logger.LogInfo($"Role: {role.Name} has been created.");
                     }
                 }
 
@@ -68,23 +72,31 @@ namespace FileStorage.Domain.Seed
                 {
                     if (userManager.FindByNameAsync(user.UserName).Result == null)
                     {
-                        userManager.CreateAsync(user, "password_goes_here").Wait();
+                        userManager.CreateAsync(user, "password").Wait();
                         userManager.AddToRoleAsync(user, "Member").Wait();
+                        logger.LogInfo($"User: {user.UserName} has been created.");
 
                         foreach (var folder in user.StorageItems)
                         {
                             folderManager.CreateFolder(FolderFullPathMaker(targetPath, folder.RelativePath));
+                            logger.LogInfo($"Folder {folder.DisplayName} has been created.");
                         }
                     }
                 }
 
                 var adminUser = new User { UserName = "Admin" };
-                var result = userManager.CreateAsync(adminUser, "Admin").Result;
 
-                if (result.Succeeded)
+                if (userManager.FindByNameAsync(adminUser.UserName).Result == null)
                 {
-                    var admin = userManager.FindByNameAsync("Admin").Result;
-                    userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
+                    var result = userManager.CreateAsync(adminUser, "Admin").Result;
+
+                    if (result.Succeeded)
+                    {
+                        var admin = userManager.FindByNameAsync("Admin").Result;
+                        userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
+
+                        logger.LogInfo($"User: {admin.UserName} has been created.");
+                    }
                 }
             }
             catch (Exception ex)

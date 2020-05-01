@@ -17,7 +17,6 @@ namespace FileStorage.Data.Persistence
 
         public DbSet<StorageItem> StorageItems { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 

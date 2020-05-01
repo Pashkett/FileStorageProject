@@ -12,6 +12,7 @@ using FileStorage.Logger;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using FileStorage.Domain.ServicesExtensions;
+using FileStorage.Domain.Services.UsersServices;
 
 namespace FileStorage.API
 {
@@ -29,7 +30,6 @@ namespace FileStorage.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.ConfigureCors();
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
@@ -38,10 +38,17 @@ namespace FileStorage.API
             services.ConfigureFileSystemManagers();
             services.ConfigureFolderService();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureAuthenticationJWT(Configuration);
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminRoleRequiered", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("ModerateFilesRole", policy => policy.RequireRole("Admin", "Moderator"));
+                options.AddPolicy("MemberRequiered", policy => policy.RequireRole("Member"));
+            });
             
             services.AddControllers(options =>
             {

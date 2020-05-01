@@ -8,5 +8,6 @@ namespace FileStorage.Domain.Services.AuthenticationServices
     {
         Task<UserForRegisterDto> RegisterAsync(UserForRegisterDto user);
         Task<UserDto> LoginAsync(string username, string password);
+        Task<string> GenerateJwtTokenAsync(UserDto user);
     }
 }

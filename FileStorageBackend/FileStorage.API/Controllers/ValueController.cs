@@ -26,6 +26,7 @@ namespace FileStorage.API.Controllers
         };
 
         // GET api/values
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetValue()
         {
@@ -33,6 +34,7 @@ namespace FileStorage.API.Controllers
         }
 
         // GET api/values/5
+        [Authorize(Roles = "Member")]
         [HttpGet("{id}")]
         public IActionResult GetValue(int id)
         {
