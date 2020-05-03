@@ -3,5 +3,5 @@ export interface StorageItem {
     isFolder: boolean;
     name: string;
     createdon: Date;
-    parent: string;
+    parent?: string;
 }

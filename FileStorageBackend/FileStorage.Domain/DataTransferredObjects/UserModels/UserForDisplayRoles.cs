@@ -8,6 +8,7 @@ namespace FileStorage.Domain.DataTransferredObjects.UserModels
     {
         public Guid Id { get; set; }
         public string UserName { get; set; }
-        public List<IdentityRole<Guid>> Roles { get; set; }
+        //public List<IdentityRole<Guid>> Roles { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

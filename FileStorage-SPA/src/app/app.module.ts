@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -21,8 +22,8 @@ import { fileStorageRoutes } from './routes';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { ContainsRoleDirective } from './_directives/contains-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
-import { FileManagementComponent } from './admin/file-management/file-management.component';
 import { AdminService } from './_services/admin.service';
+import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
 
 
 export function tokenGetter() {
@@ -40,7 +41,7 @@ export function tokenGetter() {
       AdminPanelComponent,
       ContainsRoleDirective,
       UserManagementComponent,
-      FileManagementComponent
+      RolesModalComponent
    ],
    imports: [
       BrowserModule,
@@ -48,6 +49,7 @@ export function tokenGetter() {
       FormsModule,
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
+      ModalModule.forRoot(),
       RouterModule.forRoot(fileStorageRoutes),
       JwtModule.forRoot({
          config: {
@@ -61,6 +63,9 @@ export function tokenGetter() {
       AuthService,
       ErrorInterceptorProvider,
       AdminService
+   ],
+   entryComponents: [
+      RolesModalComponent
    ],
    bootstrap: [
       AppComponent

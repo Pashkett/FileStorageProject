@@ -29,13 +29,34 @@ namespace FileStorage.Domain.Services.UsersServices
         public async Task<IEnumerable<UserForDisplayRoles>> GetUserWithRolesAsync()
         {
             var allUsers = await userManager.Users.ToListAsync();
+
+            //TODO refactor all these
+            //var usersWithRoles = new List<UserForDisplayRoles>();
+            //var usersWithRoles = from user in allUsers
+            //                     select new UserForDisplayRoles
+            //                     {
+            //                         Id = user.Id,
+            //                         UserName = user.UserName,
+            //                         Roles = (List<IdentityRole<Guid>>)unitOfWork.Roles
+            //                                    .GetRolesByUser(user)
+            //                     };
+
+            //foreach (var user in allUsers)
+            //{
+            //    usersWithRoles.Add(new UserForDisplayRoles
+            //    {
+            //        Id = user.Id,
+            //        UserName = user.UserName,
+            //        Roles = (List<string>)userManager.GetRolesAsync(user).Result
+            //    });
+            //}
+
             var usersWithRoles = from user in allUsers
                                  select new UserForDisplayRoles
                                  {
                                      Id = user.Id,
                                      UserName = user.UserName,
-                                     Roles = (List<IdentityRole<Guid>>)unitOfWork.Roles
-                                                .GetRolesByUser(user)
+                                     Roles = (List<string>)userManager.GetRolesAsync(user).Result
                                  };
 
             return usersWithRoles;
