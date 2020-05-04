@@ -10,7 +10,6 @@ namespace FileStorage.Data.UnitOfWork
         private readonly FileStorageContext context;
 
         private IStorageItemRepository storageItemRepository;
-        private IRolesRepository rolesRepository;
 
         public EfUnitOfWork(FileStorageContext context)
         {
@@ -19,9 +18,6 @@ namespace FileStorage.Data.UnitOfWork
 
         public IStorageItemRepository StorageItems => 
             storageItemRepository ?? (storageItemRepository = new StorageItemRepository(context));
-
-        public IRolesRepository Roles =>
-            rolesRepository ?? (rolesRepository = new RolesRepository(context));
 
 
         public async Task<int> CommitAsync()

@@ -81,6 +81,7 @@ namespace FileStorage.API
                 ForwardedHeaders = ForwardedHeaders.All
             });
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthentication();

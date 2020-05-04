@@ -115,8 +115,7 @@ namespace FileStorage.Domain.Services.FolderServices
                     return folder.User.Id.ToString();
 
                 else
-                    return $"{folder.User.Id}_{DateTime.Now:yyyyMMddTHHmmss.fff}";
-                        // string.Concat(folder.User.Id.ToString(), "_", DateTime.Now.ToString());            
+                    return $"{folder.User.Id}_{DateTime.Now:yyyyMMddTHHmmss.fff}";      
             }
             else
             {

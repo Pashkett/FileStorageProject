@@ -7,6 +7,6 @@ namespace FileStorage.Domain.Services.UsersServices
     public interface IUserService
     {
         Task<IEnumerable<UserForDisplayRoles>> GetUserWithRolesAsync();
-        Task<List<string>> ChangeUserRoles(string userName, RoleEditDto roleEditDto);
+        Task<List<string>> ChangeUserRolesAsync(string userName, RoleEditDto roleEditDto);
     }
 }

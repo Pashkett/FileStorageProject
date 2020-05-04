@@ -14,15 +14,12 @@ namespace FileStorage.Domain.Services.UsersServices
     public class UserService : IUserService
     {
         private readonly UserManager<User> userManager;
-        private readonly IUnitOfWork unitOfWork;
         private readonly ILoggerManager loggerManager;
 
         public UserService(UserManager<User> userManager,
-                           IUnitOfWork unitOfWork,
                            ILoggerManager loggerManager)
         {
             this.userManager = userManager;
-            this.unitOfWork = unitOfWork;
             this.loggerManager = loggerManager;
         }
 
@@ -62,7 +59,7 @@ namespace FileStorage.Domain.Services.UsersServices
             return usersWithRoles;
         }
 
-        public async Task<List<string>> ChangeUserRoles(string userName, RoleEditDto roleEditDto)
+        public async Task<List<string>> ChangeUserRolesAsync(string userName, RoleEditDto roleEditDto)
         {
             var user = await userManager.FindByNameAsync(userName);
 

@@ -34,7 +34,7 @@ namespace FileStorage.API.Controllers
         [HttpPost("editRoles/{userName}")]
         public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
         {
-            var roles = await userService.ChangeUserRoles(userName, roleEditDto);
+            var roles = await userService.ChangeUserRolesAsync(userName, roleEditDto);
 
             if (roles == null)
                 return BadRequest("Failed to add or remove role for user");
