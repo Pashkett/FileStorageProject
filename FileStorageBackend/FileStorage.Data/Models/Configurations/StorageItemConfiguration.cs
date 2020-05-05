@@ -17,6 +17,12 @@ namespace FileStorage.Data.Models.Configurations
                 .HasMaxLength(300)
                 .IsRequired();
 
+            builder.Property(storageItem => storageItem.IsRecycled)
+                .HasDefaultValue(false);
+
+            builder.Property(storageItem => storageItem.Extension)
+                .HasMaxLength(20);
+
             builder.Property(storageItem => storageItem.RelativePath)
                 .HasMaxLength(900)
                 .IsRequired();

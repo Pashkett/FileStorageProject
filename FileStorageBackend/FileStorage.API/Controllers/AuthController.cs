@@ -22,6 +22,7 @@ namespace FileStorage.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegister)
         {
+            
             var user = await authService.RegisterAsync(userForRegister);
             if (user == null)
             {

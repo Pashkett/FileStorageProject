@@ -36,6 +36,7 @@
   
   <ItemGroup>
     <Folder Include="DataStorage\" />
+    <Folder Include="DataStorage\61c27c9f-0e7c-4a1d-8bed-940ce06d68e4\" />
   </ItemGroup>
 
 </Project>

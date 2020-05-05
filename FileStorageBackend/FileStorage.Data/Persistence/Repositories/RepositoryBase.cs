@@ -32,6 +32,11 @@ namespace FileStorage.Data.Persistence.Repositories
             return context.Set<TEntity>().Where(predicate);
         }
 
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await context.Set<TEntity>().Where(predicate).ToListAsync();
+        }
+
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await context.Set<TEntity>().ToListAsync();

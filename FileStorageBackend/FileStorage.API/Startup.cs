@@ -12,7 +12,8 @@ using FileStorage.Logger;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using FileStorage.Domain.ServicesExtensions;
-using FileStorage.Domain.Services.UsersServices;
+using FileStorage.Domain.Services.UserServices;
+using FileStorage.Domain.Services.StorageItemServices;
 
 namespace FileStorage.API
 {
@@ -31,24 +32,20 @@ namespace FileStorage.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
+            services.ConfigureFormOptionsLimits();
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
             services.ConfigureFileSystemManagers();
-            services.ConfigureFolderService();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IStorageItemsService, StorageItemsService>();
 
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureAuthenticationJWT(Configuration);
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AdminRoleRequired", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("ModerateFilesRole", policy => policy.RequireRole("Admin", "Moderator"));
-                options.AddPolicy("MemberRequired", policy => policy.RequireRole("Member"));
-            });
+            services.ConfigureAuthorizationPolicies();
             
             services.AddControllers(options =>
             {

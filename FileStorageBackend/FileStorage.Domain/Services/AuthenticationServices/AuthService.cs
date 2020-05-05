@@ -9,11 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using FileStorage.Data.Models;
-using FileStorage.Data.UnitOfWork;
-using FileStorage.Domain.Services.FolderServices;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
-using Microsoft.EntityFrameworkCore;
+using FileStorage.Domain.Services.StorageItemServices;
 
 namespace FileStorage.Domain.Services.AuthenticationServices
 {
@@ -23,19 +21,19 @@ namespace FileStorage.Domain.Services.AuthenticationServices
         private readonly SignInManager<User> signInManager;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
-        private readonly IFolderService folderService;
+        private readonly IStorageItemsService storageItemsService;
 
         public AuthService(UserManager<User> userManager,
                            SignInManager<User> signInManager,
                            IMapper mapper,
                            IConfiguration configuration,
-                           IFolderService folderService)
+                           IStorageItemsService storageItemsService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
             this.configuration = configuration;
-            this.folderService = folderService;
+            this.storageItemsService = storageItemsService;
         }
 
         public async Task<UserDto> LoginAsync(string username, string password)
@@ -68,7 +66,7 @@ namespace FileStorage.Domain.Services.AuthenticationServices
                     ParentFolder = null
                 };
 
-                var folder = await folderService.CreateFolderAsync(userFolder);
+                var folder = await storageItemsService.CreateFolderAsync(userFolder);
 
                 return userForRegister;
             }
@@ -89,6 +87,14 @@ namespace FileStorage.Domain.Services.AuthenticationServices
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<UserDto> GetRequestedUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+            var userDto = mapper.Map<User, UserDto>(user);
+
+            return userDto;
         }
 
         private SigningCredentials GetSigningCredentials()

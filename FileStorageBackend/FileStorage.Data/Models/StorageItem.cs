@@ -8,9 +8,11 @@ namespace FileStorage.Data.Models
         public Guid Id { get; set; }
         public DateTime CreatedOn { get; set; }
         public string TrustedName { get; set; }
+        public string Extension { get; set; }
         public string DisplayName { get; set; }
         public bool IsFolder { get; set; }
         public bool IsPrimaryFolder { get; set; }
+        public bool IsRecycled { get; set; }
         public string RelativePath { get; set; }
         public virtual StorageItem ParentFolder { get; set; }
         public virtual Guid? ParentFolderId { get; set; }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace FileStorage.API.Extensions
 {
@@ -23,7 +24,8 @@ namespace FileStorage.API.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddScoped<ILoggerManager, LoggerManager>();
 
-        public static void ConfigureAuthenticationJWT(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureAuthenticationJWT(this IServiceCollection services,
+                                                      IConfiguration configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -37,6 +39,26 @@ namespace FileStorage.API.Extensions
                         ValidateAudience = false
                     };
                 });
+        }
+
+        public static void ConfigureAuthorizationPolicies(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminRoleRequired", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("ModerateFilesRole", policy => policy.RequireRole("Admin", "Moderator"));
+                options.AddPolicy("MemberRequired", policy => policy.RequireRole("Member"));
+            });
+        }
+
+        public static void ConfigureFormOptionsLimits(this IServiceCollection services)
+        {
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartBodyLengthLimit = int.MaxValue;
+                options.MemoryBufferThreshold = int.MaxValue;
+            });
         }
     }
 }

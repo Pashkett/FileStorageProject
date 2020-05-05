@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FileStorage.Data.Persistence;
 using FileStorage.Data.UnitOfWork;
-using FileStorage.Domain.Services.FolderServices;
 using FileStorage.Data.FileSystemManagers.StorageFolderManager;
 using FileStorage.Data.FileSystemManagers.StorageFileManager;
 using FileStorage.Data.Models;
@@ -54,11 +53,6 @@ namespace FileStorage.Domain.ServicesExtensions
         {
             services.AddScoped<IFolderManager, FolderManager>();
             services.AddScoped<IFileManager, FileManager>();
-        }
-
-        public static void ConfigureFolderService(this IServiceCollection services)
-        {
-            services.AddScoped<IFolderService, FolderService>();
         }
 
         public static void ConfigureAutomapper(this IServiceCollection services)
