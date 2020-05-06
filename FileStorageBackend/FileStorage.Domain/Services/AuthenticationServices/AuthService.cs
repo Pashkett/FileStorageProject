@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using FileStorage.Data.Models;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
-using FileStorage.Domain.Services.StorageItemServices;
+using FileStorage.Domain.Services.ActualItemsServices;
 
 namespace FileStorage.Domain.Services.AuthenticationServices
 {
@@ -21,19 +21,19 @@ namespace FileStorage.Domain.Services.AuthenticationServices
         private readonly SignInManager<User> signInManager;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
-        private readonly IStorageItemsService storageItemsService;
+        private readonly IActualItemsService actualItemsService;
 
         public AuthService(UserManager<User> userManager,
                            SignInManager<User> signInManager,
                            IMapper mapper,
                            IConfiguration configuration,
-                           IStorageItemsService storageItemsService)
+                           IActualItemsService actualItemsService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
             this.configuration = configuration;
-            this.storageItemsService = storageItemsService;
+            this.actualItemsService = actualItemsService;
         }
 
         public async Task<UserDto> LoginAsync(string username, string password)
@@ -58,6 +58,8 @@ namespace FileStorage.Domain.Services.AuthenticationServices
 
             if (result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, "Member");
+
                 FolderCreateRequestDto userFolder = new FolderCreateRequestDto()
                 {
                     DisplayName = "MyStorage",
@@ -66,7 +68,7 @@ namespace FileStorage.Domain.Services.AuthenticationServices
                     ParentFolder = null
                 };
 
-                var folder = await storageItemsService.CreateFolderAsync(userFolder);
+                var folder = await actualItemsService.CreateFolderAsync(userFolder);
 
                 return userForRegister;
             }

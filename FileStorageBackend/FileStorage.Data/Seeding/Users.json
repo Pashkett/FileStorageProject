@@ -15,28 +15,6 @@
         "RelativePath": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4",
         "UserId": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4",
         "ParentFolderId": null
-      },
-      {
-        "Id": "506f691a-a6bb-406b-8406-f38595680b58",
-        "CreatedOn": "2020-04-27",
-        "TrustedName": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4_0001",
-        "DisplayName": "Documents",
-        "IsFolder": true,
-        "IsPrimaryFolder": false,
-        "RelativePath": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4\\61c27c9f-0e7c-4a1d-8bed-940ce06d68e4_0001",
-        "UserId": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4",
-        "ParentFolderId": "8e3f78af-7c07-4764-bdaf-d7cb66a2f2b3"
-      },
-      {
-        "Id": "5f652dd2-cd40-479a-b28d-8df6f885729e",
-        "CreatedOn": "2020-04-18",
-        "TrustedName": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4_0002",
-        "DisplayName": "Photos",
-        "IsFolder": true,
-        "IsPrimaryFolder": false,
-        "RelativePath": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4\\61c27c9f-0e7c-4a1d-8bed-940ce06d68e4_0002",
-        "UserId": "61c27c9f-0e7c-4a1d-8bed-940ce06d68e4",
-        "ParentFolderId": "8e3f78af-7c07-4764-bdaf-d7cb66a2f2b3"
       }
     ]
   }

@@ -42,8 +42,8 @@ namespace FileStorage.Data.FileSystemManagers.StorageFileManager
 
         public void DeleteFile(string path)
         {
-            if (IsFileExists(path))
-                throw new ArgumentException("File has been already exists.");
+            if (!IsFileExists(path))
+                throw new ArgumentException("Current file does not exists.");
             else
                 File.Delete(path);
         }

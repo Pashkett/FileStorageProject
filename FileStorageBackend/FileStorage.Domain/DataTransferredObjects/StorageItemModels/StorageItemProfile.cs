@@ -7,9 +7,8 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
     {
         public StorageItemProfile()
         {
-            CreateMap<StorageItem, FileCreateRequestDto>().ReverseMap();
             CreateMap<StorageItem, FolderCreateRequestDto>().ReverseMap();
-            CreateMap<StorageItem, StorageItemDto>().ReverseMap();
+            CreateMap<StorageItem, FileItemDto>().ReverseMap();
         }
     }
 }

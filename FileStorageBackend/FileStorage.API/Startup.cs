@@ -6,14 +6,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using FileStorage.API.Extensions;
 using FileStorage.Domain.Services.AuthenticationServices;
 using FileStorage.Logger;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using FileStorage.Domain.ServicesExtensions;
 using FileStorage.Domain.Services.UserServices;
-using FileStorage.Domain.Services.StorageItemServices;
+using FileStorage.Domain.Services.ActualItemsServices;
+using FileStorage.API.Filters;
 
 namespace FileStorage.API
 {
@@ -38,9 +39,10 @@ namespace FileStorage.API
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
             services.ConfigureFileSystemManagers();
+            services.AddScoped<CheckUserFromRequestFilterAsync>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IStorageItemsService, StorageItemsService>();
+            services.AddScoped<IActualItemsService, ActualItemsService>();
 
             services.AddAuthentication();
             services.ConfigureIdentity();

@@ -2,17 +2,27 @@
 using FileStorage.Data.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FileStorage.Data.Persistence.Repositories
 {
     public class StorageItemRepository : RepositoryBase<StorageItem>, IStorageItemRepository
     {
-        private FileStorageContext fileStorageContext => 
+        private FileStorageContext fileStorageContext =>
             context as FileStorageContext;
 
-        public StorageItemRepository(DbContext dbContext) 
+        public StorageItemRepository(DbContext dbContext)
             : base(dbContext) { }
+
+        public async Task<IEnumerable<StorageItem>> GetAllFilesByUserAsync(User user)
+        {
+            return await fileStorageContext.StorageItems
+                                .Where(file => file.User == user
+                                                  && file.IsFolder == false
+                                                  && file.IsRecycled == false).ToListAsync();
+        }
 
         public async Task<StorageItem> GetFileByUserAndFileIdAsync(User user, Guid fileId)
         {
@@ -46,6 +56,23 @@ namespace FileStorage.Data.Persistence.Repositories
                                                                 && folder.User == user
                                                                 && folder.IsFolder == true
                                                                 && folder.IsRecycled == false);
+        }
+
+        public async Task<IEnumerable<StorageItem>> GetAllRecycledFilesByUserAsync(User user)
+        {
+            return await fileStorageContext.StorageItems
+                                .Where(file => file.User == user
+                                                  && file.IsFolder == false
+                                                  && file.IsRecycled == true).ToListAsync();
+        }
+
+        public async Task<StorageItem> GetRecycledFileByUserAndFileIdAsync(User user, Guid fileId)
+        {
+            return await fileStorageContext.StorageItems
+                                .FirstOrDefaultAsync(file => file.Id == fileId
+                                                                && file.User == user
+                                                                && file.IsFolder == false
+                                                                && file.IsRecycled == true);
         }
     }
 }

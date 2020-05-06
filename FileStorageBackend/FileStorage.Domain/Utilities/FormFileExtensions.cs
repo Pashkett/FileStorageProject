@@ -16,10 +16,10 @@ namespace FileStorage.Domain.Utilities
             var nameForDisplay = WebUtility.HtmlEncode(formFile.FileName);
 
             if (formFile.Length == 0)
-                throw new FileEmptyException($"File: {nameForDisplay} is empty.");
+                throw new StorageItemEmptyException($"File: {nameForDisplay} is empty.");
                 
             if (formFile.Length > sizeLimit)
-                throw new FileExeedLimitException($"File: {nameForDisplay} exceeds {sizeLimit / 1048576:N1} MB.");
+                throw new StorageItemExeedLimitException($"File: {nameForDisplay} exceeds {sizeLimit / 1048576:N1} MB.");
 
             try
             {
@@ -28,7 +28,7 @@ namespace FileStorage.Domain.Utilities
                     await formFile.CopyToAsync(memoryStream);
 
                     if (memoryStream.Length == 0)
-                        throw new FileEmptyException($"File: {nameForDisplay} is empty.");
+                        throw new StorageItemEmptyException($"File: {nameForDisplay} is empty.");
                     else
                         return memoryStream.ToArray();
                 }
