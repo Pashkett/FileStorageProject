@@ -15,6 +15,7 @@ using FileStorage.Domain.ServicesExtensions;
 using FileStorage.Domain.Services.UserServices;
 using FileStorage.Domain.Services.ActualItemsServices;
 using FileStorage.API.Filters;
+using FileStorage.Domain.Services.RecycledItemsServices;
 
 namespace FileStorage.API
 {
@@ -43,6 +44,7 @@ namespace FileStorage.API
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IActualItemsService, ActualItemsService>();
+            services.AddScoped<IRecycledItemsService, RecycledItemsService>();
 
             services.AddAuthentication();
             services.ConfigureIdentity();

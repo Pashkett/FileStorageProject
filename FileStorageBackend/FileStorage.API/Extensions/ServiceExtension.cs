@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using FileStorage.Logger;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.DependencyInjection;
+using FileStorage.Logger;
 
 namespace FileStorage.API.Extensions
 {
@@ -45,9 +45,14 @@ namespace FileStorage.API.Extensions
         {
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminRoleRequired", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("ModerateRoleFilesRole", policy => policy.RequireRole("Admin", "Moderator"));
-                options.AddPolicy("MemberRoleRequired", policy => policy.RequireRole("Member"));
+                options.AddPolicy("AdminRoleRequired", 
+                    policy => policy.RequireRole("Admin"));
+
+                options.AddPolicy("ModerateRoleFilesRole", 
+                    policy => policy.RequireRole("Admin", "Moderator"));
+
+                options.AddPolicy("MemberRoleRequired", 
+                    policy => policy.RequireRole("Member"));
             });
         }
 
