@@ -24,6 +24,14 @@ namespace FileStorage.Data.Persistence.Repositories
                                                   && file.IsRecycled == false).ToListAsync();
         }
 
+        public async Task<StorageItem> GetFileByFileIdAsync(Guid fileId)
+        {
+            return await fileStorageContext.StorageItems
+                                .FirstOrDefaultAsync(file => file.Id == fileId
+                                                                && file.IsFolder == false
+                                                                && file.IsRecycled == false);
+        }
+
         public async Task<StorageItem> GetFileByUserAndFileIdAsync(User user, Guid fileId)
         {
             return await fileStorageContext.StorageItems

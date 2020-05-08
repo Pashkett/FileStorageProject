@@ -1,3 +1,23 @@
-<p>
-  recycle-bin works!
-</p>
+<div class="container mt-5">
+  <h2>
+    <strong>My Recycle Bin</strong>
+  </h2>
+  <div class="row">
+    <table class="table">
+      <tr>
+        <th style="width: 10%;">Name</th>
+        <th style="width: 10%;">Extension</th>
+        <th style="width: 10%;">User</th>
+        <th style="width: 10%;">Creation Date</th>
+        <th style="width: 10%;"></th>
+      </tr>
+      <tr *ngFor="let item of recycledItems">
+        <td>{{item.displayName}}</td>
+        <td>{{item.extension}}</td>
+        <td>{{item.user.userName}}</td>
+        <td>{{item.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
+        <td><button class="btn btn-info">Restore</button><button class="btn btn-info">Delete</button></td>
+      </tr>
+    </table>
+  </div>
+</div>

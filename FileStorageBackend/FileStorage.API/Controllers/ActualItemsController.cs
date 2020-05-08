@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FileStorage.Domain.Services.AuthenticationServices;
+using Microsoft.Extensions.Configuration;
 using FileStorage.Domain.Services.ActualItemsServices;
 using FileStorage.Domain.Exceptions;
 using FileStorage.API.Filters;
@@ -16,23 +16,23 @@ namespace FileStorage.API.Controllers
     public class ActualItemsController : ControllerBase
     {
         private readonly IActualItemsService actualItemsService;
-        private readonly IAuthService authService;
+        private readonly string userParamName;
 
-        public ActualItemsController(IActualItemsService actualItemsService, IAuthService authService)
+        public ActualItemsController(IActualItemsService actualItemsService, 
+                                     IConfiguration configuration)
+                                     
         {
             this.actualItemsService = actualItemsService;
-            this.authService = authService;
+            userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
         
+        
         [Authorize(Policy = "MemberRoleRequired")]
-        [ServiceFilter(typeof(CheckUserFromRequestFilterAsync))]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
         public async Task<IActionResult> GetAllActualFilesForUser()
         {
-            //var userRequested = await authService.GetRequestedUser(HttpContext.User);
-            //if (userRequested == null)
-            //    return Unauthorized();
-            var userRequested = (UserDto)HttpContext.Items["UserRequested"];
+            var userRequested = GetUserFromContext(userParamName);
 
             var files = await actualItemsService.GetActualFilesByUserAsync(userRequested);
 
@@ -43,11 +43,11 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize(Policy = "MemberRoleRequired")]
-        [ServiceFilter(typeof(CheckUserFromRequestFilterAsync))]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpPost("files"), DisableRequestSizeLimit]
         public async Task<IActionResult> UploadFilesAsync()
         {
-            var userRequested = (UserDto)HttpContext.Items["UserRequested"];
+            var userRequested = GetUserFromContext(userParamName);
 
             var files = Request.Form.Files;
 
@@ -60,15 +60,16 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize(Policy = "MemberRoleRequired")]
-        [ServiceFilter(typeof(CheckUserFromRequestFilterAsync))]
-        [HttpPost("files/{fileId}"), DisableRequestSizeLimit]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
+        [HttpGet("files/{fileId}"), DisableRequestSizeLimit]
         public async Task<IActionResult> DownloadFilesAsync(string fileId)
         {
-            var userRequested = (UserDto)HttpContext.Items["UserRequested"];
+            var userRequested = GetUserFromContext(userParamName);
 
             try
             {
                 var result = await actualItemsService.DownloadFileAsync(userRequested, fileId);
+
                 return File(result.stream, result.contentType, result.fileName);
             }
             catch (StorageItemNotFoundException ex)
@@ -78,16 +79,43 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize(Policy = "MemberRoleRequired")]
-        [ServiceFilter(typeof(CheckUserFromRequestFilterAsync))]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpDelete("files/{fileId}")]
         public async Task<IActionResult> MoveToRecycleBinAsync(string fileId)
         {
-            var userRequested = (UserDto)HttpContext.Items["UserRequested"];
+            var userRequested = GetUserFromContext(userParamName);
 
             try
             {
                 await actualItemsService.MoveFileToRecycledBinAsync(userRequested, fileId);
+
                 return Ok();
+            }
+            catch (StorageItemNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        private UserDto GetUserFromContext(string userParamKey)
+        {
+            return (UserDto)HttpContext.Items[userParamKey];
+        }
+        
+
+        /// <summary>
+        /// Use for future short-links controller
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("files/download/{fileId}"), DisableRequestSizeLimit]
+        public async Task<IActionResult> DownloadFilesAnonymousAsync(string fileId)
+        {
+            try
+            {
+                var result = await actualItemsService.DownloadFileAsync(fileId);
+                return File(result.stream, result.contentType, result.fileName);
             }
             catch (StorageItemNotFoundException ex)
             {

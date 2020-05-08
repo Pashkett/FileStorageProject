@@ -7,6 +7,7 @@ namespace FileStorage.Domain.Utilities
 {
     public static class StorageItemsHelpers
     {
+        //TODO to Reorganize
         public static string GetStorageItemRelativePath(StorageItem item)
         {
             if (item.IsFolder)
@@ -66,6 +67,7 @@ namespace FileStorage.Domain.Utilities
             return types[ext];
         }
 
+        //TODO to Reorganize read from json file
         private static Dictionary<string, string> GetMimeTypes()
         {
             return new Dictionary<string, string>

@@ -18,5 +18,4 @@ export class AdminService {
     return this.http.post(this.baseUrl + 'admin/editRoles/' + user.userName, roles);
   }
 
-
 }

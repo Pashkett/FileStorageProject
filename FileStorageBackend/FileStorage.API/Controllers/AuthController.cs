@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Services.AuthenticationServices;
@@ -22,12 +21,10 @@ namespace FileStorage.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegister)
         {
-            
             var user = await authService.RegisterAsync(userForRegister);
+
             if (user == null)
-            {
                 return BadRequest("UserName already exists");
-            }
 
             return StatusCode(201);
         }
@@ -35,8 +32,9 @@ namespace FileStorage.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLogin)
         {
-            var userFromService = await authService.LoginAsync(userForLogin.Username.ToLower(),
-                                                               userForLogin.Password);
+            var userFromService = await authService.LoginAsync(
+                                            userForLogin.Username.ToLower(),
+                                            userForLogin.Password);
 
             if (userFromService == null)
                 return Unauthorized();

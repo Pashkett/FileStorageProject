@@ -80,8 +80,8 @@ namespace FileStorage.Domain.Services.ActualItemsServices
             }
         }
 
-        public async Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
-            UserDto userDto, string fileId)
+        public async Task<(MemoryStream stream, string contentType, string fileName)> 
+            DownloadFileAsync(UserDto userDto, string fileId)
         {
             var fileItem = await GetActualItemByUserAndItemIdAsync(userDto, fileId);
 
@@ -91,6 +91,25 @@ namespace FileStorage.Domain.Services.ActualItemsServices
             stream.Position = 0;
 
             return (stream, StorageItemsHelpers.GetContentType(filePath), fileItem.DisplayName);
+        }
+
+        public async Task<(MemoryStream stream, string contentType, string fileName)> 
+            DownloadFileAsync(string fileId)
+        {
+            if (Guid.TryParse(fileId, out Guid storageItemId) == false)
+                throw new ArgumentException($"{fileId} is not valid id");
+
+            var file = await unitOfWork.StorageItems.GetFileByFileIdAsync(storageItemId);
+
+            if (file == null)
+                throw new StorageItemNotFoundException($"File for current user does not exist.");
+
+            var filePath = StorageItemsHelpers.GetStorageItemFullPath(targetPath, file.RelativePath);
+
+            var stream = await fileManager.ReadFileAsync(filePath);
+            stream.Position = 0;
+
+            return (stream, StorageItemsHelpers.GetContentType(filePath), file.DisplayName);
         }
 
         public async Task MoveFileToRecycledBinAsync(UserDto userDto, string fileId)

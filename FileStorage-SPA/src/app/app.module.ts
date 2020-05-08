@@ -24,6 +24,7 @@ import { ContainsRoleDirective } from './_directives/contains-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { AdminService } from './_services/admin.service';
 import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
+import { SharedItemsComponent } from './shared-items/shared-items.component';
 
 
 export function tokenGetter() {
@@ -41,7 +42,8 @@ export function tokenGetter() {
       AdminPanelComponent,
       ContainsRoleDirective,
       UserManagementComponent,
-      RolesModalComponent
+      RolesModalComponent,
+      SharedItemsComponent
    ],
    imports: [
       BrowserModule,

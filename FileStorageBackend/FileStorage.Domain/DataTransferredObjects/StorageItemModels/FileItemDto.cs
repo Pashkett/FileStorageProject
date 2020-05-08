@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FileStorage.Data.Models;
+using FileStorage.Domain.DataTransferredObjects.UserModels;
+using System;
 
 namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
 {
@@ -8,6 +10,8 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
         public string DisplayName { get; set; }
         public string Extension { get; set; }
         public bool IsFolder { get; set; }
+        public bool IsRecycled { get; set; }
+        public UserDto User { get; set; }
         public Guid UserId { get; set; }
         public DateTime CreatedOn { get; set; }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 namespace FileStorage.Data.FileSystemManagers.StorageFileManager
 {
     /// <summary>
+    /// Class for basic operations with Files in File System level
     /// https://stackoverflow.com/questions/1300773/what-belongs-in-a-repository-and-what-doesnt
     /// </summary>
     public class FileManager : IFileManager

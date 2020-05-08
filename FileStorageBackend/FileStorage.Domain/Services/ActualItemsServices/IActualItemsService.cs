@@ -15,11 +15,9 @@ namespace FileStorage.Domain.Services.ActualItemsServices
         Task CreateFileAsync(UserDto userDto, IFormFile file);
         Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
             UserDto userDto, string fileId);
+        Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
+            string fileId);
         Task MoveFileToRecycledBinAsync(UserDto userDto, string fileId);
-
-        //Task RenameFileAsync(string id, string itemNewName);
-        //Task DeleteFileAsync(UserDto userDto, string id);
-
         Task<StorageItem> CreateFolderAsync(FolderCreateRequestDto folderCreate);
         Task DeleteFolderAsync(UserDto userDto, string id);
     }

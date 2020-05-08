@@ -6,6 +6,6 @@ namespace FileStorage.Domain.DataTransferredObjects.UserModels
     public class UserDto
     {
         public Guid Id { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
     }
 }

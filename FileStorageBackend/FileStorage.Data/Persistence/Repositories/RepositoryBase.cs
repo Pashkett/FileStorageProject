@@ -27,34 +27,9 @@ namespace FileStorage.Data.Persistence.Repositories
             await context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return context.Set<TEntity>().Where(predicate);
-        }
-
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await context.Set<TEntity>().Where(predicate).ToListAsync();
-        }
-
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return await context.Set<TEntity>().ToListAsync();
-        }
-
-        public Task<TEntity> GetByIdAsync(Guid id)
-        {
-            return context.Set<TEntity>().FindAsync(id).AsTask();
-        }
-
         public void Remove(TEntity entity)
         {
             context.Set<TEntity>().Remove(entity);
-        }
-
-        public Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
     }
 }

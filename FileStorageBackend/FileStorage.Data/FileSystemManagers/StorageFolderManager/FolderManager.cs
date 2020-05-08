@@ -6,6 +6,7 @@ using System.Text;
 namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
 {
     /// <summary>
+    /// Class for basic operations with Folders in File System level
     /// https://stackoverflow.com/questions/1300773/what-belongs-in-a-repository-and-what-doesnt
     /// </summary>
     public class FolderManager : IFolderManager

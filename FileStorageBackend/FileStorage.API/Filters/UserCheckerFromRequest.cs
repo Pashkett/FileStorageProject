@@ -2,18 +2,23 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Configuration;
 using FileStorage.Domain.Services.AuthenticationServices;
-
 
 namespace FileStorage.API.Filters
 {
-    public class CheckUserFromRequestFilterAsync : IAsyncActionFilter
+    public class UserCheckerFromRequest : IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            var configuration =
+                context.HttpContext.RequestServices.GetService(typeof(IConfiguration)) as IConfiguration;
+
+            string userParamName = configuration.GetValue<string>("UserKeyParameter");
+            
             var authService = 
                 context.HttpContext.RequestServices.GetService(typeof(IAuthService)) as IAuthService;
-            
+
             var userRequested = 
                 await authService.GetRequestedUser(context.HttpContext.User);
 
@@ -21,11 +26,12 @@ namespace FileStorage.API.Filters
             {
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 context.Result = new JsonResult("Unauthorized");
+                return;
             }
             else
-                context.HttpContext.Items["UserRequested"] = userRequested;
+                context.HttpContext.Items[userParamName] = userRequested;
 
-            await next();
+            var result = await next();
         }
     }
 }

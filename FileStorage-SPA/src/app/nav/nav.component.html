@@ -7,6 +7,9 @@
         <a class="nav-link" [routerLink]="['/storage-items']">Files</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/shared-items']">Shared Files</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/recycle-bin']">Recycle Bin</a>
       </li>
       <li *appHasRole="['Admin', 'Moderator']" class="nav-item" routerLinkActive="active">
@@ -20,8 +23,6 @@
       </a>
 
       <div class="dropdown-menu mt-3" *dropdownMenu>
-        <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Edit Profile</a>
-        <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
       </div>
     </div>

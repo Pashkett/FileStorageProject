@@ -40,7 +40,7 @@ namespace FileStorage.API
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
             services.ConfigureFileSystemManagers();
-            services.AddScoped<CheckUserFromRequestFilterAsync>();
+            services.AddScoped<UserCheckerFromRequest>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IActualItemsService, ActualItemsService>();

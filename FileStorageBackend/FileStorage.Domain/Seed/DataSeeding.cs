@@ -30,6 +30,7 @@ namespace FileStorage.Domain.Seed
                     var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
                     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
                     var folderManager = serviceProvider.GetRequiredService<IFolderManager>();
+
                     var config = serviceProvider.GetRequiredService<IConfiguration>();
                     string targetPath = config.GetValue<string>("StoredFilesPath");
                     

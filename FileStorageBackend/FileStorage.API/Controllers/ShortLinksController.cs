@@ -4,7 +4,7 @@ namespace FileStorage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SharedLinksController : ControllerBase
+    public class ShortLinksController : ControllerBase
     {
  
     }

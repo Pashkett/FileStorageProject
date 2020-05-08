@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace FileStorage.Domain.Utilities
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class FormFileExtensions
     {
         public static async Task<byte[]> ProcessFormFileAsync(this IFormFile formFile,

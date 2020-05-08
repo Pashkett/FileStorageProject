@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using FileStorage.Domain.Exceptions;
-using FileStorage.Domain.Services.AuthenticationServices;
-using FileStorage.Domain.Services.RecycledItemsServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using FileStorage.API.Filters;
+using FileStorage.Domain.DataTransferredObjects.UserModels;
+using FileStorage.Domain.Exceptions;
+using FileStorage.Domain.Services.RecycledItemsServices;
 
 namespace FileStorage.API.Controllers
 {
@@ -14,23 +16,24 @@ namespace FileStorage.API.Controllers
     public class RecycledItemsController : ControllerBase
     {
         private readonly IRecycledItemsService recycledItemsService;
-        private readonly IAuthService authService;
+        private readonly string userParamName;
 
-        public RecycledItemsController(IRecycledItemsService recycledItemsService, IAuthService authService)
+        public RecycledItemsController(IRecycledItemsService recycledItemsService,
+                                       IConfiguration configuration)
         {
             this.recycledItemsService = recycledItemsService;
-            this.authService = authService;
+            userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
 
         [Authorize(Policy = "MemberRoleRequired")]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
         public async Task<IActionResult> GetAllRecycledFileForUser()
         {
-            var userRequested = await authService.GetRequestedUser(HttpContext.User);
-            if (userRequested == null)
-                return Unauthorized();
-
-            var recycledFiles = await recycledItemsService.GetRecycledItemsByUserAsync(userRequested);
+            var userRequested = (UserDto)HttpContext.Items[userParamName];
+            
+            var recycledFiles = 
+                await recycledItemsService.GetRecycledItemsByUserAsync(userRequested);
 
             if (recycledFiles == null || recycledFiles.Count() == 0)
                 return NoContent();
@@ -38,18 +41,17 @@ namespace FileStorage.API.Controllers
             return Ok(recycledFiles);
         }
 
-
         [Authorize(Policy = "MemberRoleRequired")]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpPost("files/{fileId}")]
         public async Task<IActionResult> RestoreRecycledFile(string fileId)
         {
-            var userRequested = await authService.GetRequestedUser(HttpContext.User);
-            if (userRequested == null)
-                return Unauthorized();
+            var userRequested = (UserDto)HttpContext.Items[userParamName];
 
             try
             {
                 await recycledItemsService.RestoreRecycledItemAsync(userRequested, fileId);
+
                 return Ok();
             }
             catch (StorageItemNotFoundException ex)
@@ -59,16 +61,16 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize(Policy = "MemberRoleRequired")]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpDelete("files/{fileId}")]
         public async Task<IActionResult> DeleteRecycledFile(string fileId)
         {
-            var userRequested = await authService.GetRequestedUser(HttpContext.User);
-            if (userRequested == null)
-                return Unauthorized();
+            var userRequested = (UserDto)HttpContext.Items[userParamName];
 
             try
             {
                 await recycledItemsService.DeleteRecycledItemAsync(userRequested, fileId);
+
                 return Ok();
             }
             catch (StorageItemNotFoundException ex)
