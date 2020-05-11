@@ -9,15 +9,34 @@
         <th style="width: 10%;">Extension</th>
         <th style="width: 10%;">User</th>
         <th style="width: 10%;">Creation Date</th>
-        <th style="width: 10%;"></th>
+        <th style="width: 20%;"></th>
       </tr>
       <tr *ngFor="let item of recycledItems">
         <td>{{item.displayName}}</td>
         <td>{{item.extension}}</td>
         <td>{{item.user.userName}}</td>
         <td>{{item.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
-        <td><button class="btn btn-info">Restore</button><button class="btn btn-info">Delete</button></td>
+        <td>
+          <button class="btn btn-outline-success mt-1 mr-1" (click)="openModal(restoreTemplate, item)">Restore</button>
+          <button class="btn btn-primary mt-1 " (click)="openModal(deleteTemplate, item)">Delete</button>
+        </td>
       </tr>
     </table>
   </div>
 </div>
+
+<ng-template #restoreTemplate>
+  <div class="modal-body text-center">
+    <p>Do you want to <strong>Restore</strong> this item?</p>
+    <button type="button" class="btn btn-default" (click)="confirmRestore()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteTemplate>
+  <div class="modal-body text-center">
+    <p>Do you want to <strong>Delete</strong> this item?</p>
+    <button type="button" class="btn btn-default" (click)="confirmDelete()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>

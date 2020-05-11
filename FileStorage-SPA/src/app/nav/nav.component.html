@@ -4,16 +4,16 @@
 
     <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/storage-items']">Files</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/shared-items']">Shared Files</a>
+        <a class="nav-link" [routerLink]="['/storage-items']">Private Files</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/recycle-bin']">Recycle Bin</a>
       </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/shared-items']">Public Files</a>
+      </li>
       <li *appHasRole="['Admin', 'Moderator']" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+        <a class="nav-link" [routerLink]="['/admin']">Administration</a>
       </li>
     </ul>
 
@@ -21,7 +21,6 @@
       <a class="dropdown-toggle text-light" dropdownToggle>
         Welcome {{authService.decodedToken?.unique_name | titlecase}}
       </a>
-
       <div class="dropdown-menu mt-3" *dropdownMenu>
         <a class="dropdown-item" href="#" (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
       </div>

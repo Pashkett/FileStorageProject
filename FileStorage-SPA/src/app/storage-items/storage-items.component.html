@@ -1,6 +1,12 @@
 <div class="container mt-5">
   <h2>
-    <strong>My Private Files</strong>
+    <strong>Upload Files</strong>
+  </h2>
+  <div>
+
+  </div>
+  <h2>
+    <strong>My Files</strong>
   </h2>
   <div class="row">
     <table class="table">
@@ -9,7 +15,7 @@
         <th style="width: 10%;">Extension</th>
         <th style="width: 10%;">User</th>
         <th style="width: 10%;">Creation Date</th>
-        <th style="width: 20%;"></th>
+        <th style="width: 15%;">Actions</th>
       </tr>
       <tr *ngFor="let item of storageItems">
         <td>{{item.displayName}}</td>
@@ -17,12 +23,19 @@
         <td>{{item.user.userName}}</td>
         <td>{{item.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
         <td>
-          <button class="btn btn-info mr-1">Share</button>
-          <!-- <button class="btn btn-info mr-1">Download F</button> -->
-          <button class="btn btn-info mr-1" (click)="downloadActualItems(item.id, item.displayName)">Download</button>
-          <button class="btn btn-info">Move to Recycle Bin</button>
+          <button class="btn btn-outline-success mt-1 mr-1">Share</button>
+          <button class="btn btn-primary mt-1 mr-1" (click)="downloadActualItems(item.id, item.displayName)">Download</button>
+          <button class="btn btn-info mt-1 " (click)="openModal(toRecycleBinTemplate, item)">To Recycle Bin</button>
         </td>
       </tr>
     </table>
   </div>
 </div>
+
+<ng-template #toRecycleBinTemplate>
+  <div class="modal-body text-center">
+    <p>Do you want to <strong>move to Recycle bin</strong> this item?</p>
+    <button type="button" class="btn btn-default" (click)="confirmPreDelete()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>

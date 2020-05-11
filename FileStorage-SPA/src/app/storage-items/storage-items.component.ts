@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActualItemsService } from '../_services/actual-items.service';
 import { StorageItem } from '../_models/storageitem';
 import { HttpEventType } from '@angular/common/http';
+import { error } from 'protractor';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-storage-items',
@@ -10,9 +12,12 @@ import { HttpEventType } from '@angular/common/http';
 })
 export class StorageItemsComponent implements OnInit {
   storageItems: StorageItem[];
+  modalRef: BsModalRef;
+  selectedItem: StorageItem;
 
 
-  constructor(private actualItemsService: ActualItemsService) { }
+  constructor(private actualItemsService: ActualItemsService,
+              private modalService: BsModalService) { }
 
   ngOnInit() {
     this.getActualItems();
@@ -25,6 +30,34 @@ export class StorageItemsComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+
+  openModal(template: TemplateRef<any>, item: StorageItem) {
+    this.selectedItem = item;
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  confirmPreDelete(): void {
+    this.moveToRecycleBin(this.selectedItem);
+    this.selectedItem = null;
+    this.modalRef.hide();
+  }
+
+  decline(): void {
+    this.modalRef.hide();
+  }
+
+  private moveToRecycleBin(item: StorageItem) {
+    this.actualItemsService.moveToRecycleBin(item.id).subscribe(
+      result => {
+        console.log(result);
+        const index: number = this.storageItems.indexOf(item);
+        if (index !== -1) {
+          this.storageItems.splice(index, 1);
+        }
+      },
+      error => console.log(error)
+    );
   }
 
   public downloadActualItems(id: string, name: string) {

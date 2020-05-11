@@ -24,4 +24,9 @@ export class ActualItemsService {
         responseType: 'blob'
       }));
   }
+
+  moveToRecycleBin(fileId: string) {
+    return this.http.delete(this.baseUrl + this.filesUrl + fileId);
+  }
+
 }
