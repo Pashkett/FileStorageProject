@@ -1,8 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
-import { AuthService } from 'src/app/_services/auth.service';
-import { StorageItem } from 'src/app/_models/storageitem';
-import { ActualItemsService } from 'src/app/_services/actual-items.service';
 
 @Component({
   selector: 'app-storage-upload',
@@ -15,21 +12,11 @@ export class StorageUploadComponent implements OnInit {
   hasBaseDropZoneOver = false;
   baseUrl = 'https://localhost:5001/api/';
 
-  constructor(private authService: AuthService,
-              private actualItemsService: ActualItemsService) { }
+  constructor() { }
 
   ngOnInit() {
     this.initializeUploader();
   }
-
-  // getActualItems() {
-  //   this.actualItemsService.getActualFiles()
-  //     .subscribe((storageItems: StorageItem[]) => {
-  //       this.storageItems = storageItems;
-  //     }, error => {
-  //       console.log(error);
-  //     });
-  // }
 
   fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
