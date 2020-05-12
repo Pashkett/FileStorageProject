@@ -20,6 +20,9 @@ namespace FileStorage.Data.Models.Configurations
             builder.Property(storageItem => storageItem.IsRecycled)
                 .HasDefaultValue(false);
 
+            builder.Property(storageItem => storageItem.IsPublic)
+                .HasDefaultValue(false);
+
             builder.Property(storageItem => storageItem.Extension)
                 .HasMaxLength(20);
 

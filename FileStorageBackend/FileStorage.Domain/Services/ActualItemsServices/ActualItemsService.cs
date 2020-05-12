@@ -115,11 +115,20 @@ namespace FileStorage.Domain.Services.ActualItemsServices
             return (stream, StorageItemsHelpers.GetContentType(filePath), file.DisplayName);
         }
 
-        public async Task MoveFileToRecycledBinAsync(UserDto userDto, string fileId)
+        public async Task MoveFileRecycledBinAsync(UserDto userDto, string fileId)
         {
             var fileItem = await GetActualItemByUserAndItemIdAsync(userDto, fileId);
             
             fileItem.IsRecycled = true;
+
+            await unitOfWork.CommitAsync();
+        }
+
+        public async Task MoveFilePublicAsync(UserDto userDto, string fileId)
+        {
+            var fileItem = await GetActualItemByUserAndItemIdAsync(userDto, fileId);
+
+            fileItem.IsPublic = true;
 
             await unitOfWork.CommitAsync();
         }

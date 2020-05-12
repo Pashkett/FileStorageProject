@@ -52,6 +52,7 @@ namespace FileStorage.Domain.Utilities
                 IsFolder = false,
                 IsPrimaryFolder = false,
                 IsRecycled = false,
+                IsPublic = false,
                 UserId = user.Id,
                 ParentFolder = primaryFolder
             };

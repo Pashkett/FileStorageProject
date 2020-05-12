@@ -28,7 +28,7 @@ namespace FileStorage.API.Controllers
         [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
-        public async Task<IActionResult> GetAllRecycledFileForUser()
+        public async Task<IActionResult> GetAllRecycledFilesForUser()
         {
             var userRequested = (UserDto)HttpContext.Items[userParamName];
             

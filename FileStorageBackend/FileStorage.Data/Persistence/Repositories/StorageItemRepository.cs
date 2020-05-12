@@ -82,5 +82,23 @@ namespace FileStorage.Data.Persistence.Repositories
                                                                 && file.IsFolder == false
                                                                 && file.IsRecycled == true);
         }
+
+        public async Task<IEnumerable<StorageItem>> GetAllPublicFilesAsync()
+        {
+            return await fileStorageContext.StorageItems
+                                .Where(file => file.IsPublic == true
+                                                  && file.IsFolder == false
+                                                  && file.IsRecycled == false).ToListAsync();
+        }
+
+        public async Task<StorageItem> GetPublicFileByUserAndFileIdAsync(User user, Guid fileId)
+        {
+            return await fileStorageContext.StorageItems
+                                .FirstOrDefaultAsync(file => file.Id == fileId
+                                                                && file.User == user
+                                                                && file.IsFolder == false
+                                                                && file.IsRecycled == false
+                                                                && file.IsPublic == true);
+        }
     }
 }

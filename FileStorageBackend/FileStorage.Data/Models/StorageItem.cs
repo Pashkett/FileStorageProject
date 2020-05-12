@@ -13,6 +13,7 @@ namespace FileStorage.Data.Models
         public bool IsFolder { get; set; }
         public bool IsPrimaryFolder { get; set; }
         public bool IsRecycled { get; set; }
+        public bool IsPublic { get; set; }
         public string RelativePath { get; set; }
         public virtual StorageItem ParentFolder { get; set; }
         public virtual Guid? ParentFolderId { get; set; }

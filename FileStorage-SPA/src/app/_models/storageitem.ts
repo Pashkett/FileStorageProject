@@ -6,6 +6,7 @@ export class StorageItem {
     extension: string;
     isFolder: boolean;
     isRecycled: boolean;
+    isPublic: boolean;
     user: User;
     userId: string;
     createdOn: Date;

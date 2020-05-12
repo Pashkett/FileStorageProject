@@ -43,6 +43,11 @@ namespace FileStorage.Data.Migrations
                     b.Property<bool>("IsPrimaryFolder")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsPublic")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<bool>("IsRecycled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")

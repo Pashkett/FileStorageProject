@@ -15,5 +15,7 @@ namespace FileStorage.Data.Persistence.Interfaces
         Task<StorageItem> GetFolderByUserAndFolderIdIdAsync(User user, Guid folderId);
         Task<IEnumerable<StorageItem>> GetAllRecycledFilesByUserAsync(User user);
         Task<StorageItem> GetRecycledFileByUserAndFileIdAsync(User user, Guid fileId);
+        Task<IEnumerable<StorageItem>> GetAllPublicFilesAsync();
+        Task<StorageItem> GetPublicFileByUserAndFileIdAsync(User user, Guid fileId);
     }
 }

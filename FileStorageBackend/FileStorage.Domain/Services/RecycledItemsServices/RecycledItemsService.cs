@@ -75,6 +75,7 @@ namespace FileStorage.Domain.Services.RecycledItemsServices
 
             if (file == null)
                 throw new StorageItemNotFoundException($"File for current user does not exist.");
+
             return file;
         }
     }

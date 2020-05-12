@@ -17,7 +17,8 @@ namespace FileStorage.Domain.Services.ActualItemsServices
             UserDto userDto, string fileId);
         Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
             string fileId);
-        Task MoveFileToRecycledBinAsync(UserDto userDto, string fileId);
+        Task MoveFileRecycledBinAsync(UserDto userDto, string fileId);
+        Task MoveFilePublicAsync(UserDto userDto, string fileId);
         Task<StorageItem> CreateFolderAsync(FolderCreateRequestDto folderCreate);
         Task DeleteFolderAsync(UserDto userDto, string id);
     }

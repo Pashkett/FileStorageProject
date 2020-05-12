@@ -11,6 +11,7 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
         public string Extension { get; set; }
         public bool IsFolder { get; set; }
         public bool IsRecycled { get; set; }
+        public bool IsPublic { get; set; }
         public UserDto User { get; set; }
         public Guid UserId { get; set; }
         public DateTime CreatedOn { get; set; }

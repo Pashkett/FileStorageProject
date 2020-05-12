@@ -90,7 +90,7 @@ namespace FileStorage.API.Controllers
 
             try
             {
-                await actualItemsService.MoveFileToRecycledBinAsync(userRequested, fileId);
+                await actualItemsService.MoveFileRecycledBinAsync(userRequested, fileId);
 
                 return Ok();
             }
