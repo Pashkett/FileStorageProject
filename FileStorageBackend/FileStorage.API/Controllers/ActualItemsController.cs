@@ -8,6 +8,8 @@ using FileStorage.Domain.Services.ActualItemsServices;
 using FileStorage.Domain.Exceptions;
 using FileStorage.API.Filters;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
+using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
+using System.Collections.Generic;
 
 namespace FileStorage.API.Controllers
 {
@@ -27,7 +29,7 @@ namespace FileStorage.API.Controllers
         }
         
         
-        [Authorize(Policy = "MemberRoleRequired")]
+        [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
         public async Task<IActionResult> GetAllActualFilesForUser()
@@ -42,7 +44,7 @@ namespace FileStorage.API.Controllers
             return Ok(files);
         }
 
-        [Authorize(Policy = "MemberRoleRequired")]
+        [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpPost("files"), DisableRequestSizeLimit]
         public async Task<IActionResult> UploadFilesAsync()
@@ -50,16 +52,17 @@ namespace FileStorage.API.Controllers
             var userRequested = GetUserFromContext(userParamName);
 
             var files = Request.Form.Files;
+            List<FileItemDto> filesDto = new List<FileItemDto>();
 
             foreach (var file in files)
             {
-                await actualItemsService.CreateFileAsync(userRequested, file);
+                filesDto.Add(await actualItemsService.CreateFileAsync(userRequested, file));
             }
 
-            return StatusCode(201);
+            return Ok(filesDto);
         }
 
-        [Authorize(Policy = "MemberRoleRequired")]
+        [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files/{fileId}"), DisableRequestSizeLimit]
         public async Task<IActionResult> DownloadFilesAsync(string fileId)
@@ -78,7 +81,7 @@ namespace FileStorage.API.Controllers
             }
         }
 
-        [Authorize(Policy = "MemberRoleRequired")]
+        [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpDelete("files/{fileId}")]
         public async Task<IActionResult> MoveToRecycleBinAsync(string fileId)

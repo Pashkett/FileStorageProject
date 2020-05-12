@@ -25,7 +25,7 @@ namespace FileStorage.API.Controllers
             userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
 
-        [Authorize(Policy = "MemberRoleRequired")]
+        [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
         public async Task<IActionResult> GetAllRecycledFileForUser()
@@ -41,7 +41,7 @@ namespace FileStorage.API.Controllers
             return Ok(recycledFiles);
         }
 
-        [Authorize(Policy = "MemberRoleRequired")]
+        [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpPost("files/{fileId}")]
         public async Task<IActionResult> RestoreRecycledFile(string fileId)
@@ -61,7 +61,7 @@ namespace FileStorage.API.Controllers
             }
         }
 
-        [Authorize(Policy = "MemberRoleRequired")]
+        [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpDelete("files/{fileId}")]
         public async Task<IActionResult> DeleteRecycledFile(string fileId)

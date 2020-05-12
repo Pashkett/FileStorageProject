@@ -1,0 +1,40 @@
+ <div class="container">
+  <table class="table">
+    <tr>
+      <th style="width: 3%;"></th>
+      <th style="width: 20%;">Name</th>
+      <th>Extension</th>
+      <th>Creation Date</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let item of storageItems">
+      <td>
+        <i class="fa fa-file" aria-hidden="true"></i>
+      </td>
+      <td>{{item.displayName}}</td>
+      <td>{{item.extension}}</td>
+      <td>{{item.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
+      <td>
+        <button class="btn btn-outline-success mt-1 mr-1" title="Share">
+          <i class="fa fa-share-alt-square" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-outline-info mt-1 mr-1" (click)="downloadActualItems(item.id, item.displayName)"
+          title="Download">
+          <i class="fa fa-download" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-outline-warning mt-1" (click)="openModal(toRecycleBinTemplate, item)"
+          title="To Recycle Bin">
+          <i class="fa fa-recycle" aria-hidden="true"></i>
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<ng-template #toRecycleBinTemplate>
+  <div class="modal-body text-center">
+    <p>Do you want to <strong>move to Recycle bin</strong> this item?</p>
+    <button type="button" class="btn btn-default" (click)="confirmPreDelete()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>

@@ -51,7 +51,7 @@ namespace FileStorage.Domain.Services.ActualItemsServices
             return filesDto;
         }
 
-        public async Task CreateFileAsync(UserDto userDto, IFormFile file)
+        public async Task<FileItemDto> CreateFileAsync(UserDto userDto, IFormFile file)
         {
             var user = mapper.Map<UserDto, User>(userDto);
             var primaryFolder = await unitOfWork.StorageItems.GetUserPrimaryFolderAsync(user);
@@ -72,6 +72,9 @@ namespace FileStorage.Domain.Services.ActualItemsServices
 
                     await unitOfWork.StorageItems.AddAsync(fileItem);
                     await unitOfWork.CommitAsync();
+
+                    var fileDto = mapper.Map<StorageItem, FileItemDto>(fileItem);
+                    return fileDto;
                 }
                 catch (Exception ex)
                 {

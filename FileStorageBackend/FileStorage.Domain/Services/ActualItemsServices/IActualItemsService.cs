@@ -12,7 +12,7 @@ namespace FileStorage.Domain.Services.ActualItemsServices
     public interface IActualItemsService
     {
         Task<IEnumerable<FileItemDto>> GetActualFilesByUserAsync(UserDto userDto);
-        Task CreateFileAsync(UserDto userDto, IFormFile file);
+        Task<FileItemDto> CreateFileAsync(UserDto userDto, IFormFile file);
         Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
             UserDto userDto, string fileId);
         Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(

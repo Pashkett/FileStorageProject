@@ -5,6 +5,7 @@
   <div class="row">
     <table class="table">
       <tr>
+        <th style="width: 3%;"></th>
         <th style="width: 10%;">Name</th>
         <th style="width: 10%;">Extension</th>
         <th style="width: 10%;">User</th>
@@ -12,13 +13,18 @@
         <th style="width: 20%;"></th>
       </tr>
       <tr *ngFor="let item of recycledItems">
+        <td><i class="fa fa-file" aria-hidden="true"></i></td>
         <td>{{item.displayName}}</td>
         <td>{{item.extension}}</td>
         <td>{{item.user.userName}}</td>
         <td>{{item.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
         <td>
-          <button class="btn btn-outline-success mt-1 mr-1" (click)="openModal(restoreTemplate, item)">Restore</button>
-          <button class="btn btn-primary mt-1 " (click)="openModal(deleteTemplate, item)">Delete</button>
+          <button class="btn btn-outline-success mt-1 mr-1" (click)="openModal(restoreTemplate, item)" title="Restore">
+            <i class="fa fa-window-restore" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-outline-danger mt-1 " (click)="openModal(deleteTemplate, item)" title="Delete">
+            <i class="fa fa-trash" ></i>
+          </button>
         </td>
       </tr>
     </table>

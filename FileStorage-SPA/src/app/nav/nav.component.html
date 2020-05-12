@@ -1,19 +1,45 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" [routerLink]="['/home']"><h2>Files Storage</h2></a>
+    <a class="navbar-brand" [routerLink]="['/home']">
+      <h2 style="color: orange;">
+        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+        Files Storage
+      </h2>
+    </a>
 
     <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/storage-items']">Private Files</a>
+        <a class="nav-link" [routerLink]="['/storage-items']">
+          <h5>
+            <!-- <i class="fa fa-user-secret" aria-hidden="true"></i> -->
+            <i class="fa fa-folder-open" aria-hidden="true"></i>
+            Private Files
+          </h5>
+        </a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/recycle-bin']">Recycle Bin</a>
+        <a class="nav-link" [routerLink]="['/recycle-bin']">
+          <h5>
+            <i class="fa fa-recycle" aria-hidden="true"></i>
+            Recycle Bin
+          </h5>
+        </a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/shared-items']">Public Files</a>
+        <a class="nav-link" [routerLink]="['/shared-items']">
+          <h5>
+            <i class="fa fa-share-alt" aria-hidden="true"></i>
+            Public Files
+          </h5>
+        </a>
       </li>
       <li *appHasRole="['Admin', 'Moderator']" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/admin']">Administration</a>
+        <a class="nav-link" [routerLink]="['/admin']">
+          <h5>
+            <i class="fa fa-laptop" aria-hidden="true"></i>
+            Administration
+          </h5>
+        </a>
       </li>
     </ul>
 

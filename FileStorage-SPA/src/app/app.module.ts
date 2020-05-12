@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { from } from 'rxjs';
@@ -17,7 +19,6 @@ import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AnimationBuilder } from '@angular/animations';
 import { RecycleBinComponent } from './recycle-bin/recycle-bin.component';
-import { StorageItemsComponent } from './storage-items/storage-items.component';
 import { fileStorageRoutes } from './routes';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { ContainsRoleDirective } from './_directives/contains-role.directive';
@@ -25,6 +26,10 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { AdminService } from './_services/admin.service';
 import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
 import { SharedItemsComponent } from './shared-items/shared-items.component';
+import { StorageTabsComponent } from './storage-general/storage-tabs/storage-tabs.component';
+import { StorageItemsComponent } from './storage-general/storage-items/storage-items.component';
+import { StorageUploadComponent } from './storage-general/storage-upload/storage-upload.component';
+
 
 
 
@@ -39,7 +44,9 @@ export function tokenGetter() {
       HomeComponent,
       RegisterComponent,
       RecycleBinComponent,
+      StorageTabsComponent,
       StorageItemsComponent,
+      StorageUploadComponent,
       AdminPanelComponent,
       ContainsRoleDirective,
       UserManagementComponent,
@@ -53,6 +60,8 @@ export function tokenGetter() {
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
       ModalModule.forRoot(),
+      TabsModule.forRoot(),
+      FileUploadModule,
       RouterModule.forRoot(fileStorageRoutes),
       JwtModule.forRoot({
          config: {
