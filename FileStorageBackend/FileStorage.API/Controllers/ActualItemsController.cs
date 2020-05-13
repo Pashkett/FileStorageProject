@@ -100,6 +100,27 @@ namespace FileStorage.API.Controllers
             }
         }
 
+        [Authorize(Policy = "AllRegisteredUsers")]
+        [ServiceFilter(typeof(UserCheckerFromRequest))]
+        [HttpPost("files/{fileId}")]
+        public async Task<IActionResult> MoveToPublicAsync(string fileId)
+        {
+            var userRequested = GetUserFromContext(userParamName);
+
+            try
+            {
+                await actualItemsService.MoveFilePublicAsync(userRequested, fileId);
+
+                return Ok(
+                    new { id = fileId }
+                    ) ;
+            }
+            catch (StorageItemNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
         private UserDto GetUserFromContext(string userParamKey)
         {
             return (UserDto)HttpContext.Items[userParamKey];

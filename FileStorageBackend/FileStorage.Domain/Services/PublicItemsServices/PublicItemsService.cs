@@ -7,7 +7,10 @@ using FileStorage.Data.UnitOfWork;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Exceptions;
-
+using System.IO;
+using FileStorage.Domain.Utilities;
+using FileStorage.Data.FileSystemManagers.StorageFileManager;
+using Microsoft.Extensions.Configuration;
 
 namespace FileStorage.Domain.Services.PublicItemsServices
 {
@@ -15,12 +18,18 @@ namespace FileStorage.Domain.Services.PublicItemsServices
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IFileManager fileManager;
+        private readonly string targetPath;
 
         public PublicItemsService(IUnitOfWork unitOfWork,
-                                  IMapper mapper)
+                                  IMapper mapper,
+                                  IFileManager fileManager,
+                                  IConfiguration configuration)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.fileManager = fileManager;
+            targetPath = configuration.GetValue<string>("StoredFilesPath");
         }
 
         public async Task<IEnumerable<FileItemDto>> GetPublicFilesAsync()
@@ -39,6 +48,25 @@ namespace FileStorage.Domain.Services.PublicItemsServices
             fileItem.IsPublic = false;
 
             await unitOfWork.CommitAsync();
+        }
+
+        public async Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(string fileId)
+        {
+            if (Guid.TryParse(fileId, out Guid storageItemId) == false)
+                throw new ArgumentException($"{fileId} is not valid id");
+
+            var fileItem = await unitOfWork.StorageItems.GetPublicFileByFileIdAsync(storageItemId);
+
+            if (fileItem == null)
+                throw new StorageItemNotFoundException($"File for current user does not exist.");
+
+            var filePath = StorageItemsHelpers.GetStorageItemFullPath(targetPath, fileItem.RelativePath);
+
+            var stream = await fileManager.ReadFileAsync(filePath);
+            stream.Position = 0;
+
+            return (stream, StorageItemsHelpers.GetContentType(filePath), fileItem.DisplayName);
+
         }
 
         private async Task<StorageItem> GetPublicItemByUserAndItemIdAsync(UserDto userDto, string fileId)

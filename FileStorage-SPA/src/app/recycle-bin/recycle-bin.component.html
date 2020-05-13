@@ -8,22 +8,22 @@
         <th style="width: 3%;"></th>
         <th style="width: 10%;">Name</th>
         <th style="width: 10%;">Extension</th>
-        <th style="width: 10%;">User</th>
+        <th style="width: 10%;">Is Public</th>
         <th style="width: 10%;">Creation Date</th>
-        <th style="width: 20%;"></th>
+        <th style="width: 20%;">Actions</th>
       </tr>
       <tr *ngFor="let item of recycledItems">
         <td><i class="fa fa-file" aria-hidden="true"></i></td>
-        <td>{{item.displayName}}</td>
-        <td>{{item.extension}}</td>
-        <td>{{item.user.userName}}</td>
-        <td>{{item.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
+        <td>{{item?.displayName}}</td>
+        <td>{{item?.extension}}</td>
+        <td>{{item?.isPublic}}</td>
+        <td>{{item?.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
         <td>
           <button class="btn btn-outline-success mt-1 mr-1" (click)="openModal(restoreTemplate, item)" title="Restore">
-            <i class="fa fa-window-restore" aria-hidden="true"></i>
+            <i class="fa fa-reply" aria-hidden="true"></i>
           </button>
           <button class="btn btn-outline-danger mt-1 " (click)="openModal(deleteTemplate, item)" title="Delete">
-            <i class="fa fa-trash" ></i>
+            <i class="fa fa-ban" aria-hidden="true"></i>
           </button>
         </td>
       </tr>

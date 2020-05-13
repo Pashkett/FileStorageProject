@@ -9,6 +9,7 @@
       </th>
       <th style="width: 20%;">Name</th>
       <th>Extension</th>
+      <th>Is Public</th>
       <th>Creation Date</th>
       <th>Actions</th>
     </tr>
@@ -16,11 +17,13 @@
       <td>
         <i class="fa fa-file" aria-hidden="true"></i>
       </td>
-      <td>{{item.displayName}}</td>
-      <td>{{item.extension}}</td>
-      <td>{{item.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
+      <td>{{item?.displayName}}</td>
+      <td>{{item?.extension}}</td>
+      <td>{{item?.isPublic}}</td>
+      <td>{{item?.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
       <td>
-        <button class="btn btn-outline-success mt-1 mr-1" title="Share">
+        <button class="btn btn-outline-success mt-1 mr-1" (click)="openModal(toPublicTemplate, item)"
+          title="Share">
           <i class="fa fa-share-alt-square" aria-hidden="true"></i>
         </button>
         <button class="btn btn-outline-info mt-1 mr-1" (click)="downloadActualItems(item.id, item.displayName)"
@@ -29,7 +32,7 @@
         </button>
         <button class="btn btn-outline-warning mt-1" (click)="openModal(toRecycleBinTemplate, item)"
           title="To Recycle Bin">
-          <i class="fa fa-recycle" aria-hidden="true"></i>
+          <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
       </td>
     </tr>
@@ -40,6 +43,14 @@
   <div class="modal-body text-center">
     <p>Do you want to <strong>move to Recycle bin</strong> this item?</p>
     <button type="button" class="btn btn-default" (click)="confirmPreDelete()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #toPublicTemplate>
+  <div class="modal-body text-center">
+    <p>Do you want to <strong>move to Public</strong> this item?</p>
+    <button type="button" class="btn btn-default" (click)="confirmPrePublic()">Yes</button>
     <button type="button" class="btn btn-primary" (click)="decline()">No</button>
   </div>
 </ng-template>

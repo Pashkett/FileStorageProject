@@ -3,6 +3,7 @@ import { ActualItemsService } from '../../_services/actual-items.service';
 import { StorageItem } from '../../_models/storageitem';
 import { HttpEventType } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-storage-items',
@@ -41,6 +42,12 @@ export class StorageItemsComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  confirmPrePublic(): void {
+    this.moveToPublic(this.selectedItem);
+    this.selectedItem = null;
+    this.modalRef.hide();
+  }
+
   decline(): void {
     this.modalRef.hide();
   }
@@ -53,6 +60,16 @@ export class StorageItemsComponent implements OnInit {
         if (index !== -1) {
           this.storageItems.splice(index, 1);
         }
+      },
+      error => console.log(error)
+    );
+  }
+
+  private moveToPublic(item: StorageItem) {
+    this.actualItemsService.moveToPublic(item.id).subscribe(
+      result => {
+        console.log(result)
+        item.isPublic = true;
       },
       error => console.log(error)
     );

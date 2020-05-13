@@ -11,7 +11,7 @@ export class RecycledItemsService {
   constructor(private http: HttpClient) { }
 
   getRecycledFiles() {
-    return this.http.get(this.baseUrl + 'RecycledItems/files');
+    return this.http.get(this.baseUrl + this.filesUrl);
   }
 
   restoreFile(fileId: string) {

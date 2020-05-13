@@ -29,4 +29,7 @@ export class ActualItemsService {
     return this.http.delete(this.baseUrl + this.filesUrl + fileId);
   }
 
+  moveToPublic(fileId: string) {
+    return this.http.post(this.baseUrl + this.filesUrl + fileId, null);
+  }
 }
