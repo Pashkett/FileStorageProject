@@ -22,7 +22,9 @@ namespace FileStorage.Data.Persistence.Repositories
                 .Where(
                     file => file.User == user
                             && file.IsFolder == false
-                            && file.IsRecycled == false).ToListAsync();
+                            && file.IsRecycled == false)
+                .OrderBy(file => file.DisplayName)
+                .ToListAsync();
         }
 
         public async Task<StorageItem> GetFileByFileIdAsync(Guid fileId)
@@ -80,7 +82,9 @@ namespace FileStorage.Data.Persistence.Repositories
                 .Where(
                     file => file.User == user
                             && file.IsFolder == false
-                            && file.IsRecycled == true).ToListAsync();
+                            && file.IsRecycled == true)
+                .OrderBy(file => file.DisplayName)
+                .ToListAsync();
         }
 
         public async Task<StorageItem> GetRecycledFileByUserAndFileIdAsync(User user,
@@ -101,7 +105,9 @@ namespace FileStorage.Data.Persistence.Repositories
                 .Where(
                     file => file.IsPublic == true
                             && file.IsFolder == false
-                            && file.IsRecycled == false).ToListAsync();
+                            && file.IsRecycled == false)
+                .OrderBy(file => file.DisplayName)
+                .ToListAsync();
         }
 
         public async Task<StorageItem> GetPublicFileByUserAndFileIdAsync(User user,
