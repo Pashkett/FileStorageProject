@@ -185,7 +185,8 @@ namespace FileStorage.Domain.Services.ActualItemsServices
 
         #endregion
 
-        private async Task<StorageItem> GetActualItemByUserAndItemIdAsync(UserDto userDto, string fileId)
+        private async Task<StorageItem> GetActualItemByUserAndItemIdAsync(UserDto userDto,
+                                                                          string fileId)
         {
             var user = mapper.Map<UserDto, User>(userDto);
 
