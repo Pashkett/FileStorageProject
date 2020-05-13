@@ -16,18 +16,18 @@ namespace FileStorage.Domain.Utilities
                     return $"{item.User.Id}";
                 else
                 {
-                    if (item.ParentFolder != null)
-                        return Path.Combine(item.ParentFolder.RelativePath, item.TrustedName);
-                    else
+                    if (item.ParentFolder == null)
                         throw new ArgumentException("Non-primary folder should have a parent folder");
+                    else
+                        return Path.Combine(item.ParentFolder.RelativePath, item.TrustedName);
                 }
             }
             else
             {
-                if (item.ParentFolder != null)
-                    return Path.Combine(item.ParentFolder.RelativePath, item.TrustedName + item.Extension);
-                else
+                if (item.ParentFolder == null)
                     throw new ArgumentException("File doesn't contain parent folder.");
+                else
+                    return Path.Combine(item.ParentFolder.RelativePath, item.TrustedName + item.Extension);
             }
         }
 
@@ -42,10 +42,10 @@ namespace FileStorage.Domain.Utilities
             }
             else
             {
-                if (item.ParentFolder != null)
-                    return $"{item.ParentFolder.Id}_{DateTime.Now:yyyyMMddTHHmmss.ffff}";
-                else
+                if (item.ParentFolder == null)
                     throw new ArgumentException("File doesn't contain parent folder.");
+                else
+                    return $"{item.ParentFolder.Id}_{DateTime.Now:yyyyMMddTHHmmss.ffff}";
             }
         }
 

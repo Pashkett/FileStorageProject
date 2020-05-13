@@ -33,21 +33,21 @@ namespace FileStorage.Domain.Seed
 
                     var config = serviceProvider.GetRequiredService<IConfiguration>();
                     string targetPath = config.GetValue<string>("StoredFilesPath");
-                    
 
                     SeedData(userManager, roleManager, folderManager, logger, targetPath);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     logger.LogError($"{ex}\n An error occurred during migration process");
                 }
             }
         }
 
-        private static void SeedData(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager,
-            IFolderManager folderManager, 
-            ILoggerManager logger,
-            string targetPath)
+        private static void SeedData(UserManager<User> userManager,
+                                      RoleManager<IdentityRole<Guid>> roleManager,
+                                      IFolderManager folderManager,
+                                      ILoggerManager logger,
+                                      string targetPath)
         {
             var users = SeedingDataHelper.SeedingDataFromJson<User>("Users.json");
             try
@@ -104,7 +104,7 @@ namespace FileStorage.Domain.Seed
             {
                 throw ex;
             }
-           
+
         }
 
         private static string FolderFullPathMaker(string targetPath, string relativePath)

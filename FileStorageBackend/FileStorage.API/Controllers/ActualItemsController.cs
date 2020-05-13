@@ -20,15 +20,15 @@ namespace FileStorage.API.Controllers
         private readonly IActualItemsService actualItemsService;
         private readonly string userParamName;
 
-        public ActualItemsController(IActualItemsService actualItemsService, 
+        public ActualItemsController(IActualItemsService actualItemsService,
                                      IConfiguration configuration)
-                                     
+
         {
             this.actualItemsService = actualItemsService;
             userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
-        
-        
+
+
         [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
@@ -111,9 +111,10 @@ namespace FileStorage.API.Controllers
             {
                 await actualItemsService.MoveFilePublicAsync(userRequested, fileId);
 
-                return Ok(
-                    new { id = fileId }
-                    ) ;
+                return Ok(new
+                {
+                    id = fileId
+                });
             }
             catch (StorageItemNotFoundException ex)
             {
@@ -125,7 +126,7 @@ namespace FileStorage.API.Controllers
         {
             return (UserDto)HttpContext.Items[userParamKey];
         }
-        
+
 
         /// <summary>
         /// Use for future short-links controller

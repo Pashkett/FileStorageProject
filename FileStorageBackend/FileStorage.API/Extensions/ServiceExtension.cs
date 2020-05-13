@@ -48,13 +48,13 @@ namespace FileStorage.API.Extensions
                 options.AddPolicy("AllRegisteredUsers",
                     policy => policy.RequireRole("Admin", "Moderator", "Member"));
 
-                options.AddPolicy("AdminRoleRequired", 
+                options.AddPolicy("AdminRoleRequired",
                     policy => policy.RequireRole("Admin"));
 
-                options.AddPolicy("ModerateRoleFilesRole", 
+                options.AddPolicy("ModerateRoleFilesRole",
                     policy => policy.RequireRole("Admin", "Moderator"));
 
-                options.AddPolicy("MemberRoleRequired", 
+                options.AddPolicy("MemberRoleRequired",
                     policy => policy.RequireRole("Member"));
             });
         }

@@ -7,7 +7,6 @@ namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
 {
     /// <summary>
     /// Class for basic operations with Folders in File System level
-    /// https://stackoverflow.com/questions/1300773/what-belongs-in-a-repository-and-what-doesnt
     /// </summary>
     public class FolderManager : IFolderManager
     {
@@ -21,6 +20,7 @@ namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
             else
             {
                 Directory.CreateDirectory(path);
+                
                 return true;
             }
         }
@@ -32,6 +32,7 @@ namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
             else
             {
                 Directory.Delete(path, true);
+                
                 return true;
             }
         }

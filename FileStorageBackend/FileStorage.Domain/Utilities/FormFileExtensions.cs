@@ -20,7 +20,7 @@ namespace FileStorage.Domain.Utilities
 
             if (formFile.Length == 0)
                 throw new StorageItemEmptyException($"File: {nameForDisplay} is empty.");
-                
+
             if (formFile.Length > sizeLimit)
                 throw new StorageItemExeedLimitException($"File: {nameForDisplay} exceeds {sizeLimit / 1048576:N1} MB.");
 
@@ -41,7 +41,7 @@ namespace FileStorage.Domain.Utilities
                 throw ex;
             }
         }
-    
+
         public static StorageItem CreateFileItemFormFile(this IFormFile formFile,
                                                          StorageItem primaryFolder,
                                                          User user)

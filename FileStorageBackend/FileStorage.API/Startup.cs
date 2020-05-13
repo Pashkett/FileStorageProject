@@ -41,7 +41,7 @@ namespace FileStorage.API
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
             services.ConfigureFileSystemManagers();
-            
+
             services.AddScoped<UserCheckerFromRequest>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
@@ -53,7 +53,7 @@ namespace FileStorage.API
             services.ConfigureIdentity();
             services.ConfigureAuthenticationJWT(Configuration);
             services.ConfigureAuthorizationPolicies();
-            
+
             services.AddControllers(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()

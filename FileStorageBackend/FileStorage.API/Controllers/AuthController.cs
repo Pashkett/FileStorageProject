@@ -32,9 +32,9 @@ namespace FileStorage.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLogin)
         {
-            var userFromService = await authService.LoginAsync(
-                                            userForLogin.Username.ToLower(),
-                                            userForLogin.Password);
+            var userFromService = 
+                await authService.LoginAsync(userForLogin.Username.ToLower(), 
+                                              userForLogin.Password);
 
             if (userFromService == null)
                 return Unauthorized();

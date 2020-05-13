@@ -3,7 +3,6 @@ import { ActualItemsService } from '../../_services/actual-items.service';
 import { StorageItem } from '../../_models/storageitem';
 import { HttpEventType } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { error } from 'protractor';
 
 @Component({
   selector: 'app-storage-items',

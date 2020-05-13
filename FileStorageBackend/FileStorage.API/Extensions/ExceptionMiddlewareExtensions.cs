@@ -14,8 +14,10 @@ namespace FileStorage.API.Extensions
     {
         public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerManager logger)
         {
-            app.UseExceptionHandler(builder => {
-                builder.Run(async context => {
+            app.UseExceptionHandler(builder =>
+            {
+                builder.Run(async context =>
+                {
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();

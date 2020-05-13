@@ -20,10 +20,8 @@ namespace FileStorage.Data.UnitOfWork
             storageItemRepository ?? (storageItemRepository = new StorageItemRepository(context));
 
 
-        public async Task<int> CommitAsync()
-        {
-            return await context.SaveChangesAsync();
-        }
+        public async Task<int> CommitAsync() => 
+            await context.SaveChangesAsync();
 
         public void Dispose() => context.Dispose();
     }

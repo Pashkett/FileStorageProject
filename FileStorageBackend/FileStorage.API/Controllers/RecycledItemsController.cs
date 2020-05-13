@@ -31,8 +31,8 @@ namespace FileStorage.API.Controllers
         public async Task<IActionResult> GetAllRecycledFilesForUser()
         {
             var userRequested = (UserDto)HttpContext.Items[userParamName];
-            
-            var recycledFiles = 
+
+            var recycledFiles =
                 await recycledItemsService.GetRecycledItemsByUserAsync(userRequested);
 
             if (recycledFiles == null || recycledFiles.Count() == 0)
@@ -52,8 +52,10 @@ namespace FileStorage.API.Controllers
             {
                 await recycledItemsService.RestoreRecycledItemAsync(userRequested, fileId);
 
-                return Ok(
-                    new { id = fileId });
+                return Ok(new
+                {
+                    id = fileId
+                });
             }
             catch (StorageItemNotFoundException ex)
             {
@@ -72,8 +74,10 @@ namespace FileStorage.API.Controllers
             {
                 await recycledItemsService.DeleteRecycledItemAsync(userRequested, fileId);
 
-                return Ok(
-                    new { id = fileId });
+                return Ok(new
+                {
+                    id = fileId
+                });
             }
             catch (StorageItemNotFoundException ex)
             {

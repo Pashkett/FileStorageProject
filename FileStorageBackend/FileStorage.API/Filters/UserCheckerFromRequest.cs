@@ -15,17 +15,18 @@ namespace FileStorage.API.Filters
                 context.HttpContext.RequestServices.GetService(typeof(IConfiguration)) as IConfiguration;
 
             string userParamName = configuration.GetValue<string>("UserKeyParameter");
-            
-            var authService = 
+
+            var authService =
                 context.HttpContext.RequestServices.GetService(typeof(IAuthService)) as IAuthService;
 
-            var userRequested = 
+            var userRequested =
                 await authService.GetRequestedUser(context.HttpContext.User);
 
             if (userRequested == null)
             {
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 context.Result = new JsonResult("Unauthorized");
+
                 return;
             }
             else

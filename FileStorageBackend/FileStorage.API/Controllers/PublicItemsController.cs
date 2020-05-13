@@ -47,8 +47,10 @@ namespace FileStorage.API.Controllers
             {
                 await publicItemsService.MoveFilePrivateAsync(userRequested, fileId);
 
-                return Ok(
-                    new { Id = fileId });
+                return Ok(new
+                {
+                    Id = fileId
+                });
             }
             catch (StorageItemNotFoundException ex)
             {
