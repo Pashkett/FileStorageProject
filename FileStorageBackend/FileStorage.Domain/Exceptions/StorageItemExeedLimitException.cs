@@ -2,12 +2,12 @@
 
 namespace FileStorage.Domain.Exceptions
 {
-    public class StorageItemExeedLimitException : Exception
+    public class StorageItemExceedLimitException : Exception
     {
-        public StorageItemExeedLimitException() { }
-        public StorageItemExeedLimitException(string message) : base(message) { }
-        public StorageItemExeedLimitException(string message, Exception inner) : base(message, inner) { }
-        protected StorageItemExeedLimitException(
+        public StorageItemExceedLimitException() { }
+        public StorageItemExceedLimitException(string message) : base(message) { }
+        public StorageItemExceedLimitException(string message, Exception inner) : base(message, inner) { }
+        protected StorageItemExceedLimitException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
