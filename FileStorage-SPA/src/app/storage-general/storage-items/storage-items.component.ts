@@ -51,30 +51,7 @@ export class StorageItemsComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  private moveToRecycleBin(item: StorageItem) {
-    this.actualItemsService.moveToRecycleBin(item.id).subscribe(
-      result => {
-        console.log(result);
-        const index: number = this.storageItems.indexOf(item);
-        if (index !== -1) {
-          this.storageItems.splice(index, 1);
-        }
-      },
-      error => console.log(error)
-    );
-  }
-
-  private moveToPublic(item: StorageItem) {
-    this.actualItemsService.moveToPublic(item.id).subscribe(
-      result => {
-        console.log(result)
-        item.isPublic = true;
-      },
-      error => console.log(error)
-    );
-  }
-
-  public downloadActualItems(id: string, name: string) {
+  downloadActualItems(id: string, name: string) {
     this.actualItemsService.downloadActualFile(id).subscribe(
       data => {
         switch (data.type) {
@@ -94,6 +71,29 @@ export class StorageItemsComponent implements OnInit {
       error => {
         console.log(error);
       });
+  }
+
+  private moveToRecycleBin(item: StorageItem) {
+    this.actualItemsService.moveToRecycleBin(item.id).subscribe(
+      result => {
+        console.log(result);
+        const index: number = this.storageItems.indexOf(item);
+        if (index !== -1) {
+          this.storageItems.splice(index, 1);
+        }
+      },
+      error => console.log(error)
+    );
+  }
+
+  private moveToPublic(item: StorageItem) {
+    this.actualItemsService.moveToPublic(item.id).subscribe(
+      result => {
+        console.log(result);
+        item.isPublic = true;
+      },
+      error => console.log(error)
+    );
   }
 
 }
