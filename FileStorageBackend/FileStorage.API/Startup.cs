@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using FileStorage.API.Extensions;
-using FileStorage.Domain.Services.AuthenticationServices;
+using FileStorage.API.Filters;
 using FileStorage.Logger;
 using FileStorage.Domain.ServicesExtensions;
 using FileStorage.Domain.Services.UserServices;
 using FileStorage.Domain.Services.ActualItemsServices;
-using FileStorage.API.Filters;
+using FileStorage.Domain.Services.AuthenticationServices;
 using FileStorage.Domain.Services.RecycledItemsServices;
 using FileStorage.Domain.Services.PublicItemsServices;
 
