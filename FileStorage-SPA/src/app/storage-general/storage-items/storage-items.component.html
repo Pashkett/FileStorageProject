@@ -20,7 +20,7 @@
       <td>{{item?.displayName}}</td>
       <td>{{item?.extension}}</td>
       <td>{{item?.isPublic}}</td>
-      <td>{{item?.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
+      <td>{{item?.createdOn | date: 'mediumDate'}}</td>
       <td>
         <button class="btn btn-outline-success mt-1 mr-1" (click)="openModal(toPublicTemplate, item)"
           title="Share">
