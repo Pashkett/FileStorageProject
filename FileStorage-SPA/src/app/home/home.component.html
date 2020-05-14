@@ -3,8 +3,8 @@
     <h1>Store your files</h1>
     <p class="lead">Come on in to store your files... All you need to do is sign up!</p>
     <div class="text-center">
-      <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
-      <button class="btn btn-warning btn-lg">Learn more</button>
+      <button class="btn btn-primary btn-lg mr-2" [disabled]="loggedIn()" (click)="registerToggle()">Register</button>
+      <button class="btn btn-warning btn-lg" (click)="moveToFiles()">Go to your files</button>
     </div>
   </div>
 
