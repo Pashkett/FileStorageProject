@@ -13,6 +13,7 @@ using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Utilities;
 using FileStorage.Domain.Exceptions;
+using FileStorage.Domain.PagingHelpers;
 
 namespace FileStorage.Domain.Services.ActualItemsServices
 {
@@ -49,6 +50,21 @@ namespace FileStorage.Domain.Services.ActualItemsServices
             var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
 
             return filesDto;
+        }
+
+        public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
+            GetActualFilesByUserPagedAsync(UserDto userDto,
+                                           StorageItemsRequestParameters itemsParams)
+        {
+            var user = mapper.Map<UserDto, User>(userDto);
+
+            var files = await unitOfWork.StorageItems.GetAllFilesByUserAsync(user);
+
+            var pagingResult = PagingManager<StorageItem>.ProcessPaging(files, itemsParams.PageNumber, itemsParams.PageSize);
+            
+            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(pagingResult.resultedCollection);
+
+            return (filesDto, pagingResult.paginationHeader);
         }
 
         public async Task<FileItemDto> CreateFileAsync(UserDto userDto, IFormFile file)
@@ -201,5 +217,7 @@ namespace FileStorage.Domain.Services.ActualItemsServices
 
             return file;
         }
+
+
     }
 }

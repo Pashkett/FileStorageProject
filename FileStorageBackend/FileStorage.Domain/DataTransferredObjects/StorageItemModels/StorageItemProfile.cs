@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FileStorage.Data.Models;
+using FileStorage.Domain.PagingHelpers;
 
 namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
 {

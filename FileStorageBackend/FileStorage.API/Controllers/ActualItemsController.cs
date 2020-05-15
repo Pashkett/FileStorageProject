@@ -10,6 +10,8 @@ using FileStorage.API.Filters;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using System.Collections.Generic;
+using FileStorage.Domain.PagingHelpers;
+using AutoMapper;
 
 namespace FileStorage.API.Controllers
 {
@@ -18,30 +20,50 @@ namespace FileStorage.API.Controllers
     public class ActualItemsController : ControllerBase
     {
         private readonly IActualItemsService actualItemsService;
+        private readonly IMapper mapper;
         private readonly string userParamName;
 
         public ActualItemsController(IActualItemsService actualItemsService,
-                                     IConfiguration configuration)
+                                     IConfiguration configuration,
+                                     IMapper mapper)
 
         {
             this.actualItemsService = actualItemsService;
+            this.mapper = mapper;
             userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
 
 
+        //[Authorize(Policy = "AllRegisteredUsers")]
+        //[ServiceFilter(typeof(UserCheckerFromRequest))]
+        //[HttpGet("files")]
+        //public async Task<IActionResult> GetAllActualFilesForUser()
+        //{
+        //    var userRequested = GetUserFromContext(userParamName);
+
+        //    var files = await actualItemsService.GetActualFilesByUserAsync(userRequested);
+
+        //    if (files == null || files.Count() == 0)
+        //        return NoContent();
+
+        //    return Ok(files);
+        //}
+
         [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
-        public async Task<IActionResult> GetAllActualFilesForUser()
+        public async Task<IActionResult> GetAllActualFilesForUser([FromQuery]StorageItemsRequestParameters filesParams)
         {
             var userRequested = GetUserFromContext(userParamName);
 
-            var files = await actualItemsService.GetActualFilesByUserAsync(userRequested);
+            var paginResults = await actualItemsService.GetActualFilesByUserPagedAsync(userRequested, filesParams);
 
-            if (files == null || files.Count() == 0)
+            if (paginResults.pagedList == null || paginResults.pagedList.Count() == 0)
                 return NoContent();
 
-            return Ok(files);
+            Response.AddPagination(paginResults.paginationHeader);
+
+            return Ok(paginResults.pagedList);
         }
 
         [Authorize(Policy = "AllRegisteredUsers")]
