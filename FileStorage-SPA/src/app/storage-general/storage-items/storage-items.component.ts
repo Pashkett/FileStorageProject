@@ -3,6 +3,7 @@ import { ActualItemsService } from '../../_services/actual-items.service';
 import { StorageItem } from '../../_models/storageitem';
 import { HttpEventType } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { PaginatedResult, Pagination } from 'src/app/_models/pagination';
 
 @Component({
   selector: 'app-storage-items',
@@ -13,6 +14,8 @@ export class StorageItemsComponent implements OnInit {
   storageItems: StorageItem[];
   modalRef: BsModalRef;
   selectedItem: StorageItem;
+  pagination: Pagination;
+  currentPage = 1;
 
   constructor(private actualItemsService: ActualItemsService,
               private modalService: BsModalService) { }
@@ -22,12 +25,21 @@ export class StorageItemsComponent implements OnInit {
   }
 
   getActualItems() {
-    this.actualItemsService.getActualFiles()
-      .subscribe((storageItems: StorageItem[]) => {
-        this.storageItems = storageItems;
+    this.actualItemsService.getActualFiles(this.currentPage)
+      .subscribe((paginatedResult: PaginatedResult<StorageItem[]>) => {
+        this.storageItems = paginatedResult.result;
+        if (paginatedResult?.pagination != null) {
+          this.pagination = paginatedResult.pagination;
+        }
       }, error => {
         console.log(error);
       });
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.currentPage = event.page;
+    this.getActualItems();
   }
 
   openModal(template: TemplateRef<any>, item: StorageItem) {

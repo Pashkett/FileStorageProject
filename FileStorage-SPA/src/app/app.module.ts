@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -62,6 +63,7 @@ export function tokenGetter() {
       BsDropdownModule.forRoot(),
       ModalModule.forRoot(),
       TabsModule.forRoot(),
+      PaginationModule.forRoot(),
       FileUploadModule,
       RouterModule.forRoot(fileStorageRoutes),
       JwtModule.forRoot({

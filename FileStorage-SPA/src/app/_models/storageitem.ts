@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export class StorageItem {
+export interface StorageItem {
     id?: string;
     displayName: string;
     extension: string;
