@@ -14,10 +14,6 @@ export class RecycledItemsService {
 
   constructor(private http: HttpClient) { }
 
-  // getRecycledFiles() {
-  //   return this.http.get(this.baseUrl + this.filesUrl);
-  // }
-
   getRecycledFiles(page = 1, itemsPerPage = 8): Observable<PaginatedResult<StorageItem[]>> {
     const paginatedResult: PaginatedResult<StorageItem[]> = new PaginatedResult<StorageItem[]>();
 

@@ -11,6 +11,7 @@ using System.IO;
 using FileStorage.Domain.Utilities;
 using FileStorage.Data.FileSystemManagers.StorageFileManager;
 using Microsoft.Extensions.Configuration;
+using FileStorage.Domain.PagingHelpers;
 
 namespace FileStorage.Domain.Services.PublicItemsServices
 {
@@ -39,6 +40,22 @@ namespace FileStorage.Domain.Services.PublicItemsServices
             var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
 
             return filesDto;
+        }
+
+        public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
+            GetPublicFilesPagedAsync(StorageItemsRequestParameters itemsParams)
+        {
+            var files = await unitOfWork.StorageItems.GetAllPublicFilesAsync();
+
+            var pagingResult = PagingManager<StorageItem>.ProcessPaging(
+                files,
+                itemsParams.PageNumber,
+                itemsParams.PageSize);
+
+            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(
+                pagingResult.resultedCollection);
+
+            return (filesDto, pagingResult.paginationHeader);
         }
 
         public async Task MoveFilePrivateAsync(UserDto userDto, string fileId)

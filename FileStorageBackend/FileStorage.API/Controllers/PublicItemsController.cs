@@ -7,6 +7,7 @@ using FileStorage.Domain.DataTransferredObjects.UserModels;
 using Microsoft.Extensions.Configuration;
 using FileStorage.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
+using FileStorage.Domain.PagingHelpers;
 
 namespace FileStorage.API.Controllers
 {
@@ -26,14 +27,17 @@ namespace FileStorage.API.Controllers
 
         [Authorize(Policy = "AllRegisteredUsers")]
         [HttpGet("files")]
-        public async Task<IActionResult> GetAllPublicFilesAsync()
+        public async Task<IActionResult> GetAllPublicFilesAsync(
+            [FromQuery]StorageItemsRequestParameters filesParams)
         {
-            var publicFiles = await publicItemsService.GetPublicFilesAsync();
+            var pagingResults = await publicItemsService.GetPublicFilesPagedAsync(filesParams);
 
-            if (publicFiles == null || publicFiles.Count() == 0)
+            if (pagingResults.pagedList == null || pagingResults.pagedList.Count() == 0)
                 return NoContent();
 
-            return Ok(publicFiles);
+            Response.AddPagination(pagingResults.paginationHeader);
+
+            return Ok(pagingResults.pagedList);
         }
 
         [Authorize(Policy = "MemberRoleRequired")]

@@ -10,11 +10,11 @@
             <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </th>
-        <th style="width: 10%;">Name</th>
-        <th style="width: 10%;">Extension</th>
-        <th style="width: 10%;">Owner</th>
-        <th style="width: 10%;">Creation Date</th>
-        <th style="width: 20%;">Actions</th>
+        <th style="width: 50%;">Name</th>
+        <th>Extension</th>
+        <th>Owner</th>
+        <th>Creation Date</th>
+        <th>Actions</th>
       </tr>
       <tr *ngFor="let item of publicItems">
         <td>
@@ -35,6 +35,21 @@
         </td>
       </tr>
     </table>
+  </div>
+</div>
+
+<div class="footer fixed-bottom">
+  <div class="d-flex justify-content-center mt-3">
+    <pagination 
+      [boundaryLinks]="true" 
+      [totalItems]="pagination?.totalItems"
+      [itemsPerPage]="pagination?.itemsPerPage" 
+      [(ngModel)] = "currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+      lastText="&raquo;">
+
+    </pagination>
   </div>
 </div>
 

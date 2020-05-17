@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PublicItemsService } from '../_services/public-items.service';
 import { HttpEventType } from '@angular/common/http';
 import { AuthService } from '../_services/auth.service';
+import { Pagination, PaginatedResult } from '../_models/pagination';
 
 @Component({
   selector: 'app-shared-items',
@@ -15,6 +16,8 @@ export class SharedItemsComponent implements OnInit {
   modalRef: BsModalRef;
   selectedItem: StorageItem;
   currentUserId: string = null;
+  pagination: Pagination;
+  currentPage = 1;
 
   constructor(private publicItemsService: PublicItemsService,
               private modalService: BsModalService,
@@ -25,12 +28,21 @@ export class SharedItemsComponent implements OnInit {
   }
 
   getPublicItems() {
-    this.publicItemsService.getPublicFiles()
-      .subscribe((recycledItems: StorageItem[]) => {
-        this.publicItems = recycledItems;
-      }, error => {
-        console.log(error);
-      });
+    this.publicItemsService.getPublicFiles(this.currentPage)
+    .subscribe((paginatedResult: PaginatedResult<StorageItem[]>) => {
+      this.publicItems = paginatedResult.result;
+      if (paginatedResult?.pagination != null) {
+        this.pagination = paginatedResult.pagination;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.currentPage = event.page;
+    this.getPublicItems();
   }
 
   getCurrentUserId(): string {
