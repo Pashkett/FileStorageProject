@@ -20,43 +20,26 @@ namespace FileStorage.API.Controllers
     public class ActualItemsController : ControllerBase
     {
         private readonly IActualItemsService actualItemsService;
-        private readonly IMapper mapper;
         private readonly string userParamName;
 
         public ActualItemsController(IActualItemsService actualItemsService,
-                                     IConfiguration configuration,
-                                     IMapper mapper)
+                                     IConfiguration configuration)
 
         {
             this.actualItemsService = actualItemsService;
-            this.mapper = mapper;
             userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
-
-
-        //[Authorize(Policy = "AllRegisteredUsers")]
-        //[ServiceFilter(typeof(UserCheckerFromRequest))]
-        //[HttpGet("files")]
-        //public async Task<IActionResult> GetAllActualFilesForUser()
-        //{
-        //    var userRequested = GetUserFromContext(userParamName);
-
-        //    var files = await actualItemsService.GetActualFilesByUserAsync(userRequested);
-
-        //    if (files == null || files.Count() == 0)
-        //        return NoContent();
-
-        //    return Ok(files);
-        //}
 
         [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
-        public async Task<IActionResult> GetAllActualFilesForUser([FromQuery]StorageItemsRequestParameters filesParams)
+        public async Task<IActionResult> GetAllActualFilesForUser(
+            [FromQuery]StorageItemsRequestParameters filesParams)
         {
             var userRequested = GetUserFromContext(userParamName);
 
-            var paginResults = await actualItemsService.GetActualFilesByUserPagedAsync(userRequested, filesParams);
+            var paginResults = 
+                await actualItemsService.GetActualFilesByUserPagedAsync(userRequested, filesParams);
 
             if (paginResults.pagedList == null || paginResults.pagedList.Count() == 0)
                 return NoContent();

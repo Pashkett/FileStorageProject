@@ -6,8 +6,8 @@ namespace FileStorage.Domain.PagingHelpers
 {
     public static class PagingManager<T>
     {
-        public static (IEnumerable<T> resultedCollection, PaginationHeader paginationHeader) ProcessPaging(
-            IEnumerable<T> source, int currentPage, int pageSize)
+        public static (IEnumerable<T> resultedCollection, PaginationHeader paginationHeader) 
+            ProcessPaging(IEnumerable<T> source, int currentPage, int pageSize)
         {
             var resultedCollection = source
                                         .Skip((currentPage - 1) * pageSize)

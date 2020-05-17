@@ -8,6 +8,7 @@ using FileStorage.API.Filters;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.Services.RecycledItemsServices;
+using FileStorage.Domain.PagingHelpers;
 
 namespace FileStorage.API.Controllers
 {
@@ -28,17 +29,20 @@ namespace FileStorage.API.Controllers
         [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
-        public async Task<IActionResult> GetAllRecycledFilesForUser()
+        public async Task<IActionResult> GetAllRecycledFilesForUser(
+            [FromQuery]StorageItemsRequestParameters filesParams)
         {
             var userRequested = (UserDto)HttpContext.Items[userParamName];
 
-            var recycledFiles =
-                await recycledItemsService.GetRecycledItemsByUserAsync(userRequested);
+            var paginResults =
+                await recycledItemsService.GetRecycledItemsByUserPagedAsync(userRequested, filesParams);
 
-            if (recycledFiles == null || recycledFiles.Count() == 0)
+            if (paginResults.pagedList == null || paginResults.pagedList.Count() == 0)
                 return NoContent();
 
-            return Ok(recycledFiles);
+            Response.AddPagination(paginResults.paginationHeader);
+
+            return Ok(paginResults.pagedList);
         }
 
         [Authorize(Policy = "AllRegisteredUsers")]

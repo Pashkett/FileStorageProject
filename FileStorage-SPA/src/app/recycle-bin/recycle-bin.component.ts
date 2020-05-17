@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { RecycledItemsService } from '../_services/recycled-items.service';
 import { StorageItem } from '../_models/storageitem';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Pagination, PaginatedResult } from '../_models/pagination';
 
 
 @Component({
@@ -13,6 +14,8 @@ export class RecycleBinComponent implements OnInit {
   recycledItems: StorageItem[];
   modalRef: BsModalRef;
   selectedItem: StorageItem;
+  pagination: Pagination;
+  currentPage = 1;
 
   constructor(private recycledItemsService: RecycledItemsService,
               private modalService: BsModalService) { }
@@ -22,12 +25,21 @@ export class RecycleBinComponent implements OnInit {
   }
 
   getAllRecycledItems() {
-    this.recycledItemsService.getRecycledFiles()
-      .subscribe((recycledItems: StorageItem[]) => {
-        this.recycledItems = recycledItems;
-      }, error => {
-        console.log(error);
-      });
+    this.recycledItemsService.getRecycledFiles(this.currentPage)
+    .subscribe((paginatedResult: PaginatedResult<StorageItem[]>) => {
+      this.recycledItems = paginatedResult.result;
+      if (paginatedResult?.pagination != null) {
+        this.pagination = paginatedResult.pagination;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.currentPage = event.page;
+    this.getAllRecycledItems();
   }
 
   openModal(template: TemplateRef<any>, item: StorageItem) {

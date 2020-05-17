@@ -53,16 +53,18 @@ namespace FileStorage.Domain.Services.ActualItemsServices
         }
 
         public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
-            GetActualFilesByUserPagedAsync(UserDto userDto,
-                                           StorageItemsRequestParameters itemsParams)
+            GetActualFilesByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams)
         {
             var user = mapper.Map<UserDto, User>(userDto);
 
             var files = await unitOfWork.StorageItems.GetAllFilesByUserAsync(user);
 
-            var pagingResult = PagingManager<StorageItem>.ProcessPaging(files, itemsParams.PageNumber, itemsParams.PageSize);
+            var pagingResult = PagingManager<StorageItem>.ProcessPaging(files,
+                itemsParams.PageNumber,
+                itemsParams.PageSize);
             
-            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(pagingResult.resultedCollection);
+            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(
+                pagingResult.resultedCollection);
 
             return (filesDto, pagingResult.paginationHeader);
         }

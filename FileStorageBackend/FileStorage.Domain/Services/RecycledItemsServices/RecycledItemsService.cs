@@ -10,7 +10,7 @@ using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.Utilities;
-
+using FileStorage.Domain.PagingHelpers;
 
 namespace FileStorage.Domain.Services.RecycledItemsServices
 {
@@ -43,6 +43,24 @@ namespace FileStorage.Domain.Services.RecycledItemsServices
             return filesDto;
         }
 
+        public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
+            GetRecycledItemsByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams)
+        {
+            var user = mapper.Map<UserDto, User>(userDto);
+
+            var files = await unitOfWork.StorageItems.GetAllRecycledFilesByUserAsync(user);
+
+            var pagingResult = PagingManager<StorageItem>.ProcessPaging(
+                files,
+                itemsParams.PageNumber,
+                itemsParams.PageSize);
+
+            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(
+                pagingResult.resultedCollection);
+
+            return (filesDto, pagingResult.paginationHeader);
+        }
+
         public async Task DeleteRecycledItemAsync(UserDto userDto, string fileId)
         {
             var file = await GetRecycledItemByUserAndItemIdAsync(userDto, fileId);
@@ -52,7 +70,6 @@ namespace FileStorage.Domain.Services.RecycledItemsServices
 
             unitOfWork.StorageItems.Remove(file);
             await unitOfWork.CommitAsync();
-
         }
 
         public async Task RestoreRecycledItemAsync(UserDto userDto, string fileId)

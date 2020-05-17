@@ -5,12 +5,15 @@
   <div class="row">
     <table class="table">
       <tr>
-        <th style="width: 3%;"></th>
-        <th style="width: 10%;">Name</th>
-        <th style="width: 10%;">Extension</th>
-        <th style="width: 10%;">Is Public</th>
-        <th style="width: 10%;">Creation Date</th>
-        <th style="width: 20%;">Actions</th>
+        <th style="width: 3%;">
+          <button class="btn btn-outline-success pull-right" title="Refresh" (click)="getAllRecycledItems()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+          </button></th>
+        <th style="width: 50%;">Name</th>
+        <th>Extension</th>
+        <th>Is Public</th>
+        <th>Creation Date</th>
+        <th>Actions</th>
       </tr>
       <tr *ngFor="let item of recycledItems">
         <td><i class="fa fa-file" aria-hidden="true"></i></td>
@@ -28,6 +31,21 @@
         </td>
       </tr>
     </table>
+  </div>
+</div>
+
+<div class="footer fixed-bottom">
+  <div class="d-flex justify-content-center mt-3">
+    <pagination 
+      [boundaryLinks]="true" 
+      [totalItems]="pagination?.totalItems"
+      [itemsPerPage]="pagination?.itemsPerPage" 
+      [(ngModel)] = "currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+      lastText="&raquo;">
+
+    </pagination>
   </div>
 </div>
 
