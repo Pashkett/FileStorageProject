@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FileStorage.Data.Models;
 using FileStorage.Data.Persistence.Interfaces;
+using FileStorage.Data.QueryModels;
 
 namespace FileStorage.Data.Persistence.Repositories
 {
@@ -16,15 +17,23 @@ namespace FileStorage.Data.Persistence.Repositories
         public StorageItemRepository(DbContext dbContext)
             : base(dbContext) { }
 
-        public async Task<IEnumerable<StorageItem>> GetAllFilesByUserAsync(User user)
+        public async Task<(IEnumerable<StorageItem> resultItems, int totalCount)>
+            GetActualFilesByUserAsync(User user, StorageItemsRequest itemsRequest)
         {
-            return await fileStorageContext.StorageItems
-                .Where(
-                    file => file.User == user
-                            && file.IsFolder == false
-                            && file.IsRecycled == false)
+            var items = fileStorageContext.StorageItems
+                .Where(file => file.User == user
+                               && file.IsFolder == false
+                               && file.IsRecycled == false);
+
+            var totalCount = await items.CountAsync();
+
+            var resultCollection = await items
+                .Skip((itemsRequest.PageNumber - 1) * itemsRequest.PageSize)
+                .Take(itemsRequest.PageSize)
                 .OrderBy(file => file.DisplayName)
                 .ToListAsync();
+
+            return (resultCollection, totalCount);
         }
 
         public async Task<StorageItem> GetFileByFileIdAsync(Guid fileId)
@@ -76,15 +85,23 @@ namespace FileStorage.Data.Persistence.Repositories
                               && folder.IsRecycled == false);
         }
 
-        public async Task<IEnumerable<StorageItem>> GetAllRecycledFilesByUserAsync(User user)
+        public async Task<(IEnumerable<StorageItem> resultItems, int totalCount)> 
+            GetRecycledFilesByUserAsync(User user, StorageItemsRequest itemsRequest)
         {
-            return await fileStorageContext.StorageItems
-                .Where(
-                    file => file.User == user
-                            && file.IsFolder == false
-                            && file.IsRecycled == true)
+            var items = fileStorageContext.StorageItems
+                .Where(file => file.User == user
+                               && file.IsFolder == false
+                               && file.IsRecycled == true);
+
+            var totalCount = await items.CountAsync();
+
+            var resultItems = await items
+                .Skip((itemsRequest.PageNumber - 1) * itemsRequest.PageSize)
+                .Take(itemsRequest.PageSize)
                 .OrderBy(file => file.DisplayName)
                 .ToListAsync();
+
+            return (resultItems, totalCount);
         }
 
         public async Task<StorageItem> GetRecycledFileByUserAndFileIdAsync(User user,
@@ -98,16 +115,24 @@ namespace FileStorage.Data.Persistence.Repositories
                             && file.IsRecycled == true);
         }
 
-        public async Task<IEnumerable<StorageItem>> GetAllPublicFilesAsync()
+        public async Task<(IEnumerable<StorageItem> resultItems, int totalCount)> 
+            GetPublicFilesAsync(StorageItemsRequest itemsRequest)
         {
-            return await fileStorageContext.StorageItems
+            var items = fileStorageContext.StorageItems
                 .Include(file => file.User)
-                .Where(
-                    file => file.IsPublic == true
-                            && file.IsFolder == false
-                            && file.IsRecycled == false)
+                .Where(file => file.IsPublic == true
+                               && file.IsFolder == false
+                               && file.IsRecycled == false);
+
+            var totalCount = await items.CountAsync();
+
+            var resultItems = await items
+                .Skip((itemsRequest.PageNumber - 1) * itemsRequest.PageSize)
+                .Take(itemsRequest.PageSize)
                 .OrderBy(file => file.DisplayName)
                 .ToListAsync();
+
+            return (resultItems, totalCount);
         }
 
         public async Task<StorageItem> GetPublicFileByUserAndFileIdAsync(User user,

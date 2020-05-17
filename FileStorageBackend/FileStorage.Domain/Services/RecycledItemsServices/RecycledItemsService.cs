@@ -3,14 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using FileStorage.Data.FileSystemManagers.StorageFileManager;
-using FileStorage.Data.Models;
-using FileStorage.Data.UnitOfWork;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.Utilities;
 using FileStorage.Domain.PagingHelpers;
+using FileStorage.Domain.RequestModels;
+using FileStorage.Data.QueryModels;
+using FileStorage.Data.FileSystemManagers.StorageFileManager;
+using FileStorage.Data.Models;
+using FileStorage.Data.UnitOfWork;
+
 
 namespace FileStorage.Domain.Services.RecycledItemsServices
 {
@@ -32,33 +35,19 @@ namespace FileStorage.Domain.Services.RecycledItemsServices
             targetPath = configuration.GetValue<string>("StoredFilesPath");
         }
 
-        public async Task<IEnumerable<FileItemDto>> GetRecycledItemsByUserAsync(UserDto userDto)
-        {
-            var user = mapper.Map<UserDto, User>(userDto);
-
-            var files = await unitOfWork.StorageItems.GetAllRecycledFilesByUserAsync(user);
-
-            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
-
-            return filesDto;
-        }
-
         public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
             GetRecycledItemsByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams)
         {
             var user = mapper.Map<UserDto, User>(userDto);
+            var parameters = mapper.Map<StorageItemsRequest>(itemsParams);
 
-            var files = await unitOfWork.StorageItems.GetAllRecycledFilesByUserAsync(user);
+            var (files, totalCount) = 
+                await unitOfWork.StorageItems.GetRecycledFilesByUserAsync(user, parameters);
 
-            var pagingResult = PagingManager<StorageItem>.ProcessPaging(
-                files,
-                itemsParams.PageNumber,
-                itemsParams.PageSize);
+            var pagingHeader = PagingManager.PrepareHeader(totalCount, itemsParams);
+            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
 
-            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(
-                pagingResult.resultedCollection);
-
-            return (filesDto, pagingResult.paginationHeader);
+            return (filesDto, pagingHeader);
         }
 
         public async Task DeleteRecycledItemAsync(UserDto userDto, string fileId)

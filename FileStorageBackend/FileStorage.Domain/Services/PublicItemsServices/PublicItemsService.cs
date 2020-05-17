@@ -1,17 +1,20 @@
 ﻿using AutoMapper;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FileStorage.Data.Models;
-using FileStorage.Data.UnitOfWork;
+using Microsoft.Extensions.Configuration;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Exceptions;
-using System.IO;
 using FileStorage.Domain.Utilities;
-using FileStorage.Data.FileSystemManagers.StorageFileManager;
-using Microsoft.Extensions.Configuration;
 using FileStorage.Domain.PagingHelpers;
+using FileStorage.Domain.RequestModels;
+using FileStorage.Data.Models;
+using FileStorage.Data.UnitOfWork;
+using FileStorage.Data.FileSystemManagers.StorageFileManager;
+using FileStorage.Data.QueryModels;
+
 
 namespace FileStorage.Domain.Services.PublicItemsServices
 {
@@ -33,29 +36,19 @@ namespace FileStorage.Domain.Services.PublicItemsServices
             targetPath = configuration.GetValue<string>("StoredFilesPath");
         }
 
-        public async Task<IEnumerable<FileItemDto>> GetPublicFilesAsync()
-        {
-            var files = await unitOfWork.StorageItems.GetAllPublicFilesAsync();
-
-            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
-
-            return filesDto;
-        }
-
         public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
             GetPublicFilesPagedAsync(StorageItemsRequestParameters itemsParams)
         {
-            var files = await unitOfWork.StorageItems.GetAllPublicFilesAsync();
+            var parameters = mapper.Map<StorageItemsRequest>(itemsParams);
 
-            var pagingResult = PagingManager<StorageItem>.ProcessPaging(
-                files,
-                itemsParams.PageNumber,
-                itemsParams.PageSize);
+            var (files, totalCount) = 
+                await unitOfWork.StorageItems.GetPublicFilesAsync(parameters);
 
-            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(
-                pagingResult.resultedCollection);
+            var pagingHeader = PagingManager.PrepareHeader(totalCount, itemsParams);
 
-            return (filesDto, pagingResult.paginationHeader);
+            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
+
+            return (filesDto, pagingHeader);
         }
 
         public async Task MoveFilePrivateAsync(UserDto userDto, string fileId)

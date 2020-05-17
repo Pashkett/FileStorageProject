@@ -1,4 +1,4 @@
-﻿namespace FileStorage.Domain.PagingHelpers
+﻿namespace FileStorage.Domain.RequestModels
 {
     public abstract class RequestParameters
     {

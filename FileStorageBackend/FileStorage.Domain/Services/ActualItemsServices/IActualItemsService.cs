@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using FileStorage.Data.Models;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.PagingHelpers;
+using FileStorage.Domain.RequestModels;
+using FileStorage.Data.Models;
 
 namespace FileStorage.Domain.Services.ActualItemsServices
 {
     public interface IActualItemsService
     {
-        Task<IEnumerable<FileItemDto>> GetActualFilesByUserAsync(UserDto userDto);
         Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
             GetActualFilesByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams);
         Task<FileItemDto> CreateFileAsync(UserDto userDto, IFormFile file);

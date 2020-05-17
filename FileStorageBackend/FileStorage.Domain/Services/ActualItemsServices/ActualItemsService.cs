@@ -5,15 +5,17 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using FileStorage.Data.FileSystemManagers.StorageFileManager;
-using FileStorage.Data.FileSystemManagers.StorageFolderManager;
-using FileStorage.Data.Models;
-using FileStorage.Data.UnitOfWork;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Utilities;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.PagingHelpers;
+using FileStorage.Domain.RequestModels;
+using FileStorage.Data.FileSystemManagers.StorageFileManager;
+using FileStorage.Data.FileSystemManagers.StorageFolderManager;
+using FileStorage.Data.Models;
+using FileStorage.Data.UnitOfWork;
+using FileStorage.Data.QueryModels;
 
 namespace FileStorage.Domain.Services.ActualItemsServices
 {
@@ -41,32 +43,20 @@ namespace FileStorage.Domain.Services.ActualItemsServices
         }
 
         #region Files Operations
-        public async Task<IEnumerable<FileItemDto>> GetActualFilesByUserAsync(UserDto userDto)
-        {
-            var user = mapper.Map<UserDto, User>(userDto);
-
-            var files = await unitOfWork.StorageItems.GetAllFilesByUserAsync(user);
-
-            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
-
-            return filesDto;
-        }
 
         public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
             GetActualFilesByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams)
         {
             var user = mapper.Map<UserDto, User>(userDto);
+            var parameters = mapper.Map<StorageItemsRequest>(itemsParams);
 
-            var files = await unitOfWork.StorageItems.GetAllFilesByUserAsync(user);
+            var (files, totalCount) = 
+                await unitOfWork.StorageItems.GetActualFilesByUserAsync(user, parameters);
 
-            var pagingResult = PagingManager<StorageItem>.ProcessPaging(files,
-                itemsParams.PageNumber,
-                itemsParams.PageSize);
-            
-            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(
-                pagingResult.resultedCollection);
+            var pagingHeader = PagingManager.PrepareHeader(totalCount, itemsParams);
+            var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
 
-            return (filesDto, pagingResult.paginationHeader);
+            return (filesDto, pagingHeader);
         }
 
         public async Task<FileItemDto> CreateFileAsync(UserDto userDto, IFormFile file)

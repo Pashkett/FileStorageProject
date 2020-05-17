@@ -1,13 +1,14 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FileStorage.Domain.Services.PublicItemsServices;
-using FileStorage.API.Filters;
-using FileStorage.Domain.DataTransferredObjects.UserModels;
-using Microsoft.Extensions.Configuration;
-using FileStorage.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
-using FileStorage.Domain.PagingHelpers;
+using Microsoft.Extensions.Configuration;
+using FileStorage.API.Filters;
+using FileStorage.API.Extensions;
+using FileStorage.Domain.Services.PublicItemsServices;
+using FileStorage.Domain.Exceptions;
+using FileStorage.Domain.DataTransferredObjects.UserModels;
+using FileStorage.Domain.RequestModels;
 
 namespace FileStorage.API.Controllers
 {
@@ -30,7 +31,8 @@ namespace FileStorage.API.Controllers
         public async Task<IActionResult> GetAllPublicFilesAsync(
             [FromQuery]StorageItemsRequestParameters filesParams)
         {
-            var pagingResults = await publicItemsService.GetPublicFilesPagedAsync(filesParams);
+            var pagingResults = 
+                await publicItemsService.GetPublicFilesPagedAsync(filesParams);
 
             if (pagingResults.pagedList == null || pagingResults.pagedList.Count() == 0)
                 return NoContent();

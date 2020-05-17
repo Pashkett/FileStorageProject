@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using FileStorage.API.Filters;
+using FileStorage.API.Extensions;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.Services.RecycledItemsServices;
-using FileStorage.Domain.PagingHelpers;
+using FileStorage.Domain.RequestModels;
 
 namespace FileStorage.API.Controllers
 {

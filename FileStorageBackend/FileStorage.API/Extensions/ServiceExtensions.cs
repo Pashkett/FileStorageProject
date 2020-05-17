@@ -8,7 +8,7 @@ using FileStorage.Logger;
 
 namespace FileStorage.API.Extensions
 {
-    public static class ServiceExtension
+    public static class ServiceExtensions
     {
         public static void ConfigureCors(this IServiceCollection service)
         {

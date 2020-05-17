@@ -1,15 +1,16 @@
-﻿using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
+﻿using System.IO;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.PagingHelpers;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+using FileStorage.Domain.RequestModels;
+
 
 namespace FileStorage.Domain.Services.PublicItemsServices
 {
     public interface IPublicItemsService
     {
-        Task<IEnumerable<FileItemDto>> GetPublicFilesAsync();
         Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)>
             GetPublicFilesPagedAsync(StorageItemsRequestParameters itemsParams);
         Task MoveFilePrivateAsync(UserDto userDto, string fileId);

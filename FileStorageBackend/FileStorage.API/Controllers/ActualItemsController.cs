@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using FileStorage.API.Filters;
+using FileStorage.API.Extensions;
 using FileStorage.Domain.Services.ActualItemsServices;
 using FileStorage.Domain.Exceptions;
-using FileStorage.API.Filters;
+using FileStorage.Domain.RequestModels;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
-using System.Collections.Generic;
-using FileStorage.Domain.PagingHelpers;
-using AutoMapper;
 
 namespace FileStorage.API.Controllers
 {

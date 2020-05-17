@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Text.Json;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using FileStorage.Domain.PagingHelpers;
 
-namespace FileStorage.Domain.PagingHelpers
+namespace FileStorage.API.Extensions
 {
     public static class ResponseExtension
     {
