@@ -7,7 +7,8 @@
 
         private long minSize = 0;
         private long maxSize = 500 * 1024 * 1024;
-        
+
+        public bool IsValidSizeRange => MaxSize > MinSize;
         public long MinSize 
         { 
             get => minSize; 
@@ -20,7 +21,7 @@
             set => maxSize = (value > MaxLength) ? MaxLength : value;
         }
 
-        public bool IsValidSizeRange => MaxSize > MinSize;
+        public string OrderBy { get; set; }
     }
 }
 

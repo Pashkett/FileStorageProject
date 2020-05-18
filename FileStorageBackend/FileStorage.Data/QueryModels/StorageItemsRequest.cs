@@ -6,5 +6,6 @@
         public int PageSize { get; set; }
         public long MinSize { get; set; }
         public long MaxSize { get; set; }
+        public string OrderBy { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace FileStorage.Data.Persistence.Repositories
 
             var resultCollection = await items
                 .PageStorageItems(itemsRequest.PageNumber, itemsRequest.PageSize)
-                .OrderBy(file => file.DisplayName)
+                .Sort(itemsRequest.OrderBy)
                 .ToListAsync();
 
             return (resultCollection, totalCount);

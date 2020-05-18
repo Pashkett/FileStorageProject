@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Linq.Dynamic.Core;
 using FileStorage.Data.Models;
 
 namespace FileStorage.Data.Persistence.Extensions
@@ -23,6 +24,21 @@ namespace FileStorage.Data.Persistence.Extensions
             return storageItems
                 .Where(storageItem => storageItem.Size >= minSize
                                       && storageItem.Size <= maxSize);
+        }
+
+        public static IQueryable<StorageItem> Sort(
+            this IQueryable<StorageItem> storageItems,
+            string orderByString)
+        {
+            if (string.IsNullOrWhiteSpace(orderByString))
+                return storageItems.OrderBy(storageItem => storageItem.DisplayName);
+
+            string orderQuery = orderByString.CreateOrderQuery<StorageItem>();
+
+            if (string.IsNullOrWhiteSpace(orderQuery))
+                return storageItems.OrderBy(storageItem => storageItem.DisplayName);
+
+            return storageItems.OrderBy(orderQuery);
         }
     }
 }
