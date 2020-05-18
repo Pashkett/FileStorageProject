@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using FileStorage.Data.Models;
 using FileStorage.Data.Persistence.Interfaces;
 using FileStorage.Data.QueryModels;
+using FileStorage.Data.Persistence.Extensions;
 
 namespace FileStorage.Data.Persistence.Repositories
 {
@@ -28,8 +29,7 @@ namespace FileStorage.Data.Persistence.Repositories
             var totalCount = await items.CountAsync();
 
             var resultCollection = await items
-                .Skip((itemsRequest.PageNumber - 1) * itemsRequest.PageSize)
-                .Take(itemsRequest.PageSize)
+                .PageStorageItems(itemsRequest.PageNumber, itemsRequest.PageSize)
                 .OrderBy(file => file.DisplayName)
                 .ToListAsync();
 
@@ -96,8 +96,7 @@ namespace FileStorage.Data.Persistence.Repositories
             var totalCount = await items.CountAsync();
 
             var resultItems = await items
-                .Skip((itemsRequest.PageNumber - 1) * itemsRequest.PageSize)
-                .Take(itemsRequest.PageSize)
+                .PageStorageItems(itemsRequest.PageNumber, itemsRequest.PageSize)
                 .OrderBy(file => file.DisplayName)
                 .ToListAsync();
 
@@ -127,8 +126,7 @@ namespace FileStorage.Data.Persistence.Repositories
             var totalCount = await items.CountAsync();
 
             var resultItems = await items
-                .Skip((itemsRequest.PageNumber - 1) * itemsRequest.PageSize)
-                .Take(itemsRequest.PageSize)
+                .PageStorageItems(itemsRequest.PageNumber, itemsRequest.PageSize)
                 .OrderBy(file => file.DisplayName)
                 .ToListAsync();
 
