@@ -15,7 +15,7 @@ export class ActualItemsService {
 
   constructor(private http: HttpClient) { }
 
-  getActualFiles(page = 1, itemsPerPage = 8): Observable<PaginatedResult<StorageItem[]>> {
+  getActualFiles(page?, itemsPerPage?, itemParams?): Observable<PaginatedResult<StorageItem[]>> {
     const paginatedResult: PaginatedResult<StorageItem[]> = new PaginatedResult<StorageItem[]>();
 
     let params = new HttpParams();
@@ -23,6 +23,11 @@ export class ActualItemsService {
     if (page != null) {
       params = params.append('pageNumber', page.toString());
       params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    if (itemParams != null) {
+      params = params.append('minSize', (itemParams.minSize * 1024 * 1024).toString());
+      params = params.append('maxSize', (itemParams.maxSize * 1024 * 1024).toString());
     }
 
     return this.http.get<StorageItem[]>(this.baseUrl + 'ActualItems/files/', {observe: 'response', params})

@@ -16,16 +16,21 @@ export class StorageItemsComponent implements OnInit {
   selectedItem: StorageItem;
   pagination: Pagination;
   currentPage = 1;
+  pageSize = 7;
+  itemParams: any = {};
 
   constructor(private actualItemsService: ActualItemsService,
               private modalService: BsModalService) { }
 
   ngOnInit() {
+    this.itemParams.minSize = 0;
+    this.itemParams.maxSize = 500;
+
     this.getActualItems();
   }
 
   getActualItems() {
-    this.actualItemsService.getActualFiles(this.currentPage)
+    this.actualItemsService.getActualFiles(this.currentPage, this.pageSize, this.itemParams)
       .subscribe((paginatedResult: PaginatedResult<StorageItem[]>) => {
         this.storageItems = paginatedResult.result;
         if (paginatedResult?.pagination != null) {
@@ -39,6 +44,12 @@ export class StorageItemsComponent implements OnInit {
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.currentPage = event.page;
+    this.getActualItems();
+  }
+
+  resetFilters() {
+    this.itemParams.minSize = 0;
+    this.itemParams.maxSize = 500;
     this.getActualItems();
   }
 

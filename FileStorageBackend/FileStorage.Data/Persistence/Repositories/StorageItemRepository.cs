@@ -24,7 +24,8 @@ namespace FileStorage.Data.Persistence.Repositories
             var items = fileStorageContext.StorageItems
                 .Where(file => file.User == user
                                && file.IsFolder == false
-                               && file.IsRecycled == false);
+                               && file.IsRecycled == false)
+                .FilterStorageItemsBySize(itemsRequest.MinSize, itemsRequest.MaxSize);
 
             var totalCount = await items.CountAsync();
 

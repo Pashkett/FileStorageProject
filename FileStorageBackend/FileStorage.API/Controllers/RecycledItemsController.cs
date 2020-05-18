@@ -33,6 +33,9 @@ namespace FileStorage.API.Controllers
         public async Task<IActionResult> GetAllRecycledFilesForUser(
             [FromQuery]StorageItemsRequestParameters filesParams)
         {
+            if (!filesParams.IsValidSizeRange)
+                return BadRequest("Max size can't be less than min size.");
+
             var userRequested = (UserDto)HttpContext.Items[userParamName];
 
             var paginResults =

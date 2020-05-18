@@ -1,14 +1,38 @@
 <div class="container">
 
+  <form class="form-inline mt-2" #form="ngForm" (ngSubmit)="getActualItems()" novalidate>
+    <div class="form-group">
+      <label for="minAge">Size From</label>
+      <input type="number" class="form-control ml-1" style="width: 70px" id="minSize" 
+        [(ngModel)]="this.itemParams.minSize" name="minSize">
+    </div>
+  
+    <div class="form-group px-2">
+      <label for="maxAge">Size To</label>
+      <input type="number" class="form-control ml-1" style="width: 70px" id="maxSize" 
+      [(ngModel)]="this.itemParams.maxSize" name="maxSize">
+    </div>
+  
+    <button type="submit" class="btn btn-outline-success  mr-1" style="margin-left:10px">Apply Filter</button>
+    <button type="button" class="btn btn-info" (click)="resetFilters()" style="margin-left:10px">Reset Filter</button>
+    
+    <div class="text-right" style="margin-left:20px">
+      <h6><b>Total Items - {{pagination?.totalItems}}</b></h6>
+    </div>
+    
+  </form>
+
   <div>
-    <table class="table">
+    <table class="table mt-2">
       <tr>
         <th style="width: 3%;">
           <button class="btn btn-outline-success pull-right" title="Refresh" (click)="getActualItems()">
             <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </th>
-        <th style="width: 50%;">Name</th>
+        <th style="width: 50%;">
+          Name
+        </th>
         <th>Size</th>
         <th>Extension</th>
         <th>Is Public</th>

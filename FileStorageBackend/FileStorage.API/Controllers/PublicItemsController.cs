@@ -31,6 +31,9 @@ namespace FileStorage.API.Controllers
         public async Task<IActionResult> GetAllPublicFilesAsync(
             [FromQuery]StorageItemsRequestParameters filesParams)
         {
+            if (!filesParams.IsValidSizeRange)
+                return BadRequest("Max size can't be less than min size.");
+
             var pagingResults = 
                 await publicItemsService.GetPublicFilesPagedAsync(filesParams);
 

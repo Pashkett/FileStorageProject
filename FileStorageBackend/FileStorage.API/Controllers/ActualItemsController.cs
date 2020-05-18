@@ -36,6 +36,9 @@ namespace FileStorage.API.Controllers
         public async Task<IActionResult> GetAllActualFilesForUser(
             [FromQuery]StorageItemsRequestParameters filesParams)
         {
+            if (!filesParams.IsValidSizeRange)
+                return BadRequest("Max size can't be less than min size.");
+
             var userRequested = GetUserFromContext(userParamName);
 
             var paginResults = 

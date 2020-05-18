@@ -4,5 +4,7 @@
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public long MinSize { get; set; }
+        public long MaxSize { get; set; }
     }
 }
