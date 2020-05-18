@@ -9,6 +9,7 @@ namespace FileStorage.Domain.DataTransferredObjects.StorageItemModels
         public Guid Id { get; set; }
         public string DisplayName { get; set; }
         public string Extension { get; set; }
+        public long Size { get; set; }
         public bool IsFolder { get; set; }
         public bool IsRecycled { get; set; }
         public bool IsPublic { get; set; }

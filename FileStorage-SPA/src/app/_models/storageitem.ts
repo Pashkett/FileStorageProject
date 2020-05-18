@@ -4,6 +4,7 @@ export interface StorageItem {
     id?: string;
     displayName: string;
     extension: string;
+    size: number;
     isFolder: boolean;
     isRecycled: boolean;
     isPublic: boolean;

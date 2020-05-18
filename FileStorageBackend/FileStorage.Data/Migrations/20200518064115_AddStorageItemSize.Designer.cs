@@ -4,14 +4,16 @@ using FileStorage.Data.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FileStorage.Data.Migrations
 {
     [DbContext(typeof(FileStorageContext))]
-    partial class FileStorageContextModelSnapshot : ModelSnapshot
+    [Migration("20200518064115_AddStorageItemSize")]
+    partial class AddStorageItemSize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,8 +63,8 @@ namespace FileStorage.Data.Migrations
                         .HasColumnType("nvarchar(900)")
                         .HasMaxLength(900);
 
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
 
                     b.Property<string>("TrustedName")
                         .IsRequired()

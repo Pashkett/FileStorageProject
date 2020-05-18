@@ -10,6 +10,7 @@ namespace FileStorage.Data.Models
         public string TrustedName { get; set; }
         public string Extension { get; set; }
         public string DisplayName { get; set; }
+        public long Size { get; set; }
         public bool IsFolder { get; set; }
         public bool IsPrimaryFolder { get; set; }
         public bool IsRecycled { get; set; }

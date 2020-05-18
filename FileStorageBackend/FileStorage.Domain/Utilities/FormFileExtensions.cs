@@ -53,6 +53,7 @@ namespace FileStorage.Domain.Utilities
                 IsPrimaryFolder = false,
                 IsRecycled = false,
                 IsPublic = false,
+                Size = formFile.Length,
                 UserId = user.Id,
                 ParentFolder = primaryFolder
             };

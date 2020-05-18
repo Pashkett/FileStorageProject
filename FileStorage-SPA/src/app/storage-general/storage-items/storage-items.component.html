@@ -9,6 +9,7 @@
           </button>
         </th>
         <th style="width: 50%;">Name</th>
+        <th>Size</th>
         <th>Extension</th>
         <th>Is Public</th>
         <th>Creation Date</th>
@@ -19,6 +20,7 @@
           <i class="fa fa-file" aria-hidden="true"></i>
         </td>
         <td>{{item?.displayName}}</td>
+        <td>{{item?.size/1024/1024 |  number:'1.0-2'}} MB</td>
         <td>{{item?.extension}}</td>
         <td>{{item?.isPublic}}</td>
         <td>{{item?.createdOn | date: 'mediumDate'}}</td>

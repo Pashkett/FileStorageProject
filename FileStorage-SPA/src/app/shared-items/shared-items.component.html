@@ -11,6 +11,7 @@
           </button>
         </th>
         <th style="width: 50%;">Name</th>
+        <th>Size</th>
         <th>Extension</th>
         <th>Owner</th>
         <th>Creation Date</th>
@@ -21,9 +22,10 @@
           <i class="fa fa-file" aria-hidden="true"></i>
         </td>
         <td>{{item?.displayName}}</td>
+        <td>{{item?.size/1024/1024 |  number:'1.0-2'}} MB</td>
         <td>{{item?.extension}}</td>
         <td>{{item?.user.userName}}</td>
-        <td>{{item?.createdOn | date:'yyyy-MM-dd hh:mm'}}</td>
+        <td>{{item?.createdOn | date: 'mediumDate'}}</td>
         <td>
           <button [disabled]="item?.user.userName != getCurrentUserId()" class="btn btn-outline-success mt-1 mr-1" (click)="openModal(privateTemplate, item)" title="Make Private">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
