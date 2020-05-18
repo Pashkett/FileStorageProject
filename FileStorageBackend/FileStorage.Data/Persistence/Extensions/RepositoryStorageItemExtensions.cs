@@ -7,9 +7,7 @@ namespace FileStorage.Data.Persistence.Extensions
     public static class RepositoryStorageItemExtensions
     {
         public static IQueryable<StorageItem> PageStorageItems(
-            this IQueryable<StorageItem> storageItems, 
-            int pageNumber, 
-            int pageSize)
+            this IQueryable<StorageItem> storageItems, int pageNumber, int pageSize)
         {
             return storageItems
                 .Skip((pageNumber - 1) * pageSize)
@@ -17,18 +15,27 @@ namespace FileStorage.Data.Persistence.Extensions
         }
 
         public static IQueryable<StorageItem> FilterStorageItemsBySize(
-            this IQueryable<StorageItem> storageItems,
-            long minSize,
-            long maxSize)
+            this IQueryable<StorageItem> storageItems, long minSize, long maxSize)
         {
-            return storageItems
-                .Where(storageItem => storageItem.Size >= minSize
-                                      && storageItem.Size <= maxSize);
+            return storageItems.Where(storageItem => 
+                storageItem.Size >= minSize
+                && storageItem.Size <= maxSize);
+        }
+
+        public static IQueryable<StorageItem> SearchBy(
+            this IQueryable<StorageItem> storageItems, string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+                return storageItems;
+
+            var lowerCaseTerm = searchTerm.Trim().ToLower();
+
+            return storageItems.Where(storageItem => 
+                storageItem.DisplayName.ToLower().Contains(lowerCaseTerm));
         }
 
         public static IQueryable<StorageItem> Sort(
-            this IQueryable<StorageItem> storageItems,
-            string orderByString)
+            this IQueryable<StorageItem> storageItems, string orderByString)
         {
             if (string.IsNullOrWhiteSpace(orderByString))
                 return storageItems.OrderBy(storageItem => storageItem.DisplayName);

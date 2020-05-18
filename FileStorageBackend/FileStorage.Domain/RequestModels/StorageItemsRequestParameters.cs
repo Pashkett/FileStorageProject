@@ -21,6 +21,7 @@
             set => maxSize = (value > MaxLength) ? MaxLength : value;
         }
 
+        public string SearchTerm { get; set; }
         public string OrderBy { get; set; }
     }
 }

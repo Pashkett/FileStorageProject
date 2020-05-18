@@ -25,7 +25,8 @@ namespace FileStorage.Data.Persistence.Repositories
                 .Where(file => file.User == user
                                && file.IsFolder == false
                                && file.IsRecycled == false)
-                .FilterStorageItemsBySize(itemsRequest.MinSize, itemsRequest.MaxSize);
+                .FilterStorageItemsBySize(itemsRequest.MinSize, itemsRequest.MaxSize)
+                .SearchBy(itemsRequest.SearchTerm);
 
             var totalCount = await items.CountAsync();
 
