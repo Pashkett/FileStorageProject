@@ -10,7 +10,6 @@ using FileStorage.API.Extensions;
 using FileStorage.Domain.Services.ActualItemsServices;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.RequestModels;
-using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
 
 namespace FileStorage.API.Controllers
@@ -39,7 +38,7 @@ namespace FileStorage.API.Controllers
             if (!filesParams.IsValidSizeRange)
                 return BadRequest("Max size can't be less than min size.");
 
-            var userRequested = GetUserFromContext(userParamName);
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             var paginResults = 
                 await actualItemsService.GetActualFilesByUserPagedAsync(userRequested, filesParams);
@@ -57,7 +56,7 @@ namespace FileStorage.API.Controllers
         [HttpPost("files"), DisableRequestSizeLimit]
         public async Task<IActionResult> UploadFilesAsync()
         {
-            var userRequested = GetUserFromContext(userParamName);
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             var files = Request.Form.Files;
             List<FileItemDto> filesDto = new List<FileItemDto>();
@@ -75,7 +74,7 @@ namespace FileStorage.API.Controllers
         [HttpGet("files/{fileId}"), DisableRequestSizeLimit]
         public async Task<IActionResult> DownloadFilesAsync(string fileId)
         {
-            var userRequested = GetUserFromContext(userParamName);
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             try
             {
@@ -94,7 +93,7 @@ namespace FileStorage.API.Controllers
         [HttpDelete("files/{fileId}")]
         public async Task<IActionResult> MoveToRecycleBinAsync(string fileId)
         {
-            var userRequested = GetUserFromContext(userParamName);
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             try
             {
@@ -113,7 +112,8 @@ namespace FileStorage.API.Controllers
         [HttpPost("files/{fileId}")]
         public async Task<IActionResult> MoveToPublicAsync(string fileId)
         {
-            var userRequested = GetUserFromContext(userParamName);
+            //var userRequested = GetUserFromContext(userParamName);
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             try
             {
@@ -129,12 +129,6 @@ namespace FileStorage.API.Controllers
                 return NotFound(ex.Message);
             }
         }
-
-        private UserDto GetUserFromContext(string userParamKey)
-        {
-            return (UserDto)HttpContext.Items[userParamKey];
-        }
-
 
         /// <summary>
         /// Use for future short-links controller

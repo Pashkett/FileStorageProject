@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using FileStorage.API.Filters;
 using FileStorage.API.Extensions;
-using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.Services.RecycledItemsServices;
 using FileStorage.Domain.RequestModels;
@@ -36,7 +35,7 @@ namespace FileStorage.API.Controllers
             if (!filesParams.IsValidSizeRange)
                 return BadRequest("Max size can't be less than min size.");
 
-            var userRequested = (UserDto)HttpContext.Items[userParamName];
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             var paginResults =
                 await recycledItemsService.GetRecycledItemsByUserPagedAsync(userRequested, filesParams);
@@ -54,7 +53,7 @@ namespace FileStorage.API.Controllers
         [HttpPost("files/{fileId}")]
         public async Task<IActionResult> RestoreRecycledFile(string fileId)
         {
-            var userRequested = (UserDto)HttpContext.Items[userParamName];
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             try
             {
@@ -76,7 +75,7 @@ namespace FileStorage.API.Controllers
         [HttpDelete("files/{fileId}")]
         public async Task<IActionResult> DeleteRecycledFile(string fileId)
         {
-            var userRequested = (UserDto)HttpContext.Items[userParamName];
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             try
             {

@@ -7,7 +7,6 @@ using FileStorage.API.Filters;
 using FileStorage.API.Extensions;
 using FileStorage.Domain.Services.PublicItemsServices;
 using FileStorage.Domain.Exceptions;
-using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.RequestModels;
 
 namespace FileStorage.API.Controllers
@@ -50,7 +49,7 @@ namespace FileStorage.API.Controllers
         [HttpPost("files/{fileId}")]
         public async Task<IActionResult> SetPrivateFile(string fileId)
         {
-            var userRequested = (UserDto)HttpContext.Items[userParamName];
+            var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             try
             {
