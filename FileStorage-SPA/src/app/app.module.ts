@@ -32,6 +32,7 @@ import { SharedItemsComponent } from './shared-items/shared-items.component';
 import { StorageTabsComponent } from './storage-general/storage-tabs/storage-tabs.component';
 import { StorageItemsComponent } from './storage-general/storage-items/storage-items.component';
 import { StorageUploadComponent } from './storage-general/storage-upload/storage-upload.component';
+import { ModerateItemsComponent } from './moderate-items/moderate-items.component';
 
 
 export function tokenGetter() {
@@ -52,7 +53,8 @@ export function tokenGetter() {
       ContainsRoleDirective,
       UserManagementComponent,
       RolesModalComponent,
-      SharedItemsComponent
+      SharedItemsComponent,
+      ModerateItemsComponent
    ],
    imports: [
       BrowserModule,

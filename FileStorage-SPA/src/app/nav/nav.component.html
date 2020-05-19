@@ -32,11 +32,19 @@
           </h5>
         </a>
       </li>
-      <li *appHasRole="['Admin', 'Moderator']" class="nav-item" routerLinkActive="active">
+      <li *appHasRole="['Admin']" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/admin']">
           <h5>
-            <i class="fa fa-laptop" aria-hidden="true"></i>
-            Administration
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+            Users
+          </h5>
+        </a>
+      </li>
+      <li *appHasRole="['Moderator']" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/moderate']">
+          <h5>
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            Moderation
           </h5>
         </a>
       </li>
