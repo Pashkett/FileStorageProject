@@ -73,30 +73,30 @@ namespace FileStorage.Domain.Seed
                 {
                     if (userManager.FindByNameAsync(user.UserName).Result == null)
                     {
-                        userManager.CreateAsync(user, "password").Wait();
-                        userManager.AddToRoleAsync(user, "Member").Wait();
-                        logger.LogInfo($"User: {user.UserName} has been created.");
-
-                        foreach (var folder in user.StorageItems)
+                        if (user.UserName == "Admin")
                         {
-                            folderManager.CreateFolder(FolderFullPathMaker(targetPath, folder.RelativePath));
-                            logger.LogInfo($"Folder {folder.DisplayName} has been created.");
+                            userManager.CreateAsync(user, "admin").Wait();
+                            userManager.AddToRoleAsync(user, "Admin").Wait();
+                            logger.LogInfo($"User: {user.UserName} has been created.");
+
+                            foreach (var folder in user.StorageItems)
+                            {
+                                folderManager.CreateFolder(FolderFullPathMaker(targetPath, folder.RelativePath));
+                                logger.LogInfo($"Folder {folder.DisplayName} has been created.");
+                            }
                         }
-                    }
-                }
+                        else
+                        {
+                            userManager.CreateAsync(user, "password").Wait();
+                            userManager.AddToRoleAsync(user, "Member").Wait();
+                            logger.LogInfo($"User: {user.UserName} has been created.");
 
-                var adminUser = new User { UserName = "Admin" };
-
-                if (userManager.FindByNameAsync(adminUser.UserName).Result == null)
-                {
-                    var result = userManager.CreateAsync(adminUser, "Admin").Result;
-
-                    if (result.Succeeded)
-                    {
-                        var admin = userManager.FindByNameAsync("Admin").Result;
-                        userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
-
-                        logger.LogInfo($"User: {admin.UserName} has been created.");
+                            foreach (var folder in user.StorageItems)
+                            {
+                                folderManager.CreateFolder(FolderFullPathMaker(targetPath, folder.RelativePath));
+                                logger.LogInfo($"Folder {folder.DisplayName} has been created.");
+                            }
+                        }
                     }
                 }
             }

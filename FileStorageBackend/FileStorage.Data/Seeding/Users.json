@@ -17,5 +17,24 @@
         "ParentFolderId": null
       }
     ]
+  },
+  {
+    "Id": "64154568-97e4-45c7-a370-9861332c6d0c",
+    "UserName": "Admin",
+    "LockoutEnabled": false,
+    "CreatedOn": "2020-04-17",
+    "StorageItems": [
+      {
+        "Id": "506f691a-a6bb-406b-8406-f38595680b58",
+        "CreatedOn": "2020-04-17",
+        "TrustedName": "64154568-97e4-45c7-a370-9861332c6d0c",
+        "DisplayName": "MyStorage",
+        "IsFolder": true,
+        "IsPrimaryFolder": true,
+        "RelativePath": "64154568-97e4-45c7-a370-9861332c6d0c",
+        "UserId": "64154568-97e4-45c7-a370-9861332c6d0c",
+        "ParentFolderId": null
+      }
+    ]
   }
 ]
