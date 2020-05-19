@@ -8,13 +8,13 @@
 
     <div class="btn-group float-right mt-2">
       <div class="btn-group mr-1">
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getActualItems()" btnRadio="displayName">Name</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getActualItems()" btnRadio="size">Size</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getActualItems()" btnRadio="extension">Extension</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getActualItems()" btnRadio="createdOn">Creation Date</button>
       </div>
 
@@ -32,8 +32,8 @@
       <form class="form-inline" #form="ngForm" (ngSubmit)="getActualItems()" novalidate>
         <div class="form-group">
           <label for="maxSize"></label>
-          <input type="text" class="form-control ml-1" id="searchTerm" placeholder="File Name" [(ngModel)]="this.itemParams.searchTerm"
-            name="searchTerm">
+          <input type="text" class="form-control ml-1" id="searchTerm" placeholder="File Name"
+            [(ngModel)]="this.itemParams.searchTerm" name="searchTerm">
         </div>
         <div>
           <button type="submit" class="btn btn-primary mr-1">
@@ -95,14 +95,14 @@
         <td>{{item?.isPublic}}</td>
         <td>{{item?.createdOn | date: 'mediumDate'}}</td>
         <td>
-          <button class="btn btn-outline-primary mt-1 mr-1" (click)="openModal(toPublicTemplate, item)" title="Share">
+          <button class="btn btn-primary mt-1 mr-1" (click)="openModal(toPublicTemplate, item)" title="Share">
             <i class="fa fa-share-alt-square" aria-hidden="true"></i>
           </button>
-          <button class="btn btn-outline-info mt-1 mr-1" (click)="downloadActualItems(item.id, item.displayName)"
+          <button class="btn btn-info mt-1 mr-1" (click)="downloadActualItems(item.id, item.displayName)"
             title="Download">
             <i class="fa fa-download" aria-hidden="true"></i>
           </button>
-          <button class="btn btn-outline-warning mt-1" (click)="openModal(toRecycleBinTemplate, item)"
+          <button class="btn btn-warning mt-1" (click)="openModal(toRecycleBinTemplate, item)"
             title="To Recycle Bin">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </button>
@@ -115,8 +115,8 @@
 <div class="footer fixed-bottom">
   <div class="d-flex justify-content-center mt-3">
     <pagination [boundaryLinks]="true" [totalItems]="pagination?.totalItems" [itemsPerPage]="pagination?.itemsPerPage"
-      [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
-      firstText="&laquo;" lastText="&raquo;">
+      [maxSize]="maxSize" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
 
     </pagination>
   </div>

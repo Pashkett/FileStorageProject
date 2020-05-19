@@ -17,6 +17,7 @@ export class StorageItemsComponent implements OnInit {
   pagination: Pagination;
   currentPage = 1;
   pageSize = 7;
+  maxSize = 5;
   isCollapsed = true;
   itemParams: any = {};
 

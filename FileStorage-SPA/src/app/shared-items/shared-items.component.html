@@ -5,13 +5,13 @@
     </h6>
     <div class="btn-group float-right">
       <div class="btn-group mr-1">
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getPublicItems()" btnRadio="displayName">Name</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getPublicItems()" btnRadio="size">Size</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getPublicItems()" btnRadio="extension">Extension</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getPublicItems()" btnRadio="createdOn">Creation Date</button>
       </div>
 
@@ -66,11 +66,12 @@
         <td>{{item?.user.userName}}</td>
         <td>{{item?.createdOn | date: 'mediumDate'}}</td>
         <td>
-          <button [disabled]="item?.user.userName != getCurrentUserId()" class="btn btn-outline-primary mt-1 mr-1"
+          <button [disabled]="item?.user.userName != getCurrentUserId()" class="btn btn-primary mt-1 mr-1"
             (click)="openModal(privateTemplate, item)" title="Make Private">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
           </button>
-          <button class="btn btn-outline-info mt-1 mr-1" (click)="downloadPublicItems(item.id, item.displayName)"
+          <button class="btn btn-info mt-1 mr-1" 
+            (click)="downloadPublicItems(item.id, item.displayName)"
             title="Download">
             <i class="fa fa-download" aria-hidden="true"></i>
           </button>
@@ -83,8 +84,8 @@
 <div class="footer fixed-bottom">
   <div class="d-flex justify-content-center mt-3">
     <pagination [boundaryLinks]="true" [totalItems]="pagination?.totalItems" [itemsPerPage]="pagination?.itemsPerPage"
-      [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
-      firstText="&laquo;" lastText="&raquo;">
+      [maxSize]="maxSize" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
 
     </pagination>
   </div>

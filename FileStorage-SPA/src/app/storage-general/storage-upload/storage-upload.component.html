@@ -21,6 +21,27 @@
 
         <h5>List for Uploading</h5>
         <p>Quantity: {{ uploader?.queue?.length }}</p>
+        
+        <div>
+            <div>
+                Progress:
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mr-1" (click)="uploader.uploadAll()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="fa fa-upload"></span> Upload All
+            </button>
+            <button type="button" class="btn btn-info mr-1" (click)="uploader.cancelAll()"
+                [disabled]="!uploader.isUploading">
+                <span class="fa fa-ban"></span> Cancel All
+            </button>
+            <button type="button" class="btn btn-warning mr-1" (click)="uploader.clearQueue()"
+                [disabled]="!uploader.queue.length">
+                <span class="fa fa-trash"></span> Remove All
+            </button>
+        </div>
 
         <table class="table">
             <thead>
@@ -64,27 +85,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <div>
-            <div>
-                Progress:
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary mr-1" (click)="uploader.uploadAll()"
-                [disabled]="!uploader.getNotUploadedItems().length">
-                <span class="fa fa-upload"></span> Upload All
-            </button>
-            <button type="button" class="btn btn-info mr-1" (click)="uploader.cancelAll()"
-                [disabled]="!uploader.isUploading">
-                <span class="fa fa-ban"></span> Cancel All
-            </button>
-            <button type="button" class="btn btn-warning mr-1" (click)="uploader.clearQueue()"
-                [disabled]="!uploader.queue.length">
-                <span class="fa fa-trash"></span> Remove All
-            </button>
-        </div>
 
     </div>
 

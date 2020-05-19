@@ -19,6 +19,7 @@ export class SharedItemsComponent implements OnInit {
   pagination: Pagination;
   currentPage = 1;
   pageSize = 7;
+  maxSize = 5;
   itemParams: any = {};
 
   constructor(private publicItemsService: PublicItemsService,

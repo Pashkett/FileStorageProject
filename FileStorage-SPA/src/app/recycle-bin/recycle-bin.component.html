@@ -5,13 +5,13 @@
     </h6>
     <div class="btn-group float-right">
       <div class="btn-group mr-1">
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getAllRecycledItems()" btnRadio="displayName">Name</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getAllRecycledItems()" btnRadio="size">Size</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getAllRecycledItems()" btnRadio="extension">Extension</button>
-        <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
+        <button type="button" name="orderBy" class="btn btn-info" [(ngModel)]="itemParams.order"
           (click)="getAllRecycledItems()" btnRadio="createdOn">Creation Date</button>
       </div>
 
@@ -64,11 +64,11 @@
           <td>{{item?.isPublic}}</td>
           <td>{{item?.createdOn | date: 'mediumDate'}}</td>
           <td>
-            <button class="btn btn-outline-primary mt-1 mr-1" (click)="openModal(restoreTemplate, item)"
+            <button class="btn btn-primary mt-1 mr-1" (click)="openModal(restoreTemplate, item)"
               title="Restore">
               <i class="fa fa-reply" aria-hidden="true"></i>
             </button>
-            <button class="btn btn-outline-warning mt-1 " (click)="openModal(deleteTemplate, item)" title="Delete">
+            <button class="btn btn-warning mt-1 " (click)="openModal(deleteTemplate, item)" title="Delete">
               <i class="fa fa-ban" aria-hidden="true"></i>
             </button>
           </td>
@@ -81,7 +81,7 @@
 <div class="footer fixed-bottom">
   <div class="d-flex justify-content-center mt-3">
     <pagination [boundaryLinks]="true" [totalItems]="pagination?.totalItems" [itemsPerPage]="pagination?.itemsPerPage"
-      [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+    [maxSize]="maxSize" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
       firstText="&laquo;" lastText="&raquo;">
 
     </pagination>
