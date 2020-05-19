@@ -38,7 +38,7 @@
             name="searchTerm">
         </div>
         <div>
-          <button type="submit" class="btn btn-success  mr-1">
+          <button type="submit" class="btn btn-primary mr-1">
             <i class="fa fa-search" aria-hidden="true"></i>
           </button>
         </div>
@@ -63,7 +63,7 @@
           [(ngModel)]="this.itemParams.maxSize" name="maxSize">
       </div>
 
-      <button type="submit" class="btn btn-success  mr-1" style="margin-left:10px">
+      <button type="submit" class="btn btn-primary  mr-1" style="margin-left:10px">
         Apply Filter</button>
       <button type="button" class="btn btn btn-warning mr-1" (click)="resetFilters()" style="margin-left:10px">
         Reset Filter</button>
@@ -74,7 +74,7 @@
     <table class="table mt-2">
       <tr>
         <th style="width: 3%;">
-          <button class="btn btn-outline-success pull-right" title="Refresh" (click)="getActualItems()">
+          <button class="btn btn-primary pull-right" title="Refresh" (click)="getActualItems()">
             <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </th>
@@ -97,7 +97,7 @@
         <td>{{item?.isPublic}}</td>
         <td>{{item?.createdOn | date: 'mediumDate'}}</td>
         <td>
-          <button class="btn btn-outline-success mt-1 mr-1" (click)="openModal(toPublicTemplate, item)" title="Share">
+          <button class="btn btn-outline-primary mt-1 mr-1" (click)="openModal(toPublicTemplate, item)" title="Share">
             <i class="fa fa-share-alt-square" aria-hidden="true"></i>
           </button>
           <button class="btn btn-outline-info mt-1 mr-1" (click)="downloadActualItems(item.id, item.displayName)"

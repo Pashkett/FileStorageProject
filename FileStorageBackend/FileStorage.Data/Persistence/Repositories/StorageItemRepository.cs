@@ -124,13 +124,14 @@ namespace FileStorage.Data.Persistence.Repositories
                 .Include(file => file.User)
                 .Where(file => file.IsPublic == true
                                && file.IsFolder == false
-                               && file.IsRecycled == false);
+                               && file.IsRecycled == false)
+                .SearchBy(itemsRequest.SearchTerm);
 
             var totalCount = await items.CountAsync();
 
             var resultItems = await items
+                .Sort(itemsRequest.OrderBy)
                 .PageStorageItems(itemsRequest.PageNumber, itemsRequest.PageSize)
-                .OrderBy(file => file.DisplayName)
                 .ToListAsync();
 
             return (resultItems, totalCount);

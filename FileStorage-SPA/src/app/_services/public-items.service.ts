@@ -14,7 +14,7 @@ export class PublicItemsService {
 
   constructor(private http: HttpClient) { }
 
-  getPublicFiles(page = 1, itemsPerPage = 8): Observable<PaginatedResult<StorageItem[]>> {
+  getPublicFiles(page?, itemsPerPage?, itemParams?): Observable<PaginatedResult<StorageItem[]>> {
     const paginatedResult: PaginatedResult<StorageItem[]> = new PaginatedResult<StorageItem[]>();
 
     let params = new HttpParams();
@@ -22,6 +22,17 @@ export class PublicItemsService {
     if (page != null) {
       params = params.append('pageNumber', page.toString());
       params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    if (itemParams != null) {
+      if (itemParams?.order) {
+        const orderBy = itemParams.order.concat(' ', itemParams?.direction);
+        params = params.append('orderBy', orderBy);
+      }
+
+      if (itemParams?.searchTerm) {
+        params = params.append('searchTerm', itemParams.searchTerm);
+      }
     }
 
     return this.http.get<StorageItem[]>(this.baseUrl + this.filesUrl, {observe: 'response', params})

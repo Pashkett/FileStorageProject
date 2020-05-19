@@ -18,17 +18,23 @@ export class SharedItemsComponent implements OnInit {
   currentUserId: string = null;
   pagination: Pagination;
   currentPage = 1;
+  pageSize = 7;
+  itemParams: any = {};
 
   constructor(private publicItemsService: PublicItemsService,
               private modalService: BsModalService,
               private authService: AuthService) { }
 
   ngOnInit() {
+    this.itemParams.order = 'displayName';
+    this.itemParams.direction = 'asc';
+    this.itemParams.searchTerm = '';
+
     this.getPublicItems();
   }
 
   getPublicItems() {
-    this.publicItemsService.getPublicFiles(this.currentPage)
+    this.publicItemsService.getPublicFiles(this.currentPage, this.pageSize, this.itemParams)
     .subscribe((paginatedResult: PaginatedResult<StorageItem[]>) => {
       this.publicItems = paginatedResult.result;
       if (paginatedResult?.pagination != null) {
