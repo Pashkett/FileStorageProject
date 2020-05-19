@@ -6,7 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -30,8 +32,6 @@ import { SharedItemsComponent } from './shared-items/shared-items.component';
 import { StorageTabsComponent } from './storage-general/storage-tabs/storage-tabs.component';
 import { StorageItemsComponent } from './storage-general/storage-items/storage-items.component';
 import { StorageUploadComponent } from './storage-general/storage-upload/storage-upload.component';
-
-
 
 
 export function tokenGetter() {
@@ -63,7 +63,9 @@ export function tokenGetter() {
       BsDropdownModule.forRoot(),
       ModalModule.forRoot(),
       TabsModule.forRoot(),
+      ButtonsModule.forRoot(),
       PaginationModule.forRoot(),
+      CollapseModule.forRoot(),
       FileUploadModule,
       RouterModule.forRoot(fileStorageRoutes),
       JwtModule.forRoot({

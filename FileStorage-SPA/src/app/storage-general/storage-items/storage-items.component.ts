@@ -17,6 +17,7 @@ export class StorageItemsComponent implements OnInit {
   pagination: Pagination;
   currentPage = 1;
   pageSize = 7;
+  isCollapsed = true;
   itemParams: any = {};
 
   constructor(private actualItemsService: ActualItemsService,
@@ -25,6 +26,9 @@ export class StorageItemsComponent implements OnInit {
   ngOnInit() {
     this.itemParams.minSize = 0;
     this.itemParams.maxSize = 500;
+    this.itemParams.order = 'displayName';
+    this.itemParams.direction = 'asc';
+    this.itemParams.searchTerm = '';
 
     this.getActualItems();
   }
@@ -103,6 +107,7 @@ export class StorageItemsComponent implements OnInit {
         const index: number = this.storageItems.indexOf(item);
         if (index !== -1) {
           this.storageItems.splice(index, 1);
+          this.pagination.totalItems = this.pagination.totalItems - 1;
         }
       },
       error => console.log(error)

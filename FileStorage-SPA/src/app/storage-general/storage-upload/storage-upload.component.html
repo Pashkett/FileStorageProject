@@ -48,15 +48,15 @@
                         <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                     </td>
                     <td nowrap>
-                        <button type="button" class="btn btn-outline-success  mr-1" (click)="item.upload() "
+                        <button type="button" class="btn btn-success  mr-1" (click)="item.upload() "
                             [disabled]="item.isReady || item.isUploading || item.isSuccess" title="Upload">
                             <span class="fa fa-upload"></span>
                         </button>
-                        <button type="button" class="btn btn-outline-warning mr-1" (click)="item.cancel()"
+                        <button type="button" class="btn btn-warning mr-1" (click)="item.cancel()"
                             [disabled]="!item.isUploading" title="Cancel">
                             <span class="fa fa-ban"></span>
                         </button>
-                        <button type="button" class="btn btn-outline-danger mr-1" (click)="item.remove()"
+                        <button type="button" class="btn btn-danger mr-1" (click)="item.remove()"
                             title="Remove">
                             <span class="fa fa-trash"></span>
                         </button>
@@ -72,15 +72,15 @@
                     <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                 </div>
             </div>
-            <button type="button" class="btn btn-outline-success  mr-1" (click)="uploader.uploadAll()"
+            <button type="button" class="btn btn-success  mr-1" (click)="uploader.uploadAll()"
                 [disabled]="!uploader.getNotUploadedItems().length">
                 <span class="fa fa-upload"></span> Upload All
             </button>
-            <button type="button" class="btn btn-outline-warning mr-1" (click)="uploader.cancelAll()"
+            <button type="button" class="btn btn-warning mr-1" (click)="uploader.cancelAll()"
                 [disabled]="!uploader.isUploading">
                 <span class="fa fa-ban"></span> Cancel All
             </button>
-            <button type="button" class="btn btn-outline-danger mr-1" (click)="uploader.clearQueue()"
+            <button type="button" class="btn btn-danger mr-1" (click)="uploader.clearQueue()"
                 [disabled]="!uploader.queue.length">
                 <span class="fa fa-trash"></span> Remove All
             </button>
