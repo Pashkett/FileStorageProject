@@ -6,8 +6,6 @@
       Show Filter
     </button>
 
-
-
     <div class="btn-group float-right mt-2">
       <div class="btn-group mr-1">
         <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
@@ -93,7 +91,7 @@
         </td>
         <td>{{item?.displayName}}</td>
         <td>{{item?.size/1024/1024 |  number:'1.0-2'}} MB</td>
-        <td>{{item?.extension}}</td>
+        <td>{{item?.extension.substr(1)}}</td>
         <td>{{item?.isPublic}}</td>
         <td>{{item?.createdOn | date: 'mediumDate'}}</td>
         <td>

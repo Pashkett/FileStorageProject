@@ -14,7 +14,7 @@
         <button type="button" name="orderBy" class="btn btn-secondary" [(ngModel)]="itemParams.order"
           (click)="getAllRecycledItems()" btnRadio="createdOn">Creation Date</button>
       </div>
-  
+
       <div class="btn-group">
         <button type="button" name="orderBy" class="btn btn-warning" [(ngModel)]="itemParams.direction"
           (click)="getAllRecycledItems()" btnRadio="asc">
@@ -25,7 +25,7 @@
           <i class="fa fa-sort-desc" aria-hidden="true"></i>
         </button>
       </div>
-  
+
       <form class="form-inline" #form="ngForm" (ngSubmit)="getAllRecycledItems()" novalidate>
         <div class="form-group">
           <label for="maxSize"></label>
@@ -60,7 +60,7 @@
           <td><i class="fa fa-file" aria-hidden="true"></i></td>
           <td>{{item?.displayName}}</td>
           <td>{{item?.size/1024/1024 |  number:'1.0-2'}} MB</td>
-          <td>{{item?.extension}}</td>
+          <td>{{item?.extension.substr(1)}}</td>
           <td>{{item?.isPublic}}</td>
           <td>{{item?.createdOn | date: 'mediumDate'}}</td>
           <td>
