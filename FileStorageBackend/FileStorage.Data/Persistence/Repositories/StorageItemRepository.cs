@@ -93,13 +93,14 @@ namespace FileStorage.Data.Persistence.Repositories
             var items = fileStorageContext.StorageItems
                 .Where(file => file.User == user
                                && file.IsFolder == false
-                               && file.IsRecycled == true);
+                               && file.IsRecycled == true)
+                .SearchBy(itemsRequest.SearchTerm);
 
             var totalCount = await items.CountAsync();
 
             var resultItems = await items
+                .Sort(itemsRequest.OrderBy)
                 .PageStorageItems(itemsRequest.PageNumber, itemsRequest.PageSize)
-                .OrderBy(file => file.DisplayName)
                 .ToListAsync();
 
             return (resultItems, totalCount);

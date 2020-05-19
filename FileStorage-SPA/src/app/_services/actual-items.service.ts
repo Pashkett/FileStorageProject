@@ -28,15 +28,15 @@ export class ActualItemsService {
     if (itemParams != null) {
       params = params.append('minSize', (itemParams.minSize * 1024 * 1024).toString());
       params = params.append('maxSize', (itemParams.maxSize * 1024 * 1024).toString());
-    }
 
-    if (itemParams?.order) {
-      const orderBy = itemParams.order.concat(' ', itemParams?.direction);
-      params = params.append('orderBy', orderBy);
-    }
+      if (itemParams?.order) {
+        const orderBy = itemParams.order.concat(' ', itemParams?.direction);
+        params = params.append('orderBy', orderBy);
+      }
 
-    if (itemParams?.searchTerm) {
-      params = params.append('searchTerm', itemParams.searchTerm);
+      if (itemParams?.searchTerm) {
+        params = params.append('searchTerm', itemParams.searchTerm);
+      }
     }
 
     return this.http.get<StorageItem[]>(this.baseUrl + 'ActualItems/files/', {observe: 'response', params})

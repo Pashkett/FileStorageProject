@@ -16,16 +16,22 @@ export class RecycleBinComponent implements OnInit {
   selectedItem: StorageItem;
   pagination: Pagination;
   currentPage = 1;
+  pageSize = 7;
+  itemParams: any = {};
 
   constructor(private recycledItemsService: RecycledItemsService,
               private modalService: BsModalService) { }
 
   ngOnInit() {
+    this.itemParams.order = 'displayName';
+    this.itemParams.direction = 'asc';
+    this.itemParams.searchTerm = '';
+
     this.getAllRecycledItems();
   }
 
   getAllRecycledItems() {
-    this.recycledItemsService.getRecycledFiles(this.currentPage)
+    this.recycledItemsService.getRecycledFiles(this.currentPage, this.pageSize, this.itemParams)
     .subscribe((paginatedResult: PaginatedResult<StorageItem[]>) => {
       this.recycledItems = paginatedResult.result;
       if (paginatedResult?.pagination != null) {
