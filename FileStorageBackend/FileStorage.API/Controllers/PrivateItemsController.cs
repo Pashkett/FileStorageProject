@@ -41,7 +41,7 @@ namespace FileStorage.API.Controllers
             var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             var (files, header) = 
-                await actualItemsService.GetActualFilesByUserPagedAsync(userRequested, filesParams);
+                await actualItemsService.GetPagedActualFilesAndHeaderAsync(userRequested, filesParams);
 
             if (files == null || files.Count() == 0)
                 return NoContent();

@@ -12,8 +12,8 @@ namespace FileStorage.Domain.Services.ActualItems
 {
     public interface IActualItemsService
     {
-        Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
-            GetActualFilesByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams);
+        Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedActualFilesAndHeaderAsync(
+            UserDto userDto, StorageItemsRequestParameters itemsParams);
         Task<FileItemDto> CreateFileAsync(UserDto userDto, IFormFile file);
         Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
             UserDto userDto, string fileId);

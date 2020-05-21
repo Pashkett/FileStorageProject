@@ -36,8 +36,8 @@ namespace FileStorage.Domain.Services.PublicItems
             targetPath = configuration.GetValue<string>("StoredFilesPath");
         }
 
-        public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
-            GetPublicFilesPagedAsync(StorageItemsRequestParameters itemsParams)
+        public async Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedPublicFilesAndHeaderAsync(
+            StorageItemsRequestParameters itemsParams)
         {
             var parameters = mapper.Map<StorageItemsRequest>(itemsParams);
 
@@ -76,7 +76,6 @@ namespace FileStorage.Domain.Services.PublicItems
             stream.Position = 0;
 
             return (stream, StorageItemsHelpers.GetContentType(filePath), fileItem.DisplayName);
-
         }
 
         private async Task<StorageItem> GetPublicItemByUserAndItemIdAsync(UserDto userDto, string fileId)

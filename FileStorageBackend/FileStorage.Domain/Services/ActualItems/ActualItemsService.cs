@@ -44,8 +44,8 @@ namespace FileStorage.Domain.Services.ActualItems
 
         #region Files Operations
 
-        public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
-            GetActualFilesByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams)
+        public async Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedActualFilesAndHeaderAsync(
+            UserDto userDto, StorageItemsRequestParameters itemsParams)
         {
             var user = mapper.Map<UserDto, User>(userDto);
             var parameters = mapper.Map<StorageItemsRequest>(itemsParams);
@@ -91,8 +91,8 @@ namespace FileStorage.Domain.Services.ActualItems
             }
         }
 
-        public async Task<(MemoryStream stream, string contentType, string fileName)> 
-            DownloadFileAsync(UserDto userDto, string fileId)
+        public async Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
+            UserDto userDto, string fileId)
         {
             var fileItem = await GetActualItemByUserAndItemIdAsync(userDto, fileId);
 
@@ -104,8 +104,8 @@ namespace FileStorage.Domain.Services.ActualItems
             return (stream, StorageItemsHelpers.GetContentType(filePath), fileItem.DisplayName);
         }
 
-        public async Task<(MemoryStream stream, string contentType, string fileName)> 
-            DownloadFileAsync(string fileId)
+        public async Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(
+            string fileId)
         {
             if (Guid.TryParse(fileId, out Guid storageItemId) == false)
                 throw new ArgumentException($"{fileId} is not valid id");
@@ -207,7 +207,7 @@ namespace FileStorage.Domain.Services.ActualItems
             if (file == null)
                 throw new StorageItemNotFoundException($"File does not exist.");
 
-            if (file.User.Id != user.Id)
+            if (file.UserId != user.Id)
                 throw new ArgumentException($"{user.UserName} is not the current file owner");
 
             return file;

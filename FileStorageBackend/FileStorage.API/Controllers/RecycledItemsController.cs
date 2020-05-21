@@ -37,15 +37,15 @@ namespace FileStorage.API.Controllers
 
             var userRequested = HttpContext.GetUserFromContext(userParamName);
 
-            var paginResults =
-                await recycledItemsService.GetRecycledItemsByUserPagedAsync(userRequested, filesParams);
+            var (files, header) =
+                await recycledItemsService.GetPagedRecycledItemsAndHeaderAsync(userRequested, filesParams);
 
-            if (paginResults.pagedList == null || paginResults.pagedList.Count() == 0)
+            if (files == null || files.Count() == 0)
                 return NoContent();
 
-            Response.AddPagination(paginResults.paginationHeader);
+            Response.AddPagination(header);
 
-            return Ok(paginResults.pagedList);
+            return Ok(files);
         }
 
         [Authorize(Policy = "AllRegisteredUsers")]

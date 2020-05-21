@@ -33,15 +33,15 @@ namespace FileStorage.API.Controllers
             if (!filesParams.IsValidSizeRange)
                 return BadRequest("Max size can't be less than min size.");
 
-            var pagingResults = 
-                await publicItemsService.GetPublicFilesPagedAsync(filesParams);
+            var (files, header) = 
+                await publicItemsService.GetPagedPublicFilesAndHeaderAsync(filesParams);
 
-            if (pagingResults.pagedList == null || pagingResults.pagedList.Count() == 0)
+            if (files == null || files.Count() == 0)
                 return NoContent();
 
-            Response.AddPagination(pagingResults.paginationHeader);
+            Response.AddPagination(header);
 
-            return Ok(pagingResults.pagedList);
+            return Ok(files);
         }
 
         [Authorize(Policy = "MemberRoleRequired")]

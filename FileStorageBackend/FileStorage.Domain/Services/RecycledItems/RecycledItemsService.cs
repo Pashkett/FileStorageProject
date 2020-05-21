@@ -35,8 +35,8 @@ namespace FileStorage.Domain.Services.RecycledItems
             targetPath = configuration.GetValue<string>("StoredFilesPath");
         }
 
-        public async Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)> 
-            GetRecycledItemsByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams)
+        public async Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedRecycledItemsAndHeaderAsync(
+            UserDto userDto, StorageItemsRequestParameters itemsParams)
         {
             var user = mapper.Map<UserDto, User>(userDto);
             var parameters = mapper.Map<StorageItemsRequest>(itemsParams);

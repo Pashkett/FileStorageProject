@@ -9,8 +9,8 @@ namespace FileStorage.Domain.Services.RecycledItems
 {
     public interface IRecycledItemsService
     {
-        Task<(IEnumerable<FileItemDto> pagedList, PaginationHeader paginationHeader)>
-            GetRecycledItemsByUserPagedAsync(UserDto userDto, StorageItemsRequestParameters itemsParams);
+        Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedRecycledItemsAndHeaderAsync(
+            UserDto userDto, StorageItemsRequestParameters itemsParams);
         Task RestoreRecycledItemAsync(UserDto userDto, string fileId);
         Task DeleteRecycledItemAsync(UserDto userDto, string fileId);
     }
