@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using FileStorage.Data.Models;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
-using FileStorage.Domain.Services.ActualItems;
+using FileStorage.Domain.Services.PrivateItems;
 
 namespace FileStorage.Domain.Services.Authentication
 {
@@ -21,13 +21,13 @@ namespace FileStorage.Domain.Services.Authentication
         private readonly SignInManager<User> signInManager;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
-        private readonly IActualItemsService actualItemsService;
+        private readonly IPrivateItemsService actualItemsService;
 
         public AuthService(UserManager<User> userManager,
                            SignInManager<User> signInManager,
                            IMapper mapper,
                            IConfiguration configuration,
-                           IActualItemsService actualItemsService)
+                           IPrivateItemsService actualItemsService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;

@@ -17,9 +17,9 @@ using FileStorage.Data.Models;
 using FileStorage.Data.UnitOfWork;
 using FileStorage.Data.QueryModels;
 
-namespace FileStorage.Domain.Services.ActualItems
+namespace FileStorage.Domain.Services.PrivateItems
 {
-    public class ActualItemsService : IActualItemsService
+    public class PrivateItemsService : IPrivateItemsService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
@@ -28,7 +28,7 @@ namespace FileStorage.Domain.Services.ActualItems
         private readonly string targetPath;
         private readonly long fileSizeLimit;
 
-        public ActualItemsService(IUnitOfWork unitOfWork,
+        public PrivateItemsService(IUnitOfWork unitOfWork,
                                    IMapper mapper,
                                    IFolderManager folderManager,
                                    IFileManager fileManager,
@@ -44,7 +44,7 @@ namespace FileStorage.Domain.Services.ActualItems
 
         #region Files Operations
 
-        public async Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedActualFilesAndHeaderAsync(
+        public async Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPrivateFilesAndHeaderAsync(
             UserDto userDto, StorageItemsRequestParameters itemsParams)
         {
             var user = mapper.Map<UserDto, User>(userDto);

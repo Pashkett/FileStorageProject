@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using FileStorage.API.Filters;
 using FileStorage.API.Extensions;
-using FileStorage.Domain.Services.ActualItems;
+using FileStorage.Domain.Services.PrivateItems;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.RequestModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
@@ -18,15 +18,15 @@ namespace FileStorage.API.Controllers
     [ApiController]
     public class PrivateItemsController : ControllerBase
     {
-        private readonly IActualItemsService actualItemsService;
+        private readonly IPrivateItemsService privateItemsService;
         private readonly string userParamName;
 
-        public PrivateItemsController(IActualItemsService actualItemsService,
+        public PrivateItemsController(IPrivateItemsService privateItemsService,
                                      IConfiguration configuration)
 
         {
-            this.actualItemsService = actualItemsService;
-            userParamName = configuration.GetValue<string>("UserKeyParameter");
+            this.privateItemsService = privateItemsService;
+            this.userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
 
         [Authorize(Policy = "AllRegisteredUsers")]
@@ -41,7 +41,7 @@ namespace FileStorage.API.Controllers
             var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             var (files, header) = 
-                await actualItemsService.GetPagedActualFilesAndHeaderAsync(userRequested, filesParams);
+                await privateItemsService.GetPrivateFilesAndHeaderAsync(userRequested, filesParams);
 
             if (files == null || files.Count() == 0)
                 return NoContent();
@@ -63,7 +63,7 @@ namespace FileStorage.API.Controllers
 
             foreach (var file in files)
             {
-                filesDto.Add(await actualItemsService.CreateFileAsync(userRequested, file));
+                filesDto.Add(await privateItemsService.CreateFileAsync(userRequested, file));
             }
 
             return Ok(filesDto);
@@ -78,7 +78,7 @@ namespace FileStorage.API.Controllers
 
             try
             {
-                var result = await actualItemsService.DownloadFileAsync(userRequested, fileId);
+                var result = await privateItemsService.DownloadFileAsync(userRequested, fileId);
 
                 return File(result.stream, result.contentType, result.fileName);
             }
@@ -97,7 +97,7 @@ namespace FileStorage.API.Controllers
 
             try
             {
-                await actualItemsService.MoveFileRecycledBinAsync(userRequested, fileId);
+                await privateItemsService.MoveFileRecycledBinAsync(userRequested, fileId);
 
                 return Ok();
             }
@@ -117,7 +117,7 @@ namespace FileStorage.API.Controllers
 
             try
             {
-                await actualItemsService.MoveFilePublicAsync(userRequested, fileId);
+                await privateItemsService.MoveFilePublicAsync(userRequested, fileId);
 
                 return Ok(new
                 {
@@ -141,7 +141,7 @@ namespace FileStorage.API.Controllers
         {
             try
             {
-                var result = await actualItemsService.DownloadFileAsync(fileId);
+                var result = await privateItemsService.DownloadFileAsync(fileId);
                 return File(result.stream, result.contentType, result.fileName);
             }
             catch (StorageItemNotFoundException ex)

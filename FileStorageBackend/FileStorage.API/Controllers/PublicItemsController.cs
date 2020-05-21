@@ -34,7 +34,7 @@ namespace FileStorage.API.Controllers
                 return BadRequest("Max size can't be less than min size.");
 
             var (files, header) = 
-                await publicItemsService.GetPagedPublicFilesAndHeaderAsync(filesParams);
+                await publicItemsService.GetPublicFilesAndHeaderAsync(filesParams);
 
             if (files == null || files.Count() == 0)
                 return NoContent();

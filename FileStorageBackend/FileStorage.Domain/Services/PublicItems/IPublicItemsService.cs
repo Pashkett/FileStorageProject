@@ -11,7 +11,7 @@ namespace FileStorage.Domain.Services.PublicItems
 {
     public interface IPublicItemsService
     {
-        Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedPublicFilesAndHeaderAsync(
+        Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPublicFilesAndHeaderAsync(
             StorageItemsRequestParameters itemsParams);
         Task MoveFilePrivateAsync(UserDto userDto, string fileId);
         Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(string fileId);

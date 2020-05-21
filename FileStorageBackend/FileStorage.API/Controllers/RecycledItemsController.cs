@@ -38,7 +38,7 @@ namespace FileStorage.API.Controllers
             var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             var (files, header) =
-                await recycledItemsService.GetPagedRecycledItemsAndHeaderAsync(userRequested, filesParams);
+                await recycledItemsService.GetRecycledItemsAndHeaderAsync(userRequested, filesParams);
 
             if (files == null || files.Count() == 0)
                 return NoContent();

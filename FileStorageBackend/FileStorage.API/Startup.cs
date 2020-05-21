@@ -13,7 +13,7 @@ using FileStorage.API.Filters;
 using FileStorage.Logger;
 using FileStorage.Domain.ServicesExtensions;
 using FileStorage.Domain.Services.Users;
-using FileStorage.Domain.Services.ActualItems;
+using FileStorage.Domain.Services.PrivateItems;
 using FileStorage.Domain.Services.Authentication;
 using FileStorage.Domain.Services.RecycledItems;
 using FileStorage.Domain.Services.PublicItems;
@@ -45,7 +45,7 @@ namespace FileStorage.API
             services.AddScoped<UserCheckerFromRequest>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IActualItemsService, ActualItemsService>();
+            services.AddScoped<IPrivateItemsService, PrivateItemsService>();
             services.AddScoped<IRecycledItemsService, RecycledItemsService>();
             services.AddScoped<IPublicItemsService, PublicItemsService>();
 

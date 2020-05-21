@@ -8,11 +8,11 @@ using FileStorage.Domain.PagingHelpers;
 using FileStorage.Domain.RequestModels;
 using FileStorage.Data.Models;
 
-namespace FileStorage.Domain.Services.ActualItems
+namespace FileStorage.Domain.Services.PrivateItems
 {
-    public interface IActualItemsService
+    public interface IPrivateItemsService
     {
-        Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedActualFilesAndHeaderAsync(
+        Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPrivateFilesAndHeaderAsync(
             UserDto userDto, StorageItemsRequestParameters itemsParams);
         Task<FileItemDto> CreateFileAsync(UserDto userDto, IFormFile file);
         Task<(MemoryStream stream, string contentType, string fileName)> DownloadFileAsync(

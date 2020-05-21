@@ -36,7 +36,7 @@ namespace FileStorage.Domain.Services.PublicItems
             targetPath = configuration.GetValue<string>("StoredFilesPath");
         }
 
-        public async Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPagedPublicFilesAndHeaderAsync(
+        public async Task<(IEnumerable<FileItemDto> files, PaginationHeader header)> GetPublicFilesAndHeaderAsync(
             StorageItemsRequestParameters itemsParams)
         {
             var parameters = mapper.Map<StorageItemsRequest>(itemsParams);
