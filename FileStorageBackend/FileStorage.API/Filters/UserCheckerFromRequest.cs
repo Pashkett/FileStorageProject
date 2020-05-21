@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FileStorage.Domain.Services.AuthenticationServices;
+using FileStorage.Domain.Services.Authentication;
 
 namespace FileStorage.API.Filters
 {

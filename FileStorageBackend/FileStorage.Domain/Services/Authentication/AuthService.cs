@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 using FileStorage.Data.Models;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
-using FileStorage.Domain.Services.ActualItemsServices;
+using FileStorage.Domain.Services.ActualItems;
 
-namespace FileStorage.Domain.Services.AuthenticationServices
+namespace FileStorage.Domain.Services.Authentication
 {
     public class AuthService : IAuthService
     {

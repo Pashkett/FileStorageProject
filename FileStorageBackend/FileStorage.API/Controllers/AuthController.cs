@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
-using FileStorage.Domain.Services.AuthenticationServices;
+using FileStorage.Domain.Services.Authentication;
 
 namespace FileStorage.API.Controllers
 {

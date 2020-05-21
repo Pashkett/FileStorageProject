@@ -18,8 +18,8 @@ namespace FileStorage.Data.Persistence.Repositories
         public StorageItemRepository(DbContext dbContext)
             : base(dbContext) { }
 
-        public async Task<(IEnumerable<StorageItem> resultItems, int totalCount)>
-            GetActualFilesByUserAsync(User user, StorageItemsRequest itemsRequest)
+        public async Task<(IEnumerable<StorageItem> files, int count)> GetActualFilesByUserAsync(
+            User user, StorageItemsRequest itemsRequest)
         {
             var items = fileStorageContext.StorageItems
                 .Where(file => file.User == user
@@ -38,22 +38,11 @@ namespace FileStorage.Data.Persistence.Repositories
             return (resultCollection, totalCount);
         }
 
-        public async Task<StorageItem> GetFileByFileIdAsync(Guid fileId)
+        public async Task<StorageItem> GetActualFileByIdAsync(Guid fileId)
         {
             return await fileStorageContext.StorageItems
                 .FirstOrDefaultAsync(
                     file => file.Id == fileId
-                            && file.IsFolder == false
-                            && file.IsRecycled == false);
-        }
-
-        public async Task<StorageItem> GetFileByUserAndFileIdAsync(User user,
-                                                                   Guid fileId)
-        {
-            return await fileStorageContext.StorageItems
-                .FirstOrDefaultAsync(
-                    file => file.Id == fileId
-                            && file.User == user
                             && file.IsFolder == false
                             && file.IsRecycled == false);
         }
@@ -76,8 +65,8 @@ namespace FileStorage.Data.Persistence.Repositories
                               && folder.IsRecycled == false);
         }
 
-        public async Task<StorageItem> GetFolderByUserAndFolderIdIdAsync(User user,
-                                                                         Guid folderId)
+        public async Task<StorageItem> GetFolderByUserAndFolderIdAsync(User user,
+                                                                       Guid folderId)
         {
             return await fileStorageContext.StorageItems
                 .FirstOrDefaultAsync(
@@ -87,8 +76,8 @@ namespace FileStorage.Data.Persistence.Repositories
                               && folder.IsRecycled == false);
         }
 
-        public async Task<(IEnumerable<StorageItem> resultItems, int totalCount)> 
-            GetRecycledFilesByUserAsync(User user, StorageItemsRequest itemsRequest)
+        public async Task<(IEnumerable<StorageItem> files, int count)> GetRecycledFilesByUserAsync(
+            User user, StorageItemsRequest itemsRequest)
         {
             var items = fileStorageContext.StorageItems
                 .Where(file => file.User == user
@@ -106,19 +95,17 @@ namespace FileStorage.Data.Persistence.Repositories
             return (resultItems, totalCount);
         }
 
-        public async Task<StorageItem> GetRecycledFileByUserAndFileIdAsync(User user,
-                                                                           Guid fileId)
+        public async Task<StorageItem> GetRecycledFileByIdAsync(Guid fileId)
         {
             return await fileStorageContext.StorageItems
                 .FirstOrDefaultAsync(
                     file => file.Id == fileId
-                            && file.User == user
                             && file.IsFolder == false
                             && file.IsRecycled == true);
         }
 
-        public async Task<(IEnumerable<StorageItem> resultItems, int totalCount)> 
-            GetPublicFilesAsync(StorageItemsRequest itemsRequest)
+        public async Task<(IEnumerable<StorageItem> files, int count)> GetPublicFilesAsync(
+            StorageItemsRequest itemsRequest)
         {
             var items = fileStorageContext.StorageItems
                 .Include(file => file.User)
@@ -137,26 +124,40 @@ namespace FileStorage.Data.Persistence.Repositories
             return (resultItems, totalCount);
         }
 
-        public async Task<StorageItem> GetPublicFileByUserAndFileIdAsync(User user,
-                                                                         Guid fileId)
+        public async Task<StorageItem> GetPublicFileByIdAsync(Guid fileId)
         {
             return await fileStorageContext.StorageItems
                 .FirstOrDefaultAsync(
                     file => file.Id == fileId
-                            && file.User == user
                             && file.IsFolder == false
                             && file.IsRecycled == false
                             && file.IsPublic == true);
         }
 
-        public async Task<StorageItem> GetPublicFileByFileIdAsync(Guid fileId)
+        public async Task<(IEnumerable<StorageItem> files, int count)> GetAllFilesAsync(
+            StorageItemsRequest itemsRequest)
+        {
+            var items = fileStorageContext.StorageItems
+                .Include(file => file.User)
+                .Where(file => file.IsFolder == false)
+                .SearchBy(itemsRequest.SearchTerm);
+
+            var totalCount = await items.CountAsync();
+
+            var resultItems = await items
+                .Sort(itemsRequest.OrderBy)
+                .PageStorageItems(itemsRequest.PageNumber, itemsRequest.PageSize)
+                .ToListAsync();
+
+            return (resultItems, totalCount);
+        }
+
+        public async Task<StorageItem> GetFileByFileIdAsync(Guid fileId)
         {
             return await fileStorageContext.StorageItems
                 .FirstOrDefaultAsync(
                     file => file.Id == fileId
-                            && file.IsFolder == false
-                            && file.IsRecycled == false
-                            && file.IsPublic == true);
+                            && file.IsFolder == false);
         }
     }
 }

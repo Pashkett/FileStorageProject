@@ -17,7 +17,7 @@ using FileStorage.Data.Models;
 using FileStorage.Data.UnitOfWork;
 using FileStorage.Data.QueryModels;
 
-namespace FileStorage.Domain.Services.ActualItemsServices
+namespace FileStorage.Domain.Services.ActualItems
 {
     public class ActualItemsService : IActualItemsService
     {
@@ -177,7 +177,7 @@ namespace FileStorage.Domain.Services.ActualItemsServices
                 throw new ArgumentException($"{id} is not valid id");
 
             var folderToDelete =
-                await unitOfWork.StorageItems.GetFolderByUserAndFolderIdIdAsync(user, storageItemId);
+                await unitOfWork.StorageItems.GetFolderByUserAndFolderIdAsync(user, storageItemId);
 
             if (folderToDelete == null)
                 throw new ArgumentException("Folder doesn't exists");
@@ -201,11 +201,14 @@ namespace FileStorage.Domain.Services.ActualItemsServices
             if (Guid.TryParse(fileId, out Guid storageItemId) == false)
                 throw new ArgumentException($"{fileId} is not valid id");
 
-            var file = await unitOfWork.StorageItems
-                .GetFileByUserAndFileIdAsync(user, storageItemId);
+            var file = 
+                await unitOfWork.StorageItems.GetActualFileByIdAsync(storageItemId);
 
             if (file == null)
-                throw new StorageItemNotFoundException($"File for current user does not exist.");
+                throw new StorageItemNotFoundException($"File does not exist.");
+
+            if (file.User.Id != user.Id)
+                throw new ArgumentException($"{user.UserName} is not the current file owner");
 
             return file;
         }

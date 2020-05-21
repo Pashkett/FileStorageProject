@@ -5,7 +5,7 @@ using FileStorage.Domain.DataTransferredObjects.UserModels;
 using FileStorage.Domain.PagingHelpers;
 using FileStorage.Domain.RequestModels;
 
-namespace FileStorage.Domain.Services.RecycledItemsServices
+namespace FileStorage.Domain.Services.RecycledItems
 {
     public interface IRecycledItemsService
     {

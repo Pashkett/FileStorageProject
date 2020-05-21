@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 
 
-namespace FileStorage.Domain.Services.AuthenticationServices
+namespace FileStorage.Domain.Services.Authentication
 {
     public interface IAuthService
     {

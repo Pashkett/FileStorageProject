@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using FileStorage.API.Filters;
 using FileStorage.API.Extensions;
-using FileStorage.Domain.Services.PublicItemsServices;
+using FileStorage.Domain.Services.PublicItems;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.RequestModels;
 

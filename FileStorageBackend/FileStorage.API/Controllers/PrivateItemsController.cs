@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using FileStorage.API.Filters;
 using FileStorage.API.Extensions;
-using FileStorage.Domain.Services.ActualItemsServices;
+using FileStorage.Domain.Services.ActualItems;
 using FileStorage.Domain.Exceptions;
 using FileStorage.Domain.RequestModels;
 using FileStorage.Domain.DataTransferredObjects.StorageItemModels;
@@ -16,12 +16,12 @@ namespace FileStorage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActualItemsController : ControllerBase
+    public class PrivateItemsController : ControllerBase
     {
         private readonly IActualItemsService actualItemsService;
         private readonly string userParamName;
 
-        public ActualItemsController(IActualItemsService actualItemsService,
+        public PrivateItemsController(IActualItemsService actualItemsService,
                                      IConfiguration configuration)
 
         {
@@ -32,7 +32,7 @@ namespace FileStorage.API.Controllers
         [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
-        public async Task<IActionResult> GetAllActualFilesForUser(
+        public async Task<IActionResult> GetPrivateFilesForUser(
             [FromQuery]StorageItemsRequestParameters filesParams)
         {
             if (!filesParams.IsValidSizeRange)
@@ -40,15 +40,15 @@ namespace FileStorage.API.Controllers
 
             var userRequested = HttpContext.GetUserFromContext(userParamName);
 
-            var paginResults = 
+            var (files, header) = 
                 await actualItemsService.GetActualFilesByUserPagedAsync(userRequested, filesParams);
 
-            if (paginResults.pagedList == null || paginResults.pagedList.Count() == 0)
+            if (files == null || files.Count() == 0)
                 return NoContent();
 
-            Response.AddPagination(paginResults.paginationHeader);
+            Response.AddPagination(header);
 
-            return Ok(paginResults.pagedList);
+            return Ok(files);
         }
 
         [Authorize(Policy = "AllRegisteredUsers")]

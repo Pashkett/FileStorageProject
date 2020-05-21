@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
-using FileStorage.Domain.Services.UserServices;
+using FileStorage.Domain.Services.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

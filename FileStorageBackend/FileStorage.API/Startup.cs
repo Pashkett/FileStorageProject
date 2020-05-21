@@ -12,11 +12,11 @@ using FileStorage.API.Extensions;
 using FileStorage.API.Filters;
 using FileStorage.Logger;
 using FileStorage.Domain.ServicesExtensions;
-using FileStorage.Domain.Services.UserServices;
-using FileStorage.Domain.Services.ActualItemsServices;
-using FileStorage.Domain.Services.AuthenticationServices;
-using FileStorage.Domain.Services.RecycledItemsServices;
-using FileStorage.Domain.Services.PublicItemsServices;
+using FileStorage.Domain.Services.Users;
+using FileStorage.Domain.Services.ActualItems;
+using FileStorage.Domain.Services.Authentication;
+using FileStorage.Domain.Services.RecycledItems;
+using FileStorage.Domain.Services.PublicItems;
 
 namespace FileStorage.API
 {

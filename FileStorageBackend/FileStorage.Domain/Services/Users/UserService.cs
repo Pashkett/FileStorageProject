@@ -12,7 +12,7 @@ using System.Security.Claims;
 using AutoMapper;
 using System.Net.Http;
 
-namespace FileStorage.Domain.Services.UserServices
+namespace FileStorage.Domain.Services.Users
 {
     public class UserService : IUserService
     {

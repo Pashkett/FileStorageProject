@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using FileStorage.API.Filters;
 using FileStorage.API.Extensions;
 using FileStorage.Domain.Exceptions;
-using FileStorage.Domain.Services.RecycledItemsServices;
+using FileStorage.Domain.Services.RecycledItems;
 using FileStorage.Domain.RequestModels;
 
 namespace FileStorage.API.Controllers

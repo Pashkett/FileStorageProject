@@ -8,7 +8,7 @@ using FileStorage.Domain.PagingHelpers;
 using FileStorage.Domain.RequestModels;
 using FileStorage.Data.Models;
 
-namespace FileStorage.Domain.Services.ActualItemsServices
+namespace FileStorage.Domain.Services.ActualItems
 {
     public interface IActualItemsService
     {

@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class ActualItemsService {
   baseUrl = 'https://localhost:5001/api/';
-  filesUrl = 'ActualItems/files/';
+  filesUrl = 'privateItems/files/';
 
   constructor(private http: HttpClient) { }
 
@@ -39,7 +39,7 @@ export class ActualItemsService {
       }
     }
 
-    return this.http.get<StorageItem[]>(this.baseUrl + 'ActualItems/files/', {observe: 'response', params})
+    return this.http.get<StorageItem[]>(this.baseUrl + this.filesUrl, {observe: 'response', params})
       .pipe(
         map(response => {
           paginatedResult.result = response.body;

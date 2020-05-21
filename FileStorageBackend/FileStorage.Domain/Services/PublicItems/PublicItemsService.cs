@@ -16,7 +16,7 @@ using FileStorage.Data.FileSystemManagers.StorageFileManager;
 using FileStorage.Data.QueryModels;
 
 
-namespace FileStorage.Domain.Services.PublicItemsServices
+namespace FileStorage.Domain.Services.PublicItems
 {
     public class PublicItemsService : IPublicItemsService
     {
@@ -65,7 +65,7 @@ namespace FileStorage.Domain.Services.PublicItemsServices
             if (Guid.TryParse(fileId, out Guid storageItemId) == false)
                 throw new ArgumentException($"{fileId} is not valid id");
 
-            var fileItem = await unitOfWork.StorageItems.GetPublicFileByFileIdAsync(storageItemId);
+            var fileItem = await unitOfWork.StorageItems.GetPublicFileByIdAsync(storageItemId);
 
             if (fileItem == null)
                 throw new StorageItemNotFoundException($"File for current user does not exist.");
@@ -86,12 +86,15 @@ namespace FileStorage.Domain.Services.PublicItemsServices
             if (Guid.TryParse(fileId, out Guid storageItemId) == false)
                 throw new ArgumentException($"{fileId} is not valid id");
 
-            var file = await unitOfWork.StorageItems
-                .GetPublicFileByUserAndFileIdAsync(user, storageItemId);
+            var file = 
+                await unitOfWork.StorageItems.GetPublicFileByIdAsync(storageItemId);
 
             if (file == null)
-                throw new StorageItemNotFoundException($"File for current user does not exist.");
-            
+                throw new StorageItemNotFoundException($"File does not exist.");
+
+            if (file.UserId != user.Id)
+                throw new ArgumentException($"{user.UserName} is not the current file owner");
+
             return file;
         }
     }

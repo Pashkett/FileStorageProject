@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using FileStorage.Domain.DataTransferredObjects.UserModels;
 
-namespace FileStorage.Domain.Services.UserServices
+namespace FileStorage.Domain.Services.Users
 {
     public interface IUserService
     {

@@ -15,7 +15,7 @@ using FileStorage.Data.Models;
 using FileStorage.Data.UnitOfWork;
 
 
-namespace FileStorage.Domain.Services.RecycledItemsServices
+namespace FileStorage.Domain.Services.RecycledItems
 {
     public class RecycledItemsService : IRecycledItemsService
     {
@@ -76,11 +76,14 @@ namespace FileStorage.Domain.Services.RecycledItemsServices
             if (Guid.TryParse(fileId, out Guid storageItemId) == false)
                 throw new ArgumentException($"{fileId} is not valid id");
 
-            var file = await unitOfWork.StorageItems
-                .GetRecycledFileByUserAndFileIdAsync(user, storageItemId);
+            var file = 
+                await unitOfWork.StorageItems.GetRecycledFileByIdAsync(storageItemId);
 
             if (file == null)
-                throw new StorageItemNotFoundException($"File for current user does not exist.");
+                throw new StorageItemNotFoundException($"File does not exist.");
+
+            if (file.UserId != user.Id)
+                throw new ArgumentException($"{user.UserName} is not the current file owner");
 
             return file;
         }
