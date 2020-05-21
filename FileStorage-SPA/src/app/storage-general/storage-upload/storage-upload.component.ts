@@ -24,7 +24,7 @@ export class StorageUploadComponent implements OnInit {
 
   initializeUploader() {
     this.uploader = new FileUploader({
-      url: this.baseUrl + 'ActualItems/files/',
+      url: this.baseUrl + 'privateItems/files/',
       authToken: 'Bearer ' + localStorage.getItem('token'),
       isHTML5: true,
       removeAfterUpload: true,
