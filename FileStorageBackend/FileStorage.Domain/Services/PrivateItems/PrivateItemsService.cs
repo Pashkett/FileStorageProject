@@ -123,7 +123,7 @@ namespace FileStorage.Domain.Services.PrivateItems
             return (stream, StorageItemsHelpers.GetContentType(filePath), file.DisplayName);
         }
 
-        public async Task MoveFileRecycledBinAsync(UserDto userDto, string fileId)
+        public async Task MoveFileRecycleBinAsync(UserDto userDto, string fileId)
         {
             var fileItem = await GetActualItemByUserAndItemIdAsync(userDto, fileId);
             

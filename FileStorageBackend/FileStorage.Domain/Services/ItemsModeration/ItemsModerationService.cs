@@ -47,7 +47,7 @@ namespace FileStorage.Domain.Services.ItemsModeration
             return (filesDto, pagingHeader);
         }
 
-        public async Task MoveFileRecycledBinAsync(string fileId)
+        public async Task MoveFileRecycleBinAsync(string fileId)
         {
             var fileItem = await GetActualItemByIdAsync(fileId);
 

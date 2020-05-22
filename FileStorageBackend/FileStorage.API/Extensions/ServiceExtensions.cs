@@ -51,8 +51,8 @@ namespace FileStorage.API.Extensions
                 options.AddPolicy("AdminRoleRequired",
                     policy => policy.RequireRole("Admin"));
 
-                options.AddPolicy("ModerateRoleFilesRole",
-                    policy => policy.RequireRole("Admin", "Moderator"));
+                options.AddPolicy("ModeratorRoleRequired",
+                    policy => policy.RequireRole("Moderator"));
 
                 options.AddPolicy("MemberRoleRequired",
                     policy => policy.RequireRole("Member"));

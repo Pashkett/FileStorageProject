@@ -12,7 +12,7 @@ namespace FileStorage.Domain.Services.ItemsModeration
             StorageItemsRequestParameters itemsParams);
         Task MoveFilePrivateAsync(string fileId);
         Task MoveFilePublicAsync(string fileId);
-        Task MoveFileRecycledBinAsync(string fileId);
+        Task MoveFileRecycleBinAsync(string fileId);
         Task RestoreRecycledFileAsync(string fileId);
         Task DeleteFileAsync(string fileId);
     }

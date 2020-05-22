@@ -26,13 +26,13 @@ namespace FileStorage.API.Controllers
 
         {
             this.privateItemsService = privateItemsService;
-            this.userParamName = configuration.GetValue<string>("UserKeyParameter");
+            userParamName = configuration.GetValue<string>("UserKeyParameter");
         }
 
         [Authorize(Policy = "AllRegisteredUsers")]
         [ServiceFilter(typeof(UserCheckerFromRequest))]
         [HttpGet("files")]
-        public async Task<IActionResult> GetPrivateFilesForUser(
+        public async Task<IActionResult> GetPrivateFiles(
             [FromQuery]StorageItemsRequestParameters filesParams)
         {
             if (!filesParams.IsValidSizeRange)
@@ -40,7 +40,7 @@ namespace FileStorage.API.Controllers
 
             var userRequested = HttpContext.GetUserFromContext(userParamName);
 
-            var (files, header) = 
+            var (files, header) =
                 await privateItemsService.GetPrivateFilesAndHeaderAsync(userRequested, filesParams);
 
             if (files == null || files.Count() == 0)
@@ -97,7 +97,7 @@ namespace FileStorage.API.Controllers
 
             try
             {
-                await privateItemsService.MoveFileRecycledBinAsync(userRequested, fileId);
+                await privateItemsService.MoveFileRecycleBinAsync(userRequested, fileId);
 
                 return Ok();
             }
@@ -112,17 +112,13 @@ namespace FileStorage.API.Controllers
         [HttpPost("files/{fileId}")]
         public async Task<IActionResult> MoveToPublicAsync(string fileId)
         {
-            //var userRequested = GetUserFromContext(userParamName);
             var userRequested = HttpContext.GetUserFromContext(userParamName);
 
             try
             {
                 await privateItemsService.MoveFilePublicAsync(userRequested, fileId);
 
-                return Ok(new
-                {
-                    id = fileId
-                });
+                return Ok(new { id = fileId });
             }
             catch (StorageItemNotFoundException ex)
             {

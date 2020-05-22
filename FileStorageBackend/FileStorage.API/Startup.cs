@@ -17,6 +17,7 @@ using FileStorage.Domain.Services.PrivateItems;
 using FileStorage.Domain.Services.Authentication;
 using FileStorage.Domain.Services.RecycledItems;
 using FileStorage.Domain.Services.PublicItems;
+using FileStorage.Domain.Services.ItemsModeration;
 
 namespace FileStorage.API
 {
@@ -48,6 +49,7 @@ namespace FileStorage.API
             services.AddScoped<IPrivateItemsService, PrivateItemsService>();
             services.AddScoped<IRecycledItemsService, RecycledItemsService>();
             services.AddScoped<IPublicItemsService, PublicItemsService>();
+            services.AddScoped<IItemsModerationService, ItemsModerationService>();
 
             services.AddAuthentication();
             services.ConfigureIdentity();

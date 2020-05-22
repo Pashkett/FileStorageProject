@@ -33,7 +33,7 @@ namespace FileStorage.API.Controllers
             if (!filesParams.IsValidSizeRange)
                 return BadRequest("Max size can't be less than min size.");
 
-            var (files, header) = 
+            var (files, header) =
                 await publicItemsService.GetPublicFilesAndHeaderAsync(filesParams);
 
             if (files == null || files.Count() == 0)
@@ -55,10 +55,7 @@ namespace FileStorage.API.Controllers
             {
                 await publicItemsService.MoveFilePrivateAsync(userRequested, fileId);
 
-                return Ok(new
-                {
-                    Id = fileId
-                });
+                return Ok(new { Id = fileId });
             }
             catch (StorageItemNotFoundException ex)
             {
