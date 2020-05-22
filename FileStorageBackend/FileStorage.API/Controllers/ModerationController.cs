@@ -105,7 +105,7 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize(Policy = "ModeratorRoleRequired")]
-        [HttpDelete("files")]
+        [HttpDelete("files/{fileId}")]
         public async Task<IActionResult> DeleteFileAsync(string fileId)
         {
             try

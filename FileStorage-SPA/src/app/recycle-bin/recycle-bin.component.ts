@@ -79,7 +79,7 @@ export class RecycleBinComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  deleteItem(item: StorageItem) {
+  private deleteItem(item: StorageItem) {
     this.recycledItemsService.deleteFile(item.id).subscribe(
       result => {
         console.log(result);
