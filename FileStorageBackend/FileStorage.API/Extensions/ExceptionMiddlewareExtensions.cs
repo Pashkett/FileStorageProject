@@ -1,12 +1,8 @@
-﻿using FileStorage.Logger;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
+using FileStorage.Logger;
 
 namespace FileStorage.API.Extensions
 {
