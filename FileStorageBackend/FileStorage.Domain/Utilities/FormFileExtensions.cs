@@ -22,7 +22,8 @@ namespace FileStorage.Domain.Utilities
                 throw new StorageItemEmptyException($"File: {nameForDisplay} is empty.");
 
             if (formFile.Length > sizeLimit)
-                throw new StorageItemExceedLimitException($"File: {nameForDisplay} exceeds {sizeLimit / 1048576:N1} MB.");
+                throw new StorageItemExceedLimitException(
+                    $"File: {nameForDisplay} exceeds {sizeLimit / 1048576:N1} MB.");
 
             try
             {
