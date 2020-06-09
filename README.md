@@ -25,6 +25,9 @@ Solution for file storage.📁📁📁 Just for portfolio purposes.
 ## Running
  - The SPA will be served on `http://localhost:4001`
  - Web API will be served on `https://localhost:5001`
+ - Command line & .NET Core CLI
+    - In FileStorage-SPA folder run: `ng serve`
+    - In FileStorageBackend\FileStorage.API folder run: `dotnet run`
 
 ### Test Users
 User with "Member" role:
