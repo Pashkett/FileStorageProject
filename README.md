@@ -1,4 +1,4 @@
-# FileStorageProject (Angular SPA ASP.NET Core Web API)
+# FileStorageProject (Angular SPA + ASP.NET Core Web API)
 
 ## Description
 Solution for file storage.📁📁📁 Just for portfolio purposes.
