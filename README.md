@@ -26,6 +26,15 @@ Solution for file storage.📁📁📁 Just for portfolio purposes.
  - The SPA will be served on `http://localhost:4001`
  - Web API will be served on `https://localhost:5001`
 
+### Test Users
+User with "Member" role:
+ - Login: Tina 
+ - Password: password
+
+User with "Admin" role:
+ - Login: Admin
+ - Password: admin
+
 ## DB Connection
 - Edit `ConnectionStrings` in _appsettings.json_:
 ```Json
