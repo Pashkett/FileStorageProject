@@ -26,7 +26,21 @@ namespace FileStorage.Data.Tests
         }
 
         [Test]
-        public void File_Has_Been_Already_Exists_When_Created()
+        public void File_Path_Is_Null_For_Creation()
+        {
+            var pathSorce = @"C:\SourceFiles\file.txt";
+            string pathTarget = null;
+            var mockFileSystem = new MockFileSystem();
+            mockFileSystem.AddFile(pathSorce, new MockFileData("TestFile"));
+            mockFileSystem.AddDirectory(@"C:\TargetFiles");
+            var bytes = mockFileSystem.File.ReadAllBytes(pathSorce);
+            var sut = new FileManager(mockFileSystem);
+
+            Assert.That(() => sut.CreateFileAsync(pathTarget, bytes), Throws.TypeOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void File_Has_Been_Already_Exists_For_Creation()
         {
             var path = @"C:\SourceFiles\file.txt";
             var mockFileSystem = new MockFileSystem();
@@ -45,6 +59,16 @@ namespace FileStorage.Data.Tests
             var sut = new FileManager(mockFileSystem);
 
             Assert.That(() => sut.ReadFileAsync(path), Throws.TypeOf<ArgumentException>());
+        }
+        
+        [Test]
+        public void File_Path_Is_Null_For_Reading()
+        {
+            string path = null;
+            var mockFileSystem = new MockFileSystem();
+            var sut = new FileManager(mockFileSystem);
+
+            Assert.That(() => sut.ReadFileAsync(path), Throws.TypeOf<ArgumentNullException>());
         }
 
         [Test]
@@ -69,6 +93,16 @@ namespace FileStorage.Data.Tests
             var sut = new FileManager(mockFileSystem);
 
             Assert.That(() => sut.DeleteFile(path), Throws.TypeOf<ArgumentException>());
+        }
+        
+        [Test]
+        public void File_Path_Is_Null_For_Deletion()
+        {
+            string path = null;
+            var mockFileSystem = new MockFileSystem();
+            var sut = new FileManager(mockFileSystem);
+
+            Assert.That(() => sut.DeleteFile(path), Throws.TypeOf<ArgumentNullException>());
         }
     }
 }

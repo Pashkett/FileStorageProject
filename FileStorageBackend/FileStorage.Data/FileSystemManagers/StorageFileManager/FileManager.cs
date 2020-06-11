@@ -19,6 +19,9 @@ namespace FileStorage.Data.FileSystemManagers.StorageFileManager
 
         public async Task CreateFileAsync(string path, byte[] streamedFileContent)
         {
+            if (path == null)
+                throw new ArgumentNullException("Path must not be null");
+
             if (fileSystem.File.Exists(path))
                 throw new ArgumentException("File has been already exists.");
             else
@@ -30,6 +33,9 @@ namespace FileStorage.Data.FileSystemManagers.StorageFileManager
 
         public async Task<MemoryStream> ReadFileAsync(string path)
         {
+            if (path == null)
+                throw new ArgumentNullException("Path must not be null");
+
             if (!fileSystem.File.Exists(path))
                 throw new ArgumentException("Current file does not exists");
             else
@@ -47,6 +53,9 @@ namespace FileStorage.Data.FileSystemManagers.StorageFileManager
 
         public void DeleteFile(string path)
         {
+            if (path == null)
+                throw new ArgumentNullException("Path must not be null");
+
             if (!fileSystem.File.Exists(path))
                 throw new ArgumentException("Current file does not exists.");
             else
