@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using System.IO.Abstractions;
 
 namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
 {
@@ -10,31 +8,36 @@ namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
     /// </summary>
     public class FolderManager : IFolderManager
     {
-        public bool IsFolderExists(string path) =>
-            Directory.Exists(path);
+        private readonly IFileSystem fileSystem;
 
-        public bool CreateFolder(string path)
+        public FolderManager(IFileSystem fileSystem)
         {
-            if (IsFolderExists(path))
-                throw new ArgumentException("Folder has been already exists.");
-            else
-            {
-                Directory.CreateDirectory(path);
-                
-                return true;
-            }
+            this.fileSystem = fileSystem;
         }
 
-        public bool DeleteFolder(string path)
+        public bool IsFolderExists(string path) =>
+            fileSystem.Directory.Exists(path);
+
+        public void CreateFolder(string path)
         {
+            if (path == null)
+                throw new ArgumentNullException("Path must not be null");
+
             if (IsFolderExists(path))
                 throw new ArgumentException("Folder has been already exists.");
             else
-            {
-                Directory.Delete(path, true);
-                
-                return true;
-            }
+                fileSystem.Directory.CreateDirectory(path);
+        }
+
+        public void DeleteFolder(string path)
+        {
+            if (path == null)
+                throw new ArgumentNullException("Path must not be null");
+
+            if (IsFolderExists(path))
+                throw new ArgumentException("Folder has been already exists.");
+            else
+                fileSystem.Directory.Delete(path, true);
         }
     }
 }

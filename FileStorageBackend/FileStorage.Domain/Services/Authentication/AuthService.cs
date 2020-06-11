@@ -21,19 +21,19 @@ namespace FileStorage.Domain.Services.Authentication
         private readonly SignInManager<User> signInManager;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
-        private readonly IPrivateItemsService actualItemsService;
+        private readonly IPrivateItemsService privateItemsService;
 
         public AuthService(UserManager<User> userManager,
                            SignInManager<User> signInManager,
                            IMapper mapper,
                            IConfiguration configuration,
-                           IPrivateItemsService actualItemsService)
+                           IPrivateItemsService privateItemsService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
             this.configuration = configuration;
-            this.actualItemsService = actualItemsService;
+            this.privateItemsService = privateItemsService;
         }
 
         public async Task<UserDto> LoginAsync(string username, string password)
@@ -68,7 +68,7 @@ namespace FileStorage.Domain.Services.Authentication
                     ParentFolder = null
                 };
 
-                var folder = await actualItemsService.CreateFolderAsync(userFolder);
+                await privateItemsService.CreateFolderAsync(userFolder);
 
                 return userForRegister;
             }
