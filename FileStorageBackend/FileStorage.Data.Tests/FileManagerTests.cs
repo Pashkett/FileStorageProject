@@ -10,14 +10,14 @@ namespace FileStorage.Data.Tests
     public class FileManagerTests
     {
         [Test]
-        public void Successfuly_Create_File_From_Path()
+        public void Successfully_Create_File_From_Path()
         {
-            var pathSorce = @"C:\SourceFiles\file.txt";
+            var pathSource = @"C:\SourceFiles\file.txt";
             var pathTarget = @"C:\TargetFiles\file.txt";
             var mockFileSystem = new MockFileSystem();
-            mockFileSystem.AddFile(pathSorce, new MockFileData("TestFile"));
+            mockFileSystem.AddFile(pathSource, new MockFileData("TestFile"));
             mockFileSystem.AddDirectory(@"C:\TargetFiles");
-            var bytes = mockFileSystem.File.ReadAllBytes(pathSorce);
+            var bytes = mockFileSystem.File.ReadAllBytes(pathSource);
             var sut = new FileManager(mockFileSystem);
 
             sut.CreateFileAsync(pathTarget, bytes).Wait();
@@ -28,12 +28,12 @@ namespace FileStorage.Data.Tests
         [Test]
         public void File_Path_Is_Null_For_Creation()
         {
-            var pathSorce = @"C:\SourceFiles\file.txt";
+            var pathSource = @"C:\SourceFiles\file.txt";
             string pathTarget = null;
             var mockFileSystem = new MockFileSystem();
-            mockFileSystem.AddFile(pathSorce, new MockFileData("TestFile"));
+            mockFileSystem.AddFile(pathSource, new MockFileData("TestFile"));
             mockFileSystem.AddDirectory(@"C:\TargetFiles");
-            var bytes = mockFileSystem.File.ReadAllBytes(pathSorce);
+            var bytes = mockFileSystem.File.ReadAllBytes(pathSource);
             var sut = new FileManager(mockFileSystem);
 
             Assert.That(() => sut.CreateFileAsync(pathTarget, bytes), Throws.TypeOf<ArgumentNullException>());
