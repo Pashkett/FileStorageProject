@@ -41,6 +41,7 @@ namespace FileStorage.API
             services.ConfigureSqlContext(Configuration);
             services.ConfigureUnitOfWork();
             services.ConfigureAutomapper();
+            services.ConfigureFileSystemAbstraction();
             services.ConfigureFileSystemManagers();
 
             services.AddScoped<UserCheckerFromRequest>();

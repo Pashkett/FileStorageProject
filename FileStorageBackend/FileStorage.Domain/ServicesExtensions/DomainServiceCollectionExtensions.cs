@@ -10,6 +10,7 @@ using FileStorage.Data.UnitOfWork;
 using FileStorage.Data.FileSystemManagers.StorageFolderManager;
 using FileStorage.Data.FileSystemManagers.StorageFileManager;
 using FileStorage.Data.Models;
+using System.IO.Abstractions;
 
 namespace FileStorage.Domain.ServicesExtensions
 {
@@ -47,6 +48,11 @@ namespace FileStorage.Domain.ServicesExtensions
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+        }
+
+        public static void ConfigureFileSystemAbstraction(this IServiceCollection services)
+        {
+            services.AddSingleton<IFileSystem, FileSystem>();
         }
 
         public static void ConfigureFileSystemManagers(this IServiceCollection services)

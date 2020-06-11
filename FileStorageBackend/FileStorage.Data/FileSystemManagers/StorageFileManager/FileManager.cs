@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 
 namespace FileStorage.Data.FileSystemManagers.StorageFileManager
@@ -9,15 +10,19 @@ namespace FileStorage.Data.FileSystemManagers.StorageFileManager
     /// </summary>
     public class FileManager : IFileManager
     {
-        public bool IsFileExists(string path) =>
-            File.Exists(path);
+        private readonly IFileSystem fileSystem;
+
+        public FileManager(IFileSystem fileSystem)
+        {
+            this.fileSystem = fileSystem;
+        }
 
         public async Task CreateFileAsync(string path, byte[] streamedFileContent)
         {
-            if (IsFileExists(path))
+            if (fileSystem.File.Exists(path))
                 throw new ArgumentException("File has been already exists.");
             else
-                using (var targetStream = File.Create(path))
+                using (var targetStream = fileSystem.File.Create(path))
                 {
                     await targetStream.WriteAsync(streamedFileContent);
                 }
@@ -25,13 +30,13 @@ namespace FileStorage.Data.FileSystemManagers.StorageFileManager
 
         public async Task<MemoryStream> ReadFileAsync(string path)
         {
-            if (!IsFileExists(path))
+            if (!fileSystem.File.Exists(path))
                 throw new ArgumentException("Current file does not exists");
             else
             {
                 var memoryStream = new MemoryStream();
 
-                using (var stream = new FileStream(path, FileMode.Open))
+                using (var stream = fileSystem.FileStream.Create(path, FileMode.Open))
                 {
                     await stream.CopyToAsync(memoryStream);
                 }
@@ -42,10 +47,10 @@ namespace FileStorage.Data.FileSystemManagers.StorageFileManager
 
         public void DeleteFile(string path)
         {
-            if (!IsFileExists(path))
+            if (!fileSystem.File.Exists(path))
                 throw new ArgumentException("Current file does not exists.");
             else
-                File.Delete(path);
+                fileSystem.File.Delete(path);
         }
     }
 }

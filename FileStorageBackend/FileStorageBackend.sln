@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileStorage.Domain", "FileS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileStorage.Data", "FileStorage.Data\FileStorage.Data.csproj", "{DD2F8F5F-E747-4120-98F3-5509BF369C93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorage.Logger", "FileStorage.Logger\FileStorage.Logger.csproj", "{09A8150F-0001-4DD7-852C-BBBEE1C3332F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileStorage.Logger", "FileStorage.Logger\FileStorage.Logger.csproj", "{09A8150F-0001-4DD7-852C-BBBEE1C3332F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorage.Data.Tests", "FileStorage.Data.Tests\FileStorage.Data.Tests.csproj", "{5D686E40-F233-4D81-91C2-A627F8994F7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{09A8150F-0001-4DD7-852C-BBBEE1C3332F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09A8150F-0001-4DD7-852C-BBBEE1C3332F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09A8150F-0001-4DD7-852C-BBBEE1C3332F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D686E40-F233-4D81-91C2-A627F8994F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D686E40-F233-4D81-91C2-A627F8994F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D686E40-F233-4D81-91C2-A627F8994F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D686E40-F233-4D81-91C2-A627F8994F7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
