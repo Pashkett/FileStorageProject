@@ -15,8 +15,13 @@ namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
             this.fileSystem = fileSystem;
         }
 
-        public bool IsFolderExists(string path) =>
-            fileSystem.Directory.Exists(path);
+        public bool IsFolderExists(string path)
+        {
+            if (path == null)
+                throw new ArgumentNullException("Path must not be null");
+
+            return fileSystem.Directory.Exists(path);
+        }
 
         public void CreateFolder(string path)
         {
@@ -34,8 +39,8 @@ namespace FileStorage.Data.FileSystemManagers.StorageFolderManager
             if (path == null)
                 throw new ArgumentNullException("Path must not be null");
 
-            if (IsFolderExists(path))
-                throw new ArgumentException("Folder has been already exists.");
+            if (!IsFolderExists(path))
+                throw new ArgumentException("Folder does not exist.");
             else
                 fileSystem.Directory.Delete(path, true);
         }
