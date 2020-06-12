@@ -10,7 +10,7 @@ namespace FileStorage.Data.Tests
     public class FileManagerTests
     {
         [Test]
-        public void Successfully_Create_File_From_Path()
+        public void Successfully_File_Creation_From_Path()
         {
             var pathSource = @"C:\SourceFiles\file.txt";
             var pathTarget = @"C:\TargetFiles\file.txt";
