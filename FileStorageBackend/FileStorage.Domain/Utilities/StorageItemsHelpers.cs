@@ -1,25 +1,22 @@
-﻿using FileStorage.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using FileStorage.Data.Models;
 
 namespace FileStorage.Domain.Utilities
 {
     public static class StorageItemsHelpers
     {
-        public static string GetStorageItemTrustedName()
-        {
-            return Guid.NewGuid().ToString();
-        }
+        public static string GetStorageItemTrustedName() => 
+            Guid.NewGuid().ToString();
 
         public static string GetFolderRelativePath(StorageItem folder)
         {
             ValidateFolder(folder);
 
-            if (folder.IsPrimaryFolder)
-                return $"{folder.User.Id}";
-            else
-                return Path.Combine(folder.ParentFolder.RelativePath, folder.TrustedName);
+            return folder.IsPrimaryFolder
+                        ? folder.TrustedName
+                        : Path.Combine(folder.ParentFolder.RelativePath, folder.TrustedName);
         }
 
         public static string GetFileRelativePath(StorageItem file)
@@ -31,12 +28,12 @@ namespace FileStorage.Domain.Utilities
 
         public static string GetStorageItemFullPath(string targetPath, string relativePath)
         {
-            var parentPath = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
-
             if (targetPath == null || relativePath == null)
                 throw new ArgumentNullException("One of the argument equals null");
-            else
-                return Path.Combine(parentPath, targetPath, relativePath);
+
+            var parentPath = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
+            
+            return Path.Combine(parentPath, targetPath, relativePath);
         }
 
         public static string GetContentType(string path)
@@ -54,6 +51,9 @@ namespace FileStorage.Domain.Utilities
 
             if (!folder.IsPrimaryFolder && folder.ParentFolder == null)
                 throw new ArgumentException("Non-primary folder should have a parent folder");
+
+            if (folder.TrustedName == null)
+                throw new ArgumentException("Folder should have Trusted name");
         }
 
         private static void ValidateFile(StorageItem file)
@@ -70,9 +70,8 @@ namespace FileStorage.Domain.Utilities
             return new Dictionary<string, string>
             {
                 #region Big freaking list of mime types
-                // combination of values from Windows Registry and 
+                // values from Windows Registry and 
                 // from C:\Windows\System32\inetsrv\config\applicationHost.config
-                // some added, including .7z and .dat
                 {".323", "text/h323"},
                 {".3g2", "video/3gpp2"},
                 {".3gp", "video/3gpp"},
