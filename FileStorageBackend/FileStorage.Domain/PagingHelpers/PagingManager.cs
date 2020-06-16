@@ -1,7 +1,5 @@
 ﻿using FileStorage.Domain.RequestModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FileStorage.Domain.PagingHelpers
 {
