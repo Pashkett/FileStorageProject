@@ -148,8 +148,8 @@ namespace FileStorage.Domain.Services.PrivateItems
         {
             var folder = mapper.Map<FolderCreateRequestDto, StorageItem>(folderCreate);
 
-            folder.TrustedName = StorageItemsHelpers.GetStorageItemTrustedName(folder);
-            folder.RelativePath = StorageItemsHelpers.GetStorageItemRelativePath(folder);
+            folder.TrustedName = StorageItemsHelpers.GetStorageItemTrustedName();
+            folder.RelativePath = StorageItemsHelpers.GetFolderRelativePath(folder);
 
             var existingFolderInDirectory =
                 await unitOfWork.StorageItems.GetFolderByTrustedNameAsync(folder.TrustedName);

@@ -19,7 +19,7 @@ namespace FileStorage.Domain.Utilities
             var nameForDisplay = WebUtility.HtmlEncode(formFile.FileName);
 
             if (formFile.Length == 0)
-                throw new StorageItemEmptyException($"File: {nameForDisplay} is empty.");
+                throw new StorageItemEmptyException($"File: {nameForDisplay} is empty from FormFile.");
 
             if (formFile.Length > sizeLimit)
                 throw new StorageItemExceedLimitException(
@@ -32,7 +32,7 @@ namespace FileStorage.Domain.Utilities
                     await formFile.CopyToAsync(memoryStream);
 
                     if (memoryStream.Length == 0)
-                        throw new StorageItemEmptyException($"File: {nameForDisplay} is empty.");
+                        throw new StorageItemEmptyException($"File: {nameForDisplay} is empty from MemoryStream.");
                     else
                         return memoryStream.ToArray();
                 }
@@ -44,11 +44,14 @@ namespace FileStorage.Domain.Utilities
         }
 
         public static StorageItem CreateFileItemFormFile(this IFormFile formFile,
-                                                         StorageItem primaryFolder,
-                                                         User user)
+                                                 StorageItem primaryFolder,
+                                                 User user)
         {
             var fileItem = new StorageItem
             {
+                TrustedName = StorageItemsHelpers.GetStorageItemTrustedName(),
+                DisplayName = WebUtility.HtmlEncode(formFile.FileName),
+                Extension = Path.GetExtension(formFile.FileName),
                 CreatedOn = DateTime.Now,
                 IsFolder = false,
                 IsPrimaryFolder = false,
@@ -58,11 +61,7 @@ namespace FileStorage.Domain.Utilities
                 UserId = user.Id,
                 ParentFolder = primaryFolder
             };
-
-            fileItem.DisplayName = WebUtility.HtmlEncode(formFile.FileName);
-            fileItem.TrustedName = StorageItemsHelpers.GetStorageItemTrustedName(fileItem);
-            fileItem.Extension = Path.GetExtension(formFile.FileName);
-            fileItem.RelativePath = StorageItemsHelpers.GetStorageItemRelativePath(fileItem);
+            fileItem.RelativePath = StorageItemsHelpers.GetFileRelativePath(fileItem);
 
             return fileItem;
         }

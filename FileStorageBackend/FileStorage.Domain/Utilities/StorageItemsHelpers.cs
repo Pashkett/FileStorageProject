@@ -7,47 +7,27 @@ namespace FileStorage.Domain.Utilities
 {
     public static class StorageItemsHelpers
     {
-        //TODO to Reorganize
-        public static string GetStorageItemRelativePath(StorageItem item)
+        public static string GetStorageItemTrustedName()
         {
-            if (item.IsFolder)
-            {
-                if (item.IsPrimaryFolder)
-                    return $"{item.User.Id}";
-                else
-                {
-                    if (item.ParentFolder == null)
-                        throw new ArgumentException("Non-primary folder should have a parent folder");
-                    else
-                        return Path.Combine(item.ParentFolder.RelativePath, item.TrustedName);
-                }
-            }
-            else
-            {
-                if (item.ParentFolder == null)
-                    throw new ArgumentException("File doesn't contain parent folder.");
-                else
-                    return Path.Combine(item.ParentFolder.RelativePath, item.TrustedName + item.Extension);
-            }
+            return Guid.NewGuid().ToString();
         }
 
-        public static string GetStorageItemTrustedName(StorageItem item)
+        public static string GetFolderRelativePath(StorageItem folder)
         {
-            if (item.IsFolder)
-            {
-                if (item.IsPrimaryFolder == true)
-                    return $"{item.User.Id}";
-                else
-                    return $"{item.User.Id}_{DateTime.Now:yyyyMMddTHHmmss.ffff}";
-            }
+            ValidateFolder(folder);
+
+            if (folder.IsPrimaryFolder)
+                return $"{folder.User.Id}";
             else
-            {
-                if (item.ParentFolder == null)
-                    throw new ArgumentException("File doesn't contain parent folder.");
-                else
-                    return $"{item.ParentFolder.Id}_{DateTime.Now:yyyyMMddTHHmmss.ffff}";
-            }
+                return Path.Combine(folder.ParentFolder.RelativePath, folder.TrustedName);
         }
+
+        public static string GetFileRelativePath(StorageItem file)
+        {
+            ValidateFile(file);
+
+            return Path.Combine(file.ParentFolder.RelativePath, file.TrustedName + file?.Extension);
+        }        
 
         public static string GetStorageItemFullPath(string targetPath, string relativePath)
         {
@@ -67,7 +47,24 @@ namespace FileStorage.Domain.Utilities
             return types[ext];
         }
 
-        //TODO to Reorganize read from json file
+        private static void ValidateFolder(StorageItem folder)
+        {
+            if (!folder.IsFolder)
+                throw new ArgumentException("Item should be folder.");
+
+            if (!folder.IsPrimaryFolder && folder.ParentFolder == null)
+                throw new ArgumentException("Non-primary folder should have a parent folder");
+        }
+
+        private static void ValidateFile(StorageItem file)
+        {
+            if (file.IsFolder)
+                throw new ArgumentException("Item should be a file.");
+
+            if (file.ParentFolder == null)
+                throw new ArgumentException("File should contain a parent folder");
+        }
+
         private static Dictionary<string, string> GetMimeTypes()
         {
             return new Dictionary<string, string>
@@ -639,6 +636,5 @@ namespace FileStorage.Domain.Utilities
                 #endregion
             };
         }
-
     }
 }
