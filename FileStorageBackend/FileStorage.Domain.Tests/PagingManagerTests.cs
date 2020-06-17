@@ -1,6 +1,4 @@
 ﻿using NUnit.Framework;
-using Moq;
-using System;
 using FileStorage.Domain.RequestModels;
 using FileStorage.Domain.PagingHelpers;
 
@@ -38,6 +36,5 @@ namespace FileStorage.Domain.Tests
 
             return sut.TotalPages;
         }
-
     }
 }
