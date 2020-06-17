@@ -14,6 +14,10 @@ using System.IO.Abstractions;
 
 namespace FileStorage.Domain.ServicesExtensions
 {
+    /// <summary>
+    /// Class with extension that allows to keep all Data layer services configuration in one place.
+    /// Also servers for decoupling Data layer from API layer.
+    /// </summary>
     public static class DomainServiceCollectionExtensions
     {
         public static void ConfigureSqlContext(this IServiceCollection services,

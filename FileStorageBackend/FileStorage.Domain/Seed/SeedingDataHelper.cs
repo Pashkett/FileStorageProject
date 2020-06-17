@@ -5,6 +5,9 @@ using System.Text.Json;
 
 namespace FileStorage.Domain.Seed
 {
+    /// <summary>
+    /// Class for deserialize data for data seed from Json file.
+    /// </summary>
     public static class SeedingDataHelper
     {
         public static List<T> SeedingDataFromJson<T>(string fileName)

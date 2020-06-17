@@ -3,6 +3,9 @@ using System;
 
 namespace FileStorage.Domain.PagingHelpers
 {
+    /// <summary>
+    /// Utility class for construction pagination header.
+    /// </summary>
     public static class PagingManager
     {
         public static PaginationHeader PrepareHeader<T>(int totalCount, T parameters)

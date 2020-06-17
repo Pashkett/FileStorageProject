@@ -5,6 +5,9 @@ using FileStorage.Data.Models;
 
 namespace FileStorage.Domain.Utilities
 {
+    /// <summary>
+    /// Static class that process business logic for work with Storage Items locations, paths and naming
+    /// </summary>
     public static class StorageItemsHelpers
     {
         public static string GetStorageItemTrustedName() => 

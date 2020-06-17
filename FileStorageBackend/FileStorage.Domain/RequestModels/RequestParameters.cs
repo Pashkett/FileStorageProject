@@ -1,5 +1,8 @@
 ﻿namespace FileStorage.Domain.RequestModels
 {
+    /// <summary>
+    /// Base class for request from customer that provides paging functionality.
+    /// </summary>
     public abstract class RequestParameters
     {
         public const int MaxPageSize = 50;

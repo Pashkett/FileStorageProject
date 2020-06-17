@@ -13,6 +13,9 @@ using FileStorage.Data.FileSystemManagers.StorageFolderManager;
 
 namespace FileStorage.Domain.Seed
 {
+    /// <summary>
+    /// Seeding data if needed when application starts.
+    /// </summary>
     public static class DataSeeding
     {
         public static void DataInitialization(this IHost host)

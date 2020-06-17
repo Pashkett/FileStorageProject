@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 namespace FileStorage.Domain.Utilities
 {
     /// <summary>
-    /// Class for FormFile processing from API  
+    /// Class with extension that allows FormFile processing
     /// </summary>
     public static class FormFileExtensions
     {

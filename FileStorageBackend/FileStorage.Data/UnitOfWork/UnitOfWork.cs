@@ -11,10 +11,8 @@ namespace FileStorage.Data.UnitOfWork
 
         private IStorageItemRepository storageItemRepository;
 
-        public EfUnitOfWork(FileStorageContext context)
-        {
+        public EfUnitOfWork(FileStorageContext context) => 
             this.context = context;
-        }
 
         public IStorageItemRepository StorageItems => 
             storageItemRepository ?? (storageItemRepository = new StorageItemRepository(context));

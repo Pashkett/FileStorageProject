@@ -1,5 +1,9 @@
 ﻿namespace FileStorage.Domain.RequestModels
 {
+    /// <summary>
+    /// Class for specification additional parameters for request for StorageItems.
+    /// Provides specification for size, ordering and search.
+    /// </summary>
     public class StorageItemsRequestParameters : RequestParameters
     {
         private const long MinLength = 0;
