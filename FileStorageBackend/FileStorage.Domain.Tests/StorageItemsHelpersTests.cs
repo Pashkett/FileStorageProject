@@ -41,5 +41,38 @@ namespace FileStorage.Domain.Tests
                     .With.Matches<ArgumentException>(
                         ex => ex.Message == "Non-primary folder should have a parent folder"));
         }
+
+        [Test]
+        public void Exception_Relative_File_Path_For_Folder()
+        {
+            var file = new StorageItem()
+            {
+                DisplayName = "testDisplay",
+                TrustedName = "testTrust",
+                IsFolder = true
+            };
+
+            Assert.That(() => StorageItemsHelpers.GetFileRelativePath(file),
+                Throws.TypeOf<ArgumentException>()
+                    .With.Matches<ArgumentException>(
+                        ex => ex.Message == "Item should be a file."));
+        }
+
+        [Test]
+        public void Exception_Relative_File_Path_Without_Parent_Folder()
+        {
+            var folder = new StorageItem()
+            {
+                DisplayName = "testDisplay",
+                TrustedName = "testTrust",
+                IsFolder = false,
+                ParentFolder = null
+            };
+
+            Assert.That(() => StorageItemsHelpers.GetFileRelativePath(folder),
+                Throws.TypeOf<ArgumentException>()
+                    .With.Matches<ArgumentException>(
+                        ex => ex.Message == "File should contain a parent folder."));
+        }
     }
 }
