@@ -62,7 +62,7 @@ namespace FileStorage.Domain.Utilities
                 throw new ArgumentException("Item should be a file.");
 
             if (file.ParentFolder == null)
-                throw new ArgumentException("File should contain a parent folder");
+                throw new ArgumentException("File should contain a parent folder.");
         }
 
         private static Dictionary<string, string> GetMimeTypes()
