@@ -5,14 +5,18 @@ namespace FileStorage.Domain.PagingHelpers
 {
     public static class PagingManager
     {
-        public static PaginationHeader PrepareHeader(int totalCount,
-            StorageItemsRequestParameters requestParameters)
+        public static PaginationHeader PrepareHeader<T>(int totalCount, T parameters)
+                where T : RequestParameters, new()
         {
-            var totalPages = (int)Math.Ceiling(totalCount / (double)requestParameters.PageSize);
+            if (parameters == null)
+                parameters = new T();
+
+            var totalPages = 
+                (int)Math.Ceiling(totalCount / (double)parameters.PageSize);
 
             return new PaginationHeader(
-                requestParameters.PageNumber,
-                requestParameters.PageSize,
+                parameters.PageNumber,
+                parameters.PageSize,
                 totalCount,
                 totalPages);
         }
