@@ -8,9 +8,9 @@ namespace FileStorage.Data.Persistence.Interfaces
 {
     public interface IStorageItemRepository : IRepositoryBase<StorageItem>
     {
-        Task<(IEnumerable<StorageItem> files, int count)> GetActualFilesByUserAsync(
+        Task<(IEnumerable<StorageItem> files, int count)> GetPrivateFilesByUserAsync(
             User user, StorageItemsRequest itemsRequest);
-        Task<StorageItem> GetActualFileByIdAsync(Guid fileId);
+        Task<StorageItem> GetPrivateFileByIdAsync(Guid fileId);
         Task<StorageItem> GetFolderByTrustedNameAsync(string trustedName);
         Task<StorageItem> GetUserPrimaryFolderAsync(User user);
         Task<StorageItem> GetFolderByUserAndFolderIdAsync(User user, Guid folderId);

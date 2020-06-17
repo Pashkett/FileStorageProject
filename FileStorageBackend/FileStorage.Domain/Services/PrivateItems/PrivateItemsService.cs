@@ -51,7 +51,7 @@ namespace FileStorage.Domain.Services.PrivateItems
             var parameters = mapper.Map<StorageItemsRequest>(itemsParams);
 
             var (files, totalCount) = 
-                await unitOfWork.StorageItems.GetActualFilesByUserAsync(user, parameters);
+                await unitOfWork.StorageItems.GetPrivateFilesByUserAsync(user, parameters);
 
             var pagingHeader = PagingManager.PrepareHeader(totalCount, itemsParams);
             var filesDto = mapper.Map<IEnumerable<StorageItem>, IEnumerable<FileItemDto>>(files);
@@ -202,7 +202,7 @@ namespace FileStorage.Domain.Services.PrivateItems
                 throw new ArgumentException($"{fileId} is not valid id");
 
             var file = 
-                await unitOfWork.StorageItems.GetActualFileByIdAsync(storageItemId);
+                await unitOfWork.StorageItems.GetPrivateFileByIdAsync(storageItemId);
 
             if (file == null)
                 throw new StorageItemNotFoundException($"File does not exist.");

@@ -18,7 +18,7 @@ namespace FileStorage.Data.Persistence.Repositories
         public StorageItemRepository(DbContext dbContext)
             : base(dbContext) { }
 
-        public async Task<(IEnumerable<StorageItem> files, int count)> GetActualFilesByUserAsync(
+        public async Task<(IEnumerable<StorageItem> files, int count)> GetPrivateFilesByUserAsync(
             User user, StorageItemsRequest itemsRequest)
         {
             var items = fileStorageContext.StorageItems
@@ -38,7 +38,7 @@ namespace FileStorage.Data.Persistence.Repositories
             return (resultCollection, totalCount);
         }
 
-        public async Task<StorageItem> GetActualFileByIdAsync(Guid fileId)
+        public async Task<StorageItem> GetPrivateFileByIdAsync(Guid fileId)
         {
             return await fileStorageContext.StorageItems
                 .FirstOrDefaultAsync(
