@@ -6,6 +6,9 @@ using FileStorage.Logger;
 
 namespace FileStorage.API.Extensions
 {
+    /// <summary>
+    /// Class with extension that catch exceptions in centralized way in API layer
+    /// </summary>
     public static class ExceptionMiddlewareExtensions
     {
         public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerManager logger)

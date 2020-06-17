@@ -8,6 +8,9 @@ using FileStorage.Domain.Services.Authentication;
 
 namespace FileStorage.API.Filters
 {
+    /// <summary>
+    /// Filter for check if user still exists in database
+    /// </summary>
     public class UserCheckerFromRequest : IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

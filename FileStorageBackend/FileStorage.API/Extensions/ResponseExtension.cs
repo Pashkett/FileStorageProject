@@ -4,6 +4,9 @@ using FileStorage.Domain.PagingHelpers;
 
 namespace FileStorage.API.Extensions
 {
+    /// <summary>
+    /// Class with extension that allows modify response with pagination headers
+    /// </summary>
     public static class ResponseExtension
     {
         public static void AddPagination(this HttpResponse response, PaginationHeader paginationHeader)
